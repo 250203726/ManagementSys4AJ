@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace ManagementSys4AJ {
+namespace WebPages {
     
     
     public partial class index {

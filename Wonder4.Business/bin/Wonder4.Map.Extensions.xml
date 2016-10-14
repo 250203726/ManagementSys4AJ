@@ -1,0 +1,2780 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Wonder4.Map.Extensions</name>
+    </assembly>
+    <members>
+        <member name="T:Wonder4.Map.Extensions.DAL.ConcurrencyMode">
+            <summary>
+            并发检测模式
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.DAL.ConcurrencyMode.TimeStamp">
+            <summary>
+            根据时间戳字段来检测
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.DAL.ConcurrencyMode.OriginalValue">
+            <summary>
+            根据提供原始值方式来检测
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.DataTableExtensions">
+            <summary>
+            DataTable扩展方法
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.DataTableExtensions.ToList``1(System.Data.DataTable)">
+             <summary>
+             从DataTable获取一个实体列表
+             </summary>
+             <param name="table">DataTable实例</param>
+             <remarks>
+             <list type="bullet">
+             <item><description>建议不要直接从DataTable返回实体,而是通过CPQuery或者StoreProcedure返回实体</description></item>
+             </list>
+             </remarks>
+             <example>
+            		<para>下面的代码演示了从DataTable获取一个实体列表的用法</para>
+            		<code>
+            		<![CDATA[
+            		//存储过程中包含两个SELECT语句,返回两个结果集
+            		DataSet ds = StoreProcedure.Create("usp_GetTestDataType").FillDataSet();
+            	
+            		foreach( DataTable table in ds2.Tables ) {
+            
+            			//将DataTable转换为实体集合
+            			List<TestDataType> list = table.ToList<TestDataType>();
+            		
+            		}
+            		]]>
+            		</code>
+             </example>
+             <typeparam name="T">实体类型</typeparam>
+             <exception cref="T:System.ArgumentNullException">table参数为null</exception>
+             <returns>实体列表</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.IDbExecute">
+            <summary>
+            从CPQuery和StoreProcedure类提取出来的公共方法接口
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.ExecuteNonQuery">
+            <summary>
+            执行命令,并返回影响函数
+            </summary>
+            <returns>影响行数</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.ExecuteScalar``1">
+            <summary>
+            执行命令,返回第一行,第一列的值,并将结果转换为T类型
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一行,第一列</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.FillDataSet">
+            <summary>
+            执行查询,并将结果集填充到DataSet
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.FillDataTable">
+            <summary>
+            执行命令,并将结果集填充到DataTable
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.FillScalarList``1">
+            <summary>
+            执行命令,将第一列的值填充到类型为T的行集合中
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一列集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.ToList``1">
+            <summary>
+            执行命令,将结果集转换为实体集合
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.IDbExecute.ToSingle``1">
+            <summary>
+            执行命令,将结果集转换为实体
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.ConnectionScope">
+            <summary>
+            表示连接与事务的作用域
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>必须放在using作用域,才能保证资源的正确释放.</description></item>
+            <item><description>类内部维护了一个数据库连接,在作用域内的操作将共用此连接.</description></item>
+            <item><description>对于非Map项目,连接字符串通过:<see cref="T:Wonder4.Map.Extensions.Initializer"/>类的UnSafeInit(string connectionString)方法指定</description></item>
+            <item><description>对于Map项目,连接字符串通过:<see cref="T:Wonder4.Map.Extensions.InitializerModule"/>类初始化,HttpModule只需配置在web.config文件中即可.</description></item>
+            <item><description>作用域可以嵌套使用,包括在子函数中的嵌套,都将共用一个连接</description></item>
+            <item><description>MyDB操作是内部单独开启并维护的数据库连接,不从本作用域共享连接与实务</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了ConnectionScope的用法</para>
+            <code>
+            //类需要放在using中使用
+            using (ConnectionScope scope = new ConnectionScope())
+            {
+                //声明一个CPQuery实例,具体用法请参见文档中关于CPQuery的介绍
+                var query = "insert into TestTable(RowGuid, RowString) values(".AsCPQuery()
+                   + Guid.NewGuid().AsQueryParameter() 
+                   + "," + "字符串内容".AsQueryParameter() + ")";
+                //执行命令
+                query.ExecuteNonQuery();
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.SetDefaultConnection(System.String)">
+            <summary>
+            设置默认的连接字符串
+            </summary>
+            <param name="connectionString"></param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.#ctor">
+            <summary>
+            创建一个ConnectionScope对象
+            <remarks>
+            <list type="bullet">
+            <item><description>等同于new ConnectionScope(TransactionMode.Inherits);</description></item>
+            <item><description>事务行为由<see cref="T:Wonder4.Map.Extensions.DAL.TransactionMode"/>枚举决定;</description></item>
+            </list>
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.#ctor(Wonder4.Map.Extensions.DAL.TransactionMode)">
+            <summary>
+            根据指定的TransactionMode，创建一个ConnectionScope对象
+            <remarks>
+            <list type="bullet">
+            <item><description>事务行为由<see cref="T:Wonder4.Map.Extensions.DAL.TransactionMode"/>枚举决定;</description></item>
+            </list>
+            </remarks>
+            </summary>
+            <param name="mode">事务模式</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.#ctor(Wonder4.Map.Extensions.DAL.TransactionMode,System.String)">
+            <summary>
+            根据指定的TransactionMode和连接字符串，创建一个ConnectionScope对象
+            <remarks>
+            <list type="bullet">
+            <item><description>事务行为由<see cref="T:Wonder4.Map.Extensions.DAL.TransactionMode"/>枚举决定;</description></item>
+            </list>
+            </remarks>
+            </summary>
+            <param name="mode">事务模式</param>
+            <param name="connectionString">连接字符串</param>
+            <exception cref="T:System.ArgumentNullException">如果connectionString参数为null或空字符串,则抛出此异常</exception>
+            <exception cref="T:System.NotSupportedException">如果存在嵌套作用域,内层不允许传入connectionString参数</exception>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.CreateSqlBulkCopy(System.Data.SqlClient.SqlBulkCopyOptions)">
+             <summary>
+             创建SqlBulkCopy类实例,并指定连接和事务
+             </summary>
+             <remarks>
+             <list type="bullet">
+             <item>事务由ConnectionScope构造函数的枚举控制,请不要指定UseInternalTransaction枚举选项</item>
+             </list>
+             </remarks>
+             <example>
+             <para>下面的代码演示了CreateSqlBulkCopy的用法</para>
+             <code>
+             <![CDATA[
+             //准备数据
+            	DataTable dt = new DataTable();
+            	dt.Columns.Add("GuidVal", typeof(Guid));
+            	dt.Columns.Add("IntVal", typeof(int));
+            	dt.Columns.Add("DateTimeVal", typeof(DateTime));
+            	dt.Columns.Add("StringVal", typeof(string));
+            	dt.Columns.Add("MoneyVal", typeof(decimal));
+            	dt.Columns.Add("FloatVal", typeof(double));
+            
+            	Random rnd = new Random();
+            	for( int i = 0; i < 10000; i++ ) {
+            		DataRow row = dt.NewRow();
+            		row["GuidVal"] = Guid.NewGuid();
+            		row["IntVal"] = rnd.Next();
+            		row["DateTimeVal"] = DateTime.Now;
+            		row["StringVal"] = "TestValue";
+            		row["MoneyVal"] = 100m * (decimal)rnd.NextDouble();
+            		row["FloatVal"] = 100 * rnd.NextDouble();
+            		dt.Rows.Add(row);
+            	}
+            
+            	//使用事务
+            	using(ConnectionScope scope = new ConnectionScope( TransactionMode.Required )){
+            
+            		//创建SqlBulkCopy对象
+            		SqlBulkCopy bulkCopy = scope.CreateSqlBulkCopy(SqlBulkCopyOptions.FireTriggers);
+            		//设置写入目标表
+            		bulkCopy.DestinationTableName = "TestBulkCopy";
+            		//写入数据
+            		bulkCopy.WriteToServer(dt);
+            		//提交事务
+            		scope.Commit();
+            	}
+             ]]>
+             </code>
+             </example>
+             <param name="copyOptions">SqlBulkCopyOptions枚举</param>
+             <returns>SqlBulkCopy对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.Dispose">
+            <summary>
+            销毁当前对象，并根据情况关闭连接
+            <remarks>
+            <list type="bullet">
+            <item><description>using作用域结束时将自动调用,无需在代码中使用</description></item>
+            </list>
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.Commit">
+             <summary>
+             提交事务
+             </summary>
+             <remarks>
+             <list type="bullet">
+             <item><description>必须在开启事务的层级才能提交,其他层级调用提交方法将抛出InvalidOperationException异常</description></item>
+             </list>
+             </remarks>
+             <exception cref="T:System.InvalidOperationException">1.如果没有执行过任何SQL,调用此方法将抛出异常;2.当前层级必须开启事务,否则将抛出异常;3.父级开启事务,要在父级提交,否则将抛出异常</exception>
+             <example>
+             <para>下面的代码演示了单层事务不提交的使用方法</para>
+             <code>
+             //使用TransactionMode.Required开启事务
+             using (ConnectionScope scope = new ConnectionScope(TransactionMode.Required))
+             {
+             	//函数内包含一些数据库操作
+             	SomeMethod1();
+             }
+             //由于scope没有提交.最后没有任何操作生效
+             </code>
+             <para>下面的代码演示了单层事务提交的使用方法</para>
+             <code>
+             //使用TransactionMode.Required开启事务
+             using (ConnectionScope scope = new ConnectionScope(TransactionMode.Required))
+             {
+            	    var product = new {
+            	        ProductName = Guid.NewGuid().ToString()
+            	    };
+            
+            	    CPQuery.From("INSERT INTO Products(ProductName) VALUES(@ProductName)", product).ExecuteNonQuery();
+            	    scope.Commit();
+             }
+             //事务提交后,将写入一条记录
+             </code>
+             <para>下面的代码演示了事务嵌套场景</para>
+             <code>
+             //使用TransactionMode.Required开启事务
+            	using (ConnectionScope scope1 = new ConnectionScope(TransactionMode.Required))
+            	{
+            	    //INSERT INTO TestTransaction(RowGuid,RowString) VALUES(newid(),'') //执行命令
+            		
+            	    //继承上级的事务行为(开启事务)
+            	    using (ConnectionScope scope2 = new ConnectionScope())
+            	    {
+            	        //INSERT INTO TestTransaction(RowGuid,RowString) VALUES(newid(),'') //执行命令
+            	        //这里scope2不能调用Commit()方法,调用将产生InvalidOperationException异常
+            	        //scope2.Commit();
+            	    }
+            	    //最终scop1提交,将写入两条记录到数据库
+            	    scope1.Commit();
+            	}
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.ConnectionScope.Rollback(System.String)">
+            <summary>
+            回滚事务
+            此方法直接抛出异常,通过异常回滚事务
+            </summary>
+            <exception cref="T:System.InvalidOperationException">如果数据库连接未打开则抛出此异常</exception>
+            <param name="message">异常信息</param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.TransactionMode">
+            <summary>
+            事务模式
+            </summary>
+            <remarks>
+            事务行为的真值表如下:
+            <list type="table">
+            <listheader>
+            <mode>TransactionMode</mode>
+            <root>根事务</root>
+            <description>参与范围</description>
+            </listheader>
+            <item>
+            <mode>Inherits</mode>
+            <root>是</root>
+            <description>参与根事务</description>
+            </item>
+            <item>
+            <mode>Inherits</mode>
+            <root>否</root>
+            <description>不参与事务</description>
+            </item>
+            <item>
+            <mode>Required</mode>
+            <root>是</root>
+            <description>参与事务(使用根事务)</description>
+            </item>
+            <item>
+            <mode>Required</mode>
+            <root>否</root>
+            <description>参与事务(生成根事务)</description>
+            </item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了Required的用法</para>
+            <code>
+            using (ConnectionScope scope = new ConnectionScope(TransactionMode.Required))
+            {
+            	//scope作用域开启事务
+            }
+            </code>
+            <para>下面的代码演示了Inherits的用法</para>
+            <code>
+            using (ConnectionScope scope0 = new ConnectionScope())
+            {
+                using (ConnectionScope scope1 = new ConnectionScope(TransactionMode.Inherits))
+                {
+            		//scope1作用域继承上级(scope0)的事务行为,即不开启事务
+                }
+            }
+            using (ConnectionScope scope2 = new ConnectionScope(TransactionMode.Required))
+            {
+                using (ConnectionScope scope3 = new ConnectionScope(TransactionMode.Inherits))
+                {
+            		//scope1作用域继承上级(scope0)的事务行为,即开启事务
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.DAL.TransactionMode.Inherits">
+            <summary>
+            继承当前作用域的事务模式
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.DAL.TransactionMode.Required">
+            <summary>
+            新的作用域请求启用事务
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.CPQuery">
+            <summary>
+            表示存SQL查询调用的封装
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>CPQuery使用参数化查询SQL,可以通过匿名对象、SqlParameter数组的方式添加参数</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了通过拼接字符串参数,创建CPQuery对象实例的用法</para>
+            <code>
+            //字符串可以直接转换为CPQuery(需要引用using Wonder4.Map.Extensions.DAL命名空间)
+            //对于非字符串类型参数,可以直接用+拼接,例如Guid,Int,DateTime...
+            //对于字符串类型参数,需要调用AsQueryParameter()来进行拼接,否则就直接变为字符串了.
+            var query = "insert into TestTable(RowGuid, RowString) values(".AsCPQuery()
+                    + Guid.NewGuid()
+                    + "," + "dddddddddd".AsQueryParameter() + ")";
+            //执行命令
+            query.ExecuteNonQuery();
+            </code>
+            <para>下面的代码演示了通过匿名对象添加参数,创建CPQuery对象实例的用法</para>
+            <code>
+            //声明匿名类型
+            var product = new {
+            	ProductName = "产品名称",
+            	Quantity = 10
+            };
+            
+            //SQL中的参数名就是@加匿名类型的属性名
+            CPQuery.From("INSERT INTO Products(ProductName, Quantity) VALUES(@ProductName, @Quantity)", product).ExecuteNonQuery();
+            </code>
+            <para>下面的代码演示了通过SqlParameter数组添加参数,创建CPQuery对象实例的用法</para>
+            <code>
+            //声明参数数组
+            SqlParameter[] parameters2 = new SqlParameter[2];
+            parameters2[0] = new SqlParameter("@ProductID", SqlDbType.Int);
+            parameters2[0].Value = newProductId;
+            parameters2[1] = new SqlParameter("@ProductName", SqlDbType.VarChar, 50);
+            parameters2[1].Value = "测试产品名";
+            //执行查询并返回实体
+            Products product = CPQuery.From("SELECT * FROM Products WHERE ProductID = @ProductID AND ProductName=@ProductName", parameters2).ToSingle&lt;Products&gt;();
+            </code>
+            </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.CPQuery.Command">
+            <summary>
+            获取当前CPQuery内部的SqlCommand对象
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.Create">
+            <summary>
+            创建一个CPQuery实例
+            </summary>
+            <returns>CPQuery实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.ToString">
+            <summary>
+            返回CPQuery中生成的SQL语句
+            </summary>
+            <returns>SQL语句</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.From(System.String,System.Object)">
+            <summary>
+            通过参数化SQL、匿名对象的方式,创建CPQuery对象实例
+            </summary>
+            <example>
+            <para>下面的代码演示了通过参数化SQL,匿名对象的方式,创建CPQuery对象实例的用法</para>
+            <code>
+            //声明匿名类型
+            var product = new {
+            	ProductName = "产品名称",
+            	Quantity = 10
+            };
+            
+            //SQL中的参数名就是@加匿名类型的属性名
+            CPQuery.From("INSERT INTO Products(ProductName, Quantity) VALUES(@ProductName, @Quantity)", product).ExecuteNonQuery();
+            </code>
+            </example>
+            <param name="parameterizedSQL">参数化的SQL字符串</param>
+            <param name="argsObject">匿名对象</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.From(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            通过参数化SQL、SqlParameter数组的方式，创建CPQuery实例
+            </summary>
+            <example>
+            <para>下面的代码演示了通过参数化SQL、SqlParameter数组的方式，创建CPQuery实例的用法</para>
+            <code>
+            //声明参数数组
+            SqlParameter[] parameters2 = new SqlParameter[2];
+            parameters2[0] = new SqlParameter("@ProductID", SqlDbType.Int);
+            parameters2[0].Value = 0;
+            parameters2[1] = new SqlParameter("@ProductName", SqlDbType.VarChar, 50);
+            parameters2[1].Value = "测试产品名";
+            //执行查询并返回实体
+            Products product = CPQuery.From("SELECT * FROM Products WHERE ProductID = @ProductID AND ProductName=@ProductName", parameters2).ToSingle&lt;Products&gt;();
+            </code>
+            </example>
+            <param name="parameterizedSQL">参数化的SQL字符串</param>
+            <param name="parameters">SqlParameter参数数组</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.From(System.String)">
+            <summary>
+            通过SQL语句,创建CPQuery对象实例
+            </summary>
+            <example>
+            <para>下面的代码演示了通过SQL语句,创建CPQuery对象实例的用法</para>
+            <code>
+            //本SQL不需要任何参数,从数据库中获取GUID
+            Guid guid = CPQuery.From("SELECT NEWID()").ExecuteScalar&lt;Guid&gt;();
+            </code>
+            </example>
+            <param name="parameterizedSQL">参数化的SQL字符串</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.op_Addition(Wonder4.Map.Extensions.DAL.CPQuery,System.String)">
+            <summary>
+            将字符串拼接到CPQuery对象
+            </summary>
+            <param name="query">CPQuery对象实例</param>
+            <param name="s">字符串</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.op_Addition(Wonder4.Map.Extensions.DAL.CPQuery,Wonder4.Map.Extensions.DAL.QueryParameter)">
+            <summary>
+            将QueryParameter实例拼接到CPQuery对象
+            </summary>
+            <param name="query">CPQuery对象实例</param>
+            <param name="p">QueryParameter对象实例</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.op_Addition(Wonder4.Map.Extensions.DAL.CPQuery,System.Data.SqlClient.SqlParameter)">
+            <summary>
+            将SqlParameter实例拼接到CPQuery对象
+            </summary>
+            <param name="query">CPQuery对象实例</param>
+            <param name="p">SqlParameter对象实例</param>
+            <returns>CPQuery对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.ExecuteNonQuery">
+            <summary>
+            执行命令,并返回影响函数
+            </summary>
+            <returns>影响行数</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.FillDataTable">
+            <summary>
+            执行命令,并将结果集填充到DataTable
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.FillDataSet">
+            <summary>
+            执行查询,并将结果集填充到DataSet
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.ExecuteScalar``1">
+            <summary>
+            执行命令,返回第一行,第一列的值,并将结果转换为T类型
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一行,第一列</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.FillScalarList``1">
+            <summary>
+            执行命令,将第一列的值填充到类型为T的行集合中
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一列集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.ToList``1">
+            <summary>
+            执行命令,将结果集转换为实体集合
+            </summary>
+            <example>
+            <para>下面的代码演示了如何返回实体集合</para>
+            <code>
+            List&lt;TestDataType&gt; list = CPQuery.Format("SELECT * FROM TestDataType").ToList&lt;TestDataType&gt;();
+            </code>
+            </example>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQuery.ToSingle``1">
+            <summary>
+            执行命令,将结果集转换为实体
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体</returns>
+            <example>
+            <para>下面的代码演示了如何返回实体</para>
+            <code>
+             TestDataType obj = "SELECT TOP 1 * FROM TestDataType".AsCPQuery().ToSingle&lt;TestDataType&gt;();
+            </code>
+            </example>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            表示一个SQL参数对象
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>string类型需要显示调用AsQueryParameter()扩展方法或通过通过强制类型转换的方式拼接,如:(QueryParameter)xxxx</description></item>
+            <item><description>其他类型直接通过+操作即可</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了QueryParameter类的用法</para>
+            <code>
+            //字符串可以直接转换为AsQueryParameter(需要引用using Wonder4.Map.Extensions.DAL命名空间)
+            var query = "insert into TestTable(RowGuid, RowString) values(".AsCPQuery()
+                    + Guid.NewGuid() 
+                    + "," + "dddddddddd".AsQueryParameter() + ")";
+            //执行命令
+            query.ExecuteNonQuery();
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="val">要包装的参数值</param>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.QueryParameter.Value">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Explicit(System.String)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将string显式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.DBNull)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将DBNull隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Boolean)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将bool隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Byte)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将byte隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Int32)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将int隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Int64)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将long隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Int16)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将short隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Single)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将float隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Double)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将double隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Decimal)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将decimal隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Guid)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将Guid隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.DateTime)~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将DateTime隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.QueryParameter.op_Implicit(System.Byte[])~Wonder4.Map.Extensions.DAL.QueryParameter">
+            <summary>
+            将byte隐式转换为QueryParameter
+            </summary>
+            <param name="value">要转换的值</param>
+            <returns>QueryParameter实例</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.CPQueryExtensions">
+            <summary>
+            提供CPQuery扩展方法的工具类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQueryExtensions.AsCPQuery(System.String)">
+            <summary>
+            将指定的字符串（T-SQL的片段）转成CPQuery对象
+            用法参见<see cref="T:Wonder4.Map.Extensions.DAL.CPQuery"/>类.
+            </summary>
+            <param name="s">T-SQL的片段的字符串</param>
+            <returns>包含T-SQL的片段的CPQuery对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.CPQueryExtensions.AsQueryParameter(System.String)">
+            <summary>
+            将对象转换成QueryParameter对象
+            用法参见<see cref="T:Wonder4.Map.Extensions.DAL.QueryParameter"/>类.
+            </summary>
+            <param name="b">要转换成QueryParameter的原对象</param>
+            <returns>转换后的QueryParameter对象</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.DataColumnAttribute">
+            <summary>
+            表示数据列属性
+            </summary>
+            <example>
+            	<para>下面的代码演示了数据列属性的用法</para>
+            	<code>
+            	public class cbContract{
+            		//DataColumn属性用来标记字段名的数据库特性
+            		//Alias表示别名,当出现数据字段名于代码中属性名不一致场景时,需要使用Alias标记
+            		//PrimaryKey表示该属性对应的数据库字段是否为主键
+            		//TimeStamp表示该属性对应的数据库字段是否为时间戳数据类型
+            		//Identity表示该属性对应的数据库字段是否为自增长列
+            		//SeqGuid表示该属性对应的数据库字段默认值是否为NewSequentialId()数据库函数,如果是则表示该列是有序GUID
+            		[DataColumn(Alias="Contract_Name", PrimaryKey=true, TimeStamp=true, Identity=true, SeqGuid=true)]
+            		public string ContractName { get; set; }
+            	}
+            	</code>
+            </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.Alias">
+            <summary>
+            别名
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.PrimaryKey">
+            <summary>
+            是否主键
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.TimeStamp">
+            <summary>
+            是否为时间戳类
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.Identity">
+            <summary>
+            是否为标识列
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.SeqGuid">
+            <summary>
+            是否为有序GUID列
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.IsNullable">
+            <summary>
+            是否允许为空
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataColumnAttribute.DefaultValue">
+            <summary>
+            字段的默认值表达式
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.DataEntityAttribute">
+            <summary>
+            表示数据实体属性
+            </summary>
+            <example>
+            	<para>下面的代码演示了数据实体属性的用法</para>
+            	<code>
+            	//Alias属性表示实体类别名,当数据库中的表明与实体类名不同时.需要使用Alias别名标记
+            	[DataEntity(Alias="cb_Contract")]
+            	public class cbContract{
+            		public string ContractName { get; set; }
+            	}
+            	</code>
+            </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.DataEntityAttribute.Alias">
+            <summary>
+            别名
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            表示一个存储过程的输出参数
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>由于匿名对象不支持Attribute,所以存储过程输出参数通过本类型进行标记</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了SPOut的使用方法</para>
+            <code>
+            //通过匿名类型,声明存储过程参数
+            var product = new {
+            	Remark = "备注",
+            	ProductID = (SPOut)0		//存储过程输出参数
+            };
+            
+            //存储过程调用
+            StoreProcedure sp = new StoreProcedure("InsertProduct", product);
+            sp.ExecuteNonQuery();
+            
+            //获取输出值
+            int productID = (int)sp.Command.Parameters["@ProductID"].Value;
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.#ctor">
+            <summary>
+            创建SPOut类实例
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.SPOut.Value">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.SPOut.Size">
+            <summary>
+            参数长度
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.Create(System.Object)">
+            <summary>
+            创建一个SPOut对象
+            </summary>
+            <param name="o">对象值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.DBNull)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            DBNull到SPOut的显式转换
+            </summary>
+            <param name="value">DBNull值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Boolean)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            bool到SPOut的显式转换
+            </summary>
+            <param name="value">bool值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Byte)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            byte到SPOut的显式转换
+            </summary>
+            <param name="value">byte值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Int32)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            int到SPOut的显式转换
+            </summary>
+            <param name="value">int值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Int64)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            long到SPOut的显式转换
+            </summary>
+            <param name="value">long值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Int16)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            short到SPOut的显式转换
+            </summary>
+            <param name="value">short值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Single)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            float到SPOut的显式转换
+            </summary>
+            <param name="value">float值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Double)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            double到SPOut的显式转换
+            </summary>
+            <param name="value">double值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Decimal)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            decimal到SPOut的显式转换
+            </summary>
+            <param name="value">decimal值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Guid)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            Guid到SPOut的显式转换
+            </summary>
+            <param name="value">Guid值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.String)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            string到SPOut的显式转换
+            </summary>
+            <param name="value">string值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.DateTime)~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            DateTime到SPOut的显式转换
+            </summary>
+            <param name="value">DateTime值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.SPOut.op_Explicit(System.Byte[])~Wonder4.Map.Extensions.DAL.SPOut">
+            <summary>
+            byte[]到SPOut的显式转换
+            </summary>
+            <param name="value">byte[]值</param>
+            <returns>转换后的SPOut对象</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.BaseEntity">
+             <summary>
+             数据实体的基类
+             </summary>
+             <remarks>
+             <list type="bullet">
+             <item><description>本类是所有数据实体的基类,数据实体需要继承自本类,才能在初始化时自动编译</description></item>
+             <item><description>初始化时自动编译实体信息请参见:<see cref="T:Wonder4.Map.Extensions.Initializer"/>类</description></item>
+             <item><description>实体类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中</description></item>
+             </list>
+             </remarks>
+             <example>
+             <para>下面的代码演示了从BaseEntity继承的实体</para>
+             <code>
+             using System;
+             using System.Collections.Generic;
+             using System.Linq;
+             using System.Text;
+             using Wonder4.Map.Extensions.DAL; //引入数据访问层命名空间
+            
+             namespace SmokingTest.CS.Entity
+             {
+                 //实体cbContract继承自BaseEntity
+                 public class cbContract : BaseEntity
+                 {
+                     public string ContractName { get; set; }
+                     public decimal HtAmount { get; set; }
+             		//....其他属性
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.HookExecute(System.Func{Wonder4.Map.Extensions.DAL.CPQuery,System.Boolean})">
+            <summary>
+            表示数据库操作执行前的切入函数
+            </summary>
+            <param name="func">表示执行前可以由外部指定的行为,返回true则继续执行,返回false则不会继续执行数据库操作</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.Insert">
+            <summary>
+            将数据实体插到对应的数据库表中。
+            </summary>
+            <example>
+            <para>下面的代码演示了Insert()方法的用法</para>
+            <code>
+            //Contract类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中
+            Contract contract = new Contract();
+            
+            contract.ContractGUID = Guid.NewGuid();
+            contract.ContractName = "...";
+            //...其他字段
+            
+            int count = contract.Insert();
+            //插入成功后,count等于1
+            </code>
+            </example>
+            <exception cref="T:System.InvalidOperationException">1.如果没有对实体类的任何一个字段赋值,就进行Insert()操作,则会抛出此异常2.类没有定义主键,即没有任何一个属性被标记为PrimaryKey=true,则抛出此异常</exception>
+            <exception cref="T:System.InvalidProgramException">如果数据实体类型的定义不符合规范，就会抛出此异常</exception>
+            <returns>返回ADO.NET的原始结果</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.Delete">
+            <summary>
+            将数据实体对应的记录从数据库表中删除。
+            </summary>
+            <example>
+            <para>下面的代码演示了Delete()方法的用法</para>
+            <code>
+            //Contract类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中
+            Contract contract = new Contract();
+            
+            //对主键字段进行赋值
+            contract.ContractGUID = Request.QueryString["ContractGUID"];
+            
+            int count = contract.Delete();
+            //删除成功后,count等于1
+            </code>
+            </example>
+            <exception cref="T:System.InvalidOperationException">类没有定义主键,即没有任何一个属性被标记为PrimaryKey=true,则抛出此异常</exception>
+            <exception cref="T:System.InvalidProgramException">如果数据实体类型的定义不符合规范，就会抛出此异常</exception>
+            <returns>返回ADO.NET的原始结果</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.Delete(Wonder4.Map.Extensions.DAL.ConcurrencyMode)">
+            <summary>
+            用并发检测的方式，将数据实体对应的记录从数据库表中删除。
+            </summary>
+            <example>
+            <para>下面的代码演示了并发检测模式下,Delete()方法的用法</para>
+            <code>
+            <![CDATA[
+            //Contract类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中
+            
+            public void Load(){
+            
+                //在页面加载时,查询数据库信息,时间戳字段需要通过CAST转换为长整型,绑定到界面中
+                Contract contract = CPQuery.From("SELECT ContractGUID, CAST(ContractVersion AS BigInt) ContractVersion  .... FROM cb_Contract WHERE ...").ToSingle<Contract>();
+                
+                //其他数据绑定代码
+                //...
+            }
+            
+            //删除通道,前端需要传递合同GUID,时间戳字段
+            public void Delete(Guid contractGUID, long contractVersion){
+            
+            	//删除动作,需要构建一个实体对象
+            	Contract contract = new Contract();
+            	contract.ContractGUID = contractGUID; //主键必须赋值,这是删除语句的首要条件
+            	contract.ContractVersion = contractVersion.Int64ToTimeStamp(); //界面中长整型的时间戳字段可以通过Int64ToTimeStamp扩展方法转换为byte[]数组
+            	
+            	try{
+            		//根据时间戳字段,进行并发检测
+            		int count = contract.Delete(ConcurrencyMode.TimeStamp);
+            		//如果删除成功,则count为1		
+            
+            		//根据原始值,进行并发检测
+            		//count = contract.Delete(oldContract, ConcurrencyMode.OriginalValue);
+            	}
+            	catch(OptimisticConcurrencyException ex){
+            		//并发检测失败,将会抛出OptimisticConcurrencyException异常
+            	}
+            }
+            ]]>
+            </code>
+            </example>
+            <exception cref="T:System.InvalidProgramException">如果数据实体类型的定义不符合规范，就会抛出此异常</exception>
+            <exception cref="T:System.InvalidOperationException">类没有定义主键,即没有任何一个属性被标记为PrimaryKey=true,则抛出此异常</exception>
+            <exception cref="T:Wonder4.Map.Extensions.Exception.OptimisticConcurrencyException">并发检测失败时,则会抛出此异常</exception>
+            <param name="concurrencyMode">并发检测模式</param>
+            <returns>返回ADO.NET的原始结果</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.Update">
+             <summary>
+             更新数据实体对应的记录。
+             </summary>
+             <example>
+             <para>下面的代码演示了Update()方法的用法</para>
+             <code>
+             //Contract类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中
+             Contract contract = new Contract();
+             
+             //为类的主键赋值
+             contract.ContractGUID = Reuqest.QueryString["ContractGUID"];
+             
+             //为类的其他字段赋值
+             //contract.ContractName = Request.Form["ContractName"];
+             //...
+            
+             int count = contract.Update();
+             //更新成功后,count等于1
+             </code>
+             </example>
+             <exception cref="T:System.InvalidProgramException">如果数据实体类型的定义不符合规范，就会抛出此异常</exception>
+             <exception cref="T:System.InvalidOperationException">类没有定义主键,即没有任何一个属性被标记为PrimaryKey=true,则抛出此异常</exception>
+             <returns>返回ADO.NET的原始结果</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.Update(Wonder4.Map.Extensions.DAL.BaseEntity,Wonder4.Map.Extensions.DAL.ConcurrencyMode)">
+            <summary>
+            用并发检测的方式，更新数据实体对应的记录。
+            </summary>
+            <example>
+            <para>下面的代码演示了并发检测模式下,Update()方法的用法</para>
+            <code>
+            <![CDATA[
+            //Contract类需要继承自BaseEntity,并且需要放在以*.Entity.dll结尾的程序集中
+            
+            public void Load(){
+            
+                //在页面加载时,查询数据库信息,时间戳字段需要通过CAST转换为长整型,绑定到界面中
+                Contract contract = CPQuery.From("SELECT ContractGUID, CAST(ContractVersion AS BigInt) ContractVersion  .... FROM cb_Contract WHERE ...").ToSingle<Contract>();
+                
+                //其他数据绑定代码
+                //...
+            }
+            
+            public void Update(string dataXML, long contractVersion){
+            	//将AppFrom的xml直接转换为实体对象
+            	Contract contract = XmlDataEntity.ConvertXmlToSingle<CbContract>(dataXML)
+            	
+            	//构造用于并发检测的原对象
+            	Contract origContract = new Contract();
+            	origContract.ContractGUID = contract.ContractGUID; //并发检测时,原对象的主键是必须提供的
+            	contract.ContractVersion = contractVersion.Int64ToTimeStamp(); //界面中长整型的时间戳字段可以通过Int64ToTimeStamp扩展方法转换为byte[]数组
+            	
+            	try{
+            		//根据时间戳字段,进行并发检测
+            		int count = contract.Update(origContract, ConcurrencyMode.TimeStamp);
+            		//如果更新成功,则count为1		
+            
+            		//根据原始值,进行并发检测
+            		//count = contract.Update(origContract, ConcurrencyMode.OriginalValue);
+            	}
+            	catch(OptimisticConcurrencyException ex){
+            		//并发检测失败,将会抛出OptimisticConcurrencyException异常
+            	}
+            }
+            ]]>
+            </code>
+            </example>
+            <param name="original">用于并发检测的原始对象</param>
+            <param name="concurrencyMode">并发检测模式</param>
+            <exception cref="T:System.InvalidProgramException">如果数据实体类型的定义不符合规范，就会抛出此异常</exception>
+            <exception cref="T:System.InvalidOperationException">类没有定义主键,即没有任何一个属性被标记为PrimaryKey=true,则抛出此异常</exception>
+            <exception cref="T:System.ArgumentException">用于并发检测的原始对象不能是当前对象</exception>
+            <exception cref="T:Wonder4.Map.Extensions.Exception.OptimisticConcurrencyException">并发检测失败时,则会抛出此异常</exception>
+            <returns>返回ADO.NET的原始结果</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.SetPropertyDefaultValue(System.String)">
+            <summary>
+            将指定的【值类型】属性对应的字段值设置为零值。
+            </summary>
+            <remarks>说明：属性的零值由 .net framework来定义，数字类型为 0，布尔类型为 false，等等。
+            </remarks>
+            <exception cref="T:System.ArgumentNullException">属性名为空</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">属性名不能匹配任何属性</exception>
+            <exception cref="T:System.InvalidOperationException">指定的属性是一个引用类型</exception>
+            <exception cref="T:System.InvalidOperationException">指定的属性是一个可空类型</exception>
+            <param name="propertyName">属性名</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.GetZeroProperties">
+            <summary>
+            此API不宜在项目代码中调用，仅供内部使用。
+            </summary>
+            <returns>....</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.BaseEntity.TrackChange">
+            <summary>
+            此API不宜在项目代码中调用，仅供内部使用。
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.EventManager">
+            <summary>
+            事件管理类,提供事件的订阅
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>注意:由于本类提供的事件都是静态事件,事件触发后,事件响应函数将直接在宿主线程中执行</description></item>
+            <item><description>请确保事件响应函数中的代码不要抛出异常,否则将直接影响宿主SQL命令的执行行为</description></item>
+            <item><description>请不要在事件响应函数中使用或调用ConnectionScope包装,因为在事件响应函数中通过ConnectionScope执行的SQL出错时,异常会被再次抛出,再次捕获.导致堆栈溢出</description></item>
+            <item><description>使用事务需要单独开启事务,否则将直接参与到宿主代码的事务中</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了事件订阅的用法</para>
+            <code>
+            public void Event()
+            {
+            	//订阅事件
+            	EventManager.ConnectionOpened += new EventHandler&lt;ConnectionEventArg&gt;(EventManager_ConnectionOpened);
+            	EventManager.BeforeExecute += new EventHandler&lt;CommandEventArg&gt;(EventManager_BeforeExecute);
+            	EventManager.AfterExecute += new EventHandler&lt;CommandEventArg&gt;(EventManager_AfterExecute);
+            	EventManager.OnException += new EventHandler&lt;ExceptionEventArg&gt;(EventManager_OnException);
+            
+            	//数据库操作
+            	using( ConnectionScope scope = new ConnectionScope() ) {
+            		Guid guid = "SELECT newid()".AsCPQuery().ExecuteScalar&lt;Guid&gt;();
+            		try {
+            			"SELECT x".AsCPQuery().ExecuteScalar&lt;string&gt;();
+            		}
+            		catch( Exception ex ) {
+            			//仅仅为了验证是否能触发OnException函数
+            		}
+            	}
+            }
+            public void EventManager_OnException(object sender, ExceptionEventArg e)
+            {
+            	//当发生异常时,将会触发这个事件
+            	//e.Exception属性包含了具体的内部错误
+            }
+            public void EventManager_AfterExecute(object sender, CommandEventArg e)
+            {
+            	//当SQL命令执行完毕时,将会触发这个事件
+            }
+            public void EventManager_BeforeExecute(object sender, CommandEventArg e)
+            {
+            	e.UserData = "Test";
+            	//当SQL命令准备执行时,将会触发这个事件
+            	//UserData在命令执行前可以传入,在命令执行完毕,发生异常时可以收到传入的这个对象.
+            }
+            public void EventManager_ConnectionOpened(object sender, ConnectionEventArg e)
+            {
+            	//当连接打开后.将会触发这个事件
+            }
+            </code>
+            </example>
+        </member>
+        <member name="E:Wonder4.Map.Extensions.DAL.EventManager.ConnectionOpened">
+            <summary>
+            连接打开事件
+            </summary>
+        </member>
+        <member name="E:Wonder4.Map.Extensions.DAL.EventManager.BeforeExecute">
+            <summary>
+            命令执行之前事件
+            </summary>
+        </member>
+        <member name="E:Wonder4.Map.Extensions.DAL.EventManager.AfterExecute">
+            <summary>
+            命令执行之后事件
+            </summary>
+        </member>
+        <member name="E:Wonder4.Map.Extensions.DAL.EventManager.OnException">
+            <summary>
+            异常事件
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.ConnectionEventArgs">
+            <summary>
+            数据库连接事件参数
+            用法参见<see cref="T:Wonder4.Map.Extensions.DAL.EventManager"/>类.
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.ConnectionEventArgs.Connection">
+            <summary>
+            当前打开的数据库连接
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.CommandEventArgs">
+            <summary>
+            执行命令事件参数
+            用法参见<see cref="T:Wonder4.Map.Extensions.DAL.EventManager"/>类.
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.CommandEventArgs.Command">
+            <summary>
+            执行的命令
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.CommandEventArgs.UserData">
+            <summary>
+            用户自定义数据
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.ExceptionEventArgs">
+            <summary>
+            异常事件参数
+            用法参见<see cref="T:Wonder4.Map.Extensions.DAL.EventManager"/>类.
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.ExceptionEventArgs.Command">
+            <summary>
+            异常时所执行的命令
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.ExceptionEventArgs.Exception">
+            <summary>
+            异常事件中包含的内部异常
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.ExceptionEventArgs.UserData">
+            <summary>
+            用户自定义数据
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.DAL.StoreProcedure">
+             <summary>
+             表示存储过程调用的封装
+             </summary>
+             <example>
+             <para>下面的代码演示了通过匿名对象,创建StoreProcedure对象实例的用法</para>
+             <code>
+            		//声明匿名对象
+            		var product = new {
+            			ProductName = Guid.NewGuid().ToString(),
+            			CategoryID = 1,
+            			Unit = "个",
+            			UnitPrice = 12.36,
+            			Quantity = 25,
+            			Remark = "mmmmmmmmmmmmmm",
+            			ProductID = (SPOut)0		// 输出参数,参见SPOut类说明
+            		};
+            
+            		//创建StoreProcedure对象
+            		StoreProcedure sp = new StoreProcedure("InsertProduct", product);
+            	    //执行存储过程
+            		sp.ExecuteNonQuery();
+             </code>
+             <para>下面的代码演示了通过SqlParameter数组,创建StoreProcedure对象实例的用法</para>
+             <code>
+            		//声明参数数组
+            		SqlParameter[] parameters1 = new SqlParameter[7];
+            
+            		parameters1[0] = new SqlParameter("@ProductName", SqlDbType.NVarChar, 50);
+            		parameters1[0].Value = "测试产品名";
+            		parameters1[1] = new SqlParameter("@CategoryID", SqlDbType.Int);
+            		parameters1[1].Value = 1;
+            		parameters1[2] = new SqlParameter("@Unit", SqlDbType.NVarChar, 10);
+            		parameters1[2].Value = "个";
+            		parameters1[3] = new SqlParameter("@UnitPrice", SqlDbType.Money);
+            		parameters1[3].Value = 55;
+            		parameters1[4] = new SqlParameter("@Quantity", SqlDbType.Int);
+            		parameters1[4].Value = 44;
+            		parameters1[5] = new SqlParameter("@Remark", SqlDbType.NText);
+            		parameters1[5].Value = "产品备注";
+            		parameters1[6] = new SqlParameter("@ProductID", SqlDbType.Int);
+            		parameters1[6].Direction = ParameterDirection.Output;
+            
+             	//执行存储过程
+            		StoreProcedure.Create("InsertProduct", parameters1).ExecuteNonQuery();
+            		
+            		//获取输出参数
+            		int newProductId = (int)parameters1[6].Value;
+             </code>
+             </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.DAL.StoreProcedure.Command">
+            <summary>
+            存储过程内部的SqlCommand对象
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.#ctor(System.String,System.Data.SqlClient.SqlParameter[])">
+             <summary>
+             通过存储过程名称、SqlParameter参数数组的方式,创建StoreProcedure对象的实例
+             </summary>
+             <param name="spName">存储过程名</param>
+             <param name="parameters">参数数组</param>
+             <returns>存储过程对象</returns>
+             <example>
+             <para>下面的代码演示了通过存储过程名称、SqlParameter参数数组,创建StoreProcedure对象的实例的用法</para>
+             <code>
+            		//声明参数数组
+            		SqlParameter[] parameters1 = new SqlParameter[7];
+            
+            		parameters1[0] = new SqlParameter("@ProductName", SqlDbType.NVarChar, 50);
+            		parameters1[0].Value = "测试产品名";
+            		parameters1[1] = new SqlParameter("@CategoryID", SqlDbType.Int);
+            		parameters1[1].Value = 1;
+            		parameters1[2] = new SqlParameter("@Unit", SqlDbType.NVarChar, 10);
+            		parameters1[2].Value = "个";
+            		parameters1[3] = new SqlParameter("@UnitPrice", SqlDbType.Money);
+            		parameters1[3].Value = 55;
+            		parameters1[4] = new SqlParameter("@Quantity", SqlDbType.Int);
+            		parameters1[4].Value = 44;
+            		parameters1[5] = new SqlParameter("@Remark", SqlDbType.NText);
+            		parameters1[5].Value = "产品备注";
+            		parameters1[6] = new SqlParameter("@ProductID", SqlDbType.Int);
+            		parameters1[6].Direction = ParameterDirection.Output;
+            
+            		StoreProcedure.Create("InsertProduct", parameters1).ExecuteNonQuery();
+            		
+            		//获取输出参数
+            		int newProductId = (int)parameters1[6].Value;
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.#ctor(System.String,System.Object)">
+             <summary>
+             通过存储过程名称、匿名对象的方式,创建StoreProcedure对象的实例
+             </summary>
+             <param name="spName">存储过程名称</param>
+             <param name="parameterObject">匿名对象</param>
+             <returns>存储过程对象</returns>
+             <example>
+             <para>下面的代码演示了通过存储过程名称、匿名对象,创建StoreProcedure对象的用法</para>
+             <code>
+            		//声明匿名对象
+            		var product = new {
+            			ProductName = Guid.NewGuid().ToString(),
+            			CategoryID = 1,
+            			Unit = "个",
+            			UnitPrice = 12.36,
+            			Quantity = 25,
+            			Remark = "mmmmmmmmmmmmmm",
+            			ProductID = (SPOut)0		// 输出参数,参见SPOut类说明
+            		};
+            
+            		//创建StoreProcedure对象
+            		StoreProcedure sp = new StoreProcedure("InsertProduct", product);
+            		//执行存储过程
+            		sp.ExecuteNonQuery();
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.#ctor(System.String)">
+            <summary>
+            通过存储过程名称,创建StoreProcedure对象的实例
+            </summary>
+            <param name="spName">存储过程名称</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.Create(System.String)">
+            <summary>
+            创建StoreProcedure对象的实例,等同于 new StoreProcedure(string spName);
+            </summary>
+            <param name="spName">存储过程名称</param>
+            <returns>StoreProcedure对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.Create(System.String,System.Object)">
+            <summary>
+            创建StoreProcedure对象的实例,等同于 new StoreProcedure(string spName, object parameterObject);
+            </summary>
+            <param name="spName">存储过程名称</param>
+            <param name="parameterObject">匿名对象</param>
+            <returns>StoreProcedure对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.Create(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            创建StoreProcedure对象的实例,等同于 new StoreProcedure(string spName, params SqlParameter[] parameters);
+            </summary>
+            <param name="spName">存储过程名称</param>
+            <param name="parameters">匿名对象</param>
+            <returns>StoreProcedure对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.ExecuteNonQuery">
+            <summary>
+            执行存储过程,并返回影响函数
+            </summary>
+            <returns>影响行数</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.FillDataTable">
+            <summary>
+            执行存储过程,并将结果集填充到DataTable
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.FillDataSet">
+            <summary>
+            执行存储过程,并将结果集填充到DataSet
+            </summary>
+            <returns>数据集</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.ExecuteScalar``1">
+            <summary>
+            执行存储过程,返回第一行,第一列的值,并将结果转换为T类型
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一行,第一列</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.FillScalarList``1">
+            <summary>
+            执行存储过程,将第一列的值填充到列表中,并将结果转换为T类型
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns>结果集的第一列集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.ToList``1">
+            <summary>
+            执行存储过程,将结果集转换为实体集合
+            </summary>
+            <example>
+            <para>下面的代码演示了如何返回实体集合</para>
+            <code>
+            List&lt;TestDataType&gt; list = StoreProcedure.Create("usp_GetXXXX", null).ToList&lt;TestDataType&gt;();
+            </code>
+            </example>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.DAL.StoreProcedure.ToSingle``1">
+            <summary>
+            执行存储过程,将结果集转换为实体
+            </summary>
+            <example>
+            <para>下面的代码演示了如何返回实体</para>
+            <code>
+            TestDataType obj = StoreProcedure.Create("usp_GetXXXX", null).ToSingle&lt;TestDataType&gt;();
+            </code>
+            </example>
+            <typeparam name="T">实体类型</typeparam>
+            <returns>实体</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Exception.NonStandardExecption">
+            <summary>
+            不标准异常。表示代码的定义不符合事先约定的说明。
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.NonStandardExecption.#ctor">
+            <summary>
+            初始化 NonStandardExecption 的新实例。
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.NonStandardExecption.#ctor(System.String)">
+            <summary>
+            使用指定的错误消息初始化 NonStandardExecption 的新实例。
+            </summary>
+            <param name="message">错误消息</param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Exception.OptimisticConcurrencyException">
+            <summary>
+            开放式并发冲突发生时引发的异常。
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.OptimisticConcurrencyException.#ctor">
+            <summary>
+            初始化 OptimisticConcurrencyException 的新实例。
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.OptimisticConcurrencyException.#ctor(System.String)">
+            <summary>
+            使用指定的错误消息初始化 OptimisticConcurrencyException 的新实例。
+            </summary>
+            <param name="message">错误消息</param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Exception.BuildException">
+            <summary>
+            表示代码生成异常
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.BuildException.#ctor">
+            <summary>
+            初始化 BuildException 的新实例。
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Exception.BuildException.BuildExceptions">
+            <summary>
+            包含多个编译异常或其他异常实例
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Exception.CompileException">
+            <summary>
+            表示编译异常
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.CompileException.#ctor">
+            <summary>
+            初始化 CompileException 的新实例。
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Exception.CompileException.Code">
+            <summary>
+            编译异常的代码
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Exception.CompileException.CompilerResult">
+            <summary>
+            编译结果
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Exception.RollbackException">
+            <summary>
+            表示一个回滚事务的异常
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Exception.RollbackException.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="message">异常信息</param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.BinSerializerHelper">
+            <summary>
+            二进制序列化的工具类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.BinSerializerHelper.Serialize(System.Object)">
+            <summary>
+            将对象序列化为二进制字节数组
+            </summary>
+            <param name="obj">要序列化的对象</param>
+            <returns>字节数组</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.BinSerializerHelper.Deserialize``1(System.Byte[])">
+            <summary>
+            将字节数组反序列化为对象
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="buffer">字节数组</param>
+            <returns>对象实例</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.TimeStampExtensions">
+            <summary>
+            表示数据库时间戳类型转换的扩展方法类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.TimeStampExtensions.TimeStampToInt64(System.Byte[])">
+            <summary>
+            将用字节表示的时间戳数据转换为用长整型表示.
+            </summary>
+            <param name="array">字节数组</param>
+            <returns>长整型时间戳</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.TimeStampExtensions.Int64ToTimeStamp(System.Int64)">
+            <summary>
+            将用长整型表示的时间戳数据转换为用字节数组表示
+            </summary>
+            <param name="value">长整型数组</param>
+            <returns>字节数组</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Web.HttpResult">
+            <summary>
+            表示通用的返回值封装
+            </summary>
+            <example>
+            <para>下面的代码演示了HttpResult转化为xml字符串的用法</para>
+            <code>
+            <![CDATA[
+            	HttpResult hr = new HttpResult();
+            	hr.Result = true;
+            	hr.KeyValue = Guid.NewGuid().ToString();
+            	string xml = hr.ToXml();
+            	
+            	//xml的内容为:
+            	//<?xml version="1.0" encoding="GB2312" ?>
+            	//<xml result="true" keyvalue="生成的GUID值"/>
+            ]]>
+            </code>
+            <para>下面的代码演示了HttpResult转化为json字符串的用法</para>
+            <code>
+            <![CDATA[
+            	HttpResult hr = new HttpResult();
+            	hr.Result = true;
+            	hr.KeyValue = Guid.NewGuid().ToString();
+            	string json = hr.ToJson();
+            	
+            	//json的内容为:
+            	//{Result : "true", KeyValue : "生成的GUID值", ErrorMessage : "null"}
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Web.HttpResult.Result">
+            <summary>
+            表示结果是否正确
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Web.HttpResult.KeyValue">
+            <summary>
+            表示结果的键值
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Web.HttpResult.ErrorMessage">
+            <summary>
+            表示结果的错误消息
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Web.HttpResult`1">
+            <summary>
+            表示包含一个数据值的通用返回值封装
+            </summary>
+            <typeparam name="T">数据值类型</typeparam>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Web.HttpResult`1.Data">
+            <summary>
+            返回值包含的数据
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Web.HtmlHelper">
+            <summary>
+            HTML操作的工具类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Web.HtmlHelper.GetHtml(System.String,System.Object)">
+            <summary>
+            根据XSLT模板和一个数据对象生成HTML代码
+            </summary>
+            <param name="xsltFilePath">XSLT模板文件的路径</param>
+            <param name="obj">数据对象</param>
+            <returns>生成的HTML代码</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Web.HtmlHelper.GetHtml(System.String,System.String)">
+            <summary>
+            根据XSLT模板和一个 XML字符串 生成HTML代码
+            </summary>
+            <param name="xsltFilePath">XSLT模板文件的路径</param>
+            <param name="xmlString">XML字符串</param>
+            <returns>生成的HTML代码</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Initializer">
+            <summary>
+            表示初始化配置信息(连接字符串,预编译实体)
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>通过UnSafeInit(connectionString)方法指定连接字符串;</description></item>
+            <item><description>本类在非Map项目中使用,如果需要在Map项目中使用数据访问层,请使用<see cref="T:Wonder4.Map.Extensions.InitializerModule"/>类;</description></item>
+            </list>
+            </remarks>
+            <exception cref="T:System.ArgumentNullException">连接字符串为null或为空</exception>
+            <example>
+            <para>下面的代码演示了如何初始化连接字符串</para>
+            <code>
+            using System;
+            using System.Collections.Generic;
+            using System.Linq;
+            using System.Text;
+            using Wonder4.Map.Extensions.DAL;
+            
+            namespace SmokingTest.DAL
+            {
+            	class Program
+            	{
+            		static void Main(string[] args)
+            		{
+            			string connectionString = @"server=localhost\sqlexpress;database=MyNorthwind;Integrated Security=SSPI";
+            
+            			//指定连接字符串
+            			Wonder4.Map.Extensions.Initializer.UnSafeInit(connectionString);
+            
+            		}
+            	}
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Initializer.UnSafeInit(System.String)">
+            <summary>
+            初始化连接字符串,预编译实体
+            </summary>
+            <exception cref="T:Wonder4.Map.Extensions.Exception.BuildException">预编译实体过程中产生异常</exception>
+            <exception cref="T:System.InvalidOperationException">多次调用本函数</exception>
+            <param name="connectionString">连接字符串</param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.InitializerModule">
+             <summary>
+             表示初始化HttpModule,用于初始化连接字符串,预编译实体
+             </summary>
+             <remarks>
+             <list type="bullet">
+             <item><description>本类通过反射方式加载Mysoft.Map.Core.dll程序集中MyDB类中的链接字符串,并初始化</description></item>
+             <item><description>本类只能使用在Map项目中.不支持在其他项目中调用本类,如果需要在其他项目中使用数据访问层,请使用<see cref="T:Wonder4.Map.Extensions.Initializer"/>类</description></item>
+             </list>
+             </remarks>
+             <exception cref="T:System.IO.FileNotFoundException">Mysoft.Map.Core.dll文件不存在或Mysoft.Map.Data.MyDB类不存在</exception>
+             <example>
+             <para>下面的代码演示了如何在web.config文件中配置HttpModule</para>
+             <code>
+            &lt;?xml version="1.0"?&gt;
+            &lt;configuration&gt;
+            	 &lt;system.web&gt;
+                &lt;httpModules&gt;
+                  &lt;add name="MapExtends" type="Wonder4.Map.Extensions.InitializerModule,Wonder4.Map.Extensions" /&gt;
+                &lt;/httpModules&gt;
+              &lt;/system.web&gt;
+              &lt;system.webServer&gt;
+                &lt;modules&gt;
+                  &lt;remove name="ScriptModule" /&gt;
+            	  &lt;add name="MapExtends" preCondition="managedHandler" type="Wonder4.Map.Extensions.InitializerModule,Wonder4.Map.Extensions" /&gt;
+                &lt;/modules&gt;
+              &lt;/system.webServer&gt;
+            &lt;/configuration&gt;
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.InitializerModule.#cctor">
+            <summary>
+            初始化连接字符串,预编译实体
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.InitializerModule.Init(System.Web.HttpApplication)">
+            <summary>
+            此方法为Asp.net运行时调用.不支持在代码中直接调用.
+            </summary>
+            <param name="app">HttpApplication实例</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.InitializerModule.Dispose">
+            <summary>
+            此方法为Asp.net运行时调用.不支持在代码中直接调用.
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Json.JsonHelper">
+            <summary>
+            JSON序列化帮助类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Json.JsonHelper.JsonSerialize(System.Object)">
+            <summary>
+            将对象序列化为JSON字符串
+            </summary>
+            <param name="o">对象</param>
+            <returns>JSON字符串</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Json.JsonHelper.JsonDeserialize``1(System.String)">
+            <summary>
+            将json字符串反序列化为对象
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="s">json字符串</param>
+            <returns>对象实例</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Reflection.IGetValue">
+            <summary>
+            定义读属性操作的接口
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Reflection.ISetValue">
+            <summary>
+            定义写属性操作的接口
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Reflection.GetterSetterFactory">
+            <summary>
+            创建IGetValue或者ISetValue实例的工厂方法类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Reflection.GetterSetterFactory.CreatePropertyGetterWrapper(System.Reflection.PropertyInfo)">
+            <summary>
+            根据指定的PropertyInfo对象，返回对应的IGetValue实例
+            </summary>
+            <param name="propertyInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Reflection.GetterSetterFactory.CreatePropertySetterWrapper(System.Reflection.PropertyInfo)">
+            <summary>
+            根据指定的PropertyInfo对象，返回对应的ISetValue实例
+            </summary>
+            <param name="propertyInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Reflection.PropertyExtensions">
+            <summary>
+            一些扩展方法，用于访问属性，它们都可以优化反射性能。
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Reflection.PropertyExtensions.FastGetValue(System.Reflection.PropertyInfo,System.Object)">
+            <summary>
+            快速调用PropertyInfo的GetValue方法
+            </summary>
+            <param name="propertyInfo"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Reflection.PropertyExtensions.FastSetValue(System.Reflection.PropertyInfo,System.Object,System.Object)">
+            <summary>
+            快速调用PropertyInfo的SetValue方法
+            </summary>
+            <param name="propertyInfo"></param>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.JsonExtensions">
+            <summary>
+            包含Json操作的扩展方法类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.JsonExtensions.ToJson(System.Object)">
+            <summary>
+            将指定对象转换为Json字符串
+            </summary>
+            <example>
+            <para>下面的代码演示了ToJson的用法</para>
+            <code>
+            <![CDATA[
+            	HttpResult hr = new HttpResult();
+            	hr.Result = true;
+            	hr.KeyValue = Guid.NewGuid().ToString();
+            	string json = hr.ToJson();
+            	
+            	//json的内容为:
+            	//{Result : "true", KeyValue : "生成的GUID值", ErrorMessage : "null"}
+            ]]>
+            </code>
+            </example>
+            <param name="o">对象</param>
+            <returns>Json字符串</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.JsonExtensions.FromJson``1(System.String)">
+            <summary>
+            将指Json字符串反序列化为对象实例
+            </summary>
+            <example>
+            <para>下面的代码演示了FromJson的用法</para>
+            <code>
+            <![CDATA[
+            	string json = @"{"Result":true,"KeyValue":"FD4D2306-1023-49FD-8D06-A873541AE222","ErrorMessage":null}";
+            	HttpResult hr = json.FromJson<HttpResult>();
+            	
+            	//hr的Result属性将被赋值为true
+            	//hr的KeyValue属性将被赋值为FD4D2306-1023-49FD-8D06-A873541AE222
+            ]]>
+            </code>
+            </example>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="s">Json字符串</param>
+            <returns>对象实例</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.BindOption">
+             <summary>
+             表示为BusinessType类型绑定数据的数据源
+             </summary>
+             <remarks>
+             <list type="bullet">
+             <item><description>绑定时,需要指定数据源的不同行为时,请使用本类</description></item>
+             <item><description>本类源自参照ERP258代码时,代码中有循环域哈希值自动生成,列名映射,标识列等用法</description></item>
+             </list>
+             </remarks>
+             <example>
+             <para>下面的代码演示了BindOption类的用法</para>
+             <code>
+             <![CDATA[
+             //从文件加载BusinessType类实例
+             
+            	BusinessTypeManager btm = BusinessTypeManager.FromFile("Demo1_HTML.xml");
+            	
+             //查询SQL
+            	string sql = @"SELECT
+            		'A'  AS [A],
+            		'B'  AS [B],
+            		GETDATE() AS [C],
+            		CAST(55.5 AS MONEY) AS [D]";
+            		
+            	//映射关系 { ColumnName, DomainName }
+            	Dictionary<string, string> dict = new Dictionary<string, string>() { 
+            		{ "A", "拆分来源" },
+            		{ "B", "拆分类型" },
+            		{ "C", "科目编码" },
+            		{ "D", "拆分金额" }
+            	};
+            	
+             //哈希字段,使用映射后的名称
+             //拼接这两个字段的行值,并写入[合约规划使用明细列表比较域]中
+            	List<string> hash = new List<string>() { "拆分来源", "拆分类型" };
+            
+             //数据表
+            	DataTable dt = CPQuery.From(sql).FillDataTable();
+            
+             //声明绑定对象
+            	BindOption bo = new BindOption();
+            	bo.ColumnMap = dict;
+            	bo.HashColumns = hash;
+            	bo.IdentityDomain = "序号";  //循环域中的序号域将被填充为1,2,3,4....序列
+            	
+             //绑定循环域
+            	btm.BindGroup("合约规划使用明细", dt, bo);
+             ]]>
+             </code>
+             </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindOption.HashColumns">
+            <summary>
+            表示需要计算哈希值的字段
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>在BindGroup函数中可用,Bind函数中本参数将被忽略。</description></item>
+            <item><description>哈希值计算方法为:(哈希字段1!哈希字段2!哈希字段3...)(更多行...).ToString().GetHashCode().ToString()。</description></item>
+            <item><description>哈希值将自动写入Name为[GroupName]+[比较域]或[GroupName]+[列表比较域]的Domain中</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindOption.ColumnMap">
+            <summary>
+            表示字段名的映射关系
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>在BindGroup函数中可用,Bind函数中本参数将被忽略。</description></item>
+            <item><description>映射格式为:KeyValuePair&lt;ColumnName,DomainName&gt;格式</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindOption.IdentityDomain">
+            <summary>
+            表示循环域标识列的DomainName
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>在BindGroup函数中可用,Bind函数中本参数将被忽略。</description></item>
+            <item><description>循环域中将为标识为1,2,3....的列</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.BindEventArgs">
+            <summary>
+            绑定事件参数
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>BusinessTypeManager类的Bind(),BindGroup()方法将会触发绑定事件</description></item>
+            <item><description>绑定事件将在每一行数据被绑定时触发,而不是在绑定绑定某一个循环域时触发</description></item>
+            <item><description>不会为没有数据绑定的Domain触发DomainBinding事件,</description></item>
+            <item><description>当数据库的值为null时,将不会触发DomainBinding事件,因为null值不绑定</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了BindEventArgs类的用法</para>
+            <code>
+            <![CDATA[
+            
+            //订阅事件
+            public void Main(){
+            	BusinessTypeManager btm = BusinessTypeManager.FromFile("Demo1_HTML.xml");
+            	btm.OnDomainBinding += new EventHandler<BindEventArgs>(btm_DomainBinding);
+            	btm.Bind();
+            }
+            
+            //响应函数
+            private void btm_DomainBinding(object sender, BindEventArgs e)
+            {
+            	if( e.Domain.Name == "经办人" ) {
+            		e.Domain.Value = e.Value.ToString() + "-" + DateTime.Now.ToString();
+            	}
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindEventArgs.DataType">
+            <summary>
+            绑定的数据类型
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindEventArgs.Group">
+            <summary>
+            绑定的循环域组
+            <list type="bullet">
+            <item><description>在调用Bind()函数时,由于没有涉及到循环域,所以本属性将为null</description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindEventArgs.Domain">
+            <summary>
+            绑定的业务域
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BindEventArgs.Value">
+            <summary>
+            被绑定的值
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.BusinessType">
+            <summary>
+            表示工作流xml的封装
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>大多数场景下无需单独使用BusinessType类,请直接使用BusinessTypeManager包装来管理</description></item>
+            <item><description>BusinessType类与工作流xml通过序列化的方式进行转换</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BusinessType.BusinessAssembly">
+            <summary>
+            表示业务对象对应的程序集，由开发人员填写，其他人员不能删除、修改
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BusinessType.BusinessClassName">
+            <summary>
+            表示业务对象对应的类，由开发人员填写，其他人员不能删除、修改
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BusinessType.BusinessGUID">
+            <summary>
+            表示业务GUID,默认为空，不需要填写
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BusinessType.SQL">
+            <summary>
+            表示BusinessType节点的SQL语句值.
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.BusinessType.Item">
+            <summary>
+            表示Domain节点与Group节点的集合
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.BaseItem">
+            <summary>
+            由于Group与Domain处在同一个层级中,于是需要一个统一的基类
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BaseItem.Name">
+            <summary>
+            表示域名称，可以为中英文字符
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.Domain">
+            <summary>
+            表示Domain节点
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.IsUpdate">
+            <summary>
+            表示是否在归档时更新，只能是1或0
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.IsNull">
+            <summary>
+            表示是否允许为空，只能是1或0
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.Type">
+            <summary>
+            表示数据类型，需要按数据库中对应字段数据类型名称填写（不包含长度），如varchar、nvarchar、int、money
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.Length">
+            <summary>
+            标识数据的最大长度
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.DisplayType">
+            <summary>
+            表示显示类型
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>文本：text</description></item>
+            <item><description>下拉选择：select</description></item>
+            <item><description>文本区：textarea</description></item>
+            <item><description>辅助录入(只读)：assistant_r</description></item>
+            <item><description>辅助录入(可写)：assistant_w</description></item>
+            <item><description>隐藏：hidden</description></item>
+            <item><description>计算：calc</description></item>
+            <item><description>数字：number</description></item>
+            <item><description>合计：sum</description></item>
+            <item><description>datetime</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.DropdownOptions">
+            <summary>
+            表示配置选项；暂时无用
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.DefaultValue">
+            <summary>
+            表示默认值
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.IsApprovemodify">
+            <summary>
+            表示是否允许在审批时修改，只能是1或0
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.IsUser">
+            <summary>
+            表示是否用户在文档定义界面添加的域
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.BusinessDynamic">
+            <summary>
+            表示Domain节点中的businessdynamic属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.Dynamic">
+            <summary>
+            表示Domain节点中的dynamic属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Domain.Value">
+            <summary>
+            表示Domain节点中的数据值
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.Group">
+            <summary>
+            表示xml文件中的Group节点
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.Group.SQL">
+            <summary>
+            表示Group节点下的SQL语句值
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.Group.GroupItems">
+            <summary>
+            表示Group节点下每行Item节点集合
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.GroupItem">
+            <summary>
+            表示Group节点中的一行
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.GroupItem.RowIndex">
+            <summary>
+            标识循环域的行号
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.GroupItem.Domains">
+            <summary>
+            当前Item行下的Domain集合
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.SQL">
+            <summary>
+            表示SQL节点.在商业地产及后续平台中可用
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.SQL.Value">
+            <summary>
+            表示SQL节点内的值
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.BusinessTypeManager">
+            <summary>
+            BusinessType包装类
+            </summary>
+            <example>
+            <para>下面的代码演示了BusinessTypeManager的用法</para>
+            <code>
+            <![CDATA[
+            
+            	BusinessTypeManager btm = BusinessTypeManager.FromFile("/Map/Cbgl/Workflow/Demo1_HTML.xml");
+            	
+            	//真实的业务场景中,需要将BusinessGUID属性赋值为业务GUID
+            	btm.BusinessType.BusinessGUID = Guid.NewGuid();
+            	
+            	btm.SetFormat(DomainType.DateTime, "yyyy-MM-dd");
+            	btm.SetFormat(DomainType.Int, "#,##0.00");
+            	btm.SetFormat(DomainType.Money, "#,##0.00");
+            	DataTable dt;
+            	string sql = @"SELECT
+            				'Code1'  AS [合同编码],
+            				'合同名称'  AS [合同名称],
+            				GETDATE() AS [签订日期],
+            				'abc' AS [经办人],
+            				555 AS [IntVal]";
+            
+            	dt = CPQuery.From(sql).FillDataTable();
+            	btm.Bind(dt);
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.FromFile(System.String)">
+            <summary>
+            从xml文件反序列化为对象
+            </summary>
+            <example>
+            <para>下面的代码演示了FromFile的用法</para>
+            <code>
+            <![CDATA[
+            
+            //使用站点相对路径
+            usinessTypeManager btm = BusinessTypeManager.FromFile("/Map/Cbgl/Workflow/Demo1_HTML.xml");
+            	
+            ]]>
+            </code>
+            </example>
+            <param name="file">xml文件</param>
+            <returns>BusinessTypeManager类实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.FromXml(System.String)">
+            <summary>
+            从xml字符串反序列化为对象
+            </summary>
+            <example>
+            <para>下面的代码演示了FromXML的用法</para>
+            <code>
+            <![CDATA[
+            
+            string xml = "<BusinessType BusinessGUID="" ...>...";
+            usinessTypeManager btm = BusinessTypeManager.FromXml(xml);
+            	
+            ]]>
+            </code>
+            </example>
+            <param name="xml">xml字符串</param>
+            <returns>BusinessTypeManager类实例</returns>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.BusinessType">
+             <summary>
+             BusinessType对象
+             </summary>
+             <example>
+             <para>下面的代码演示了BusinessType的用法</para>
+             <code>
+             <![CDATA[
+             
+            	BusinessTypeManager btm = BusinessTypeManager.FromFile("/Map/Cbgl/Workflow/Demo1_HTML.xml");
+            	btm.BusinessType.BusinessGUID = guid.ToString();
+            
+             //工作流业务域XML将被序列化到xml变量中
+            	string xml = btm.BusinessType.ToXml();
+             ]]>
+             </code>
+             </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.SetFormat(Wonder4.Map.Extensions.Workflow.DomainType,System.String)">
+            <summary>
+            设置格式化
+            </summary>
+            <example>
+            <para>下面的代码演示了SetFormat的用法</para>
+            <code>
+            <![CDATA[
+            
+            	BusinessTypeManager btm = BusinessTypeManager.FromXml("...");
+            	btm.SetFormat(DomainType.DateTime, "yyyy-MM-dd");
+            	btm.SetFormat(DomainType.Int, "#,##0.00");
+            	btm.SetFormat(DomainType.Money, "#,##0.00");
+            	
+            ]]>
+            </code>
+            </example>
+            <param name="type">Domain类型</param>
+            <param name="format">格式化字符串</param>
+        </member>
+        <member name="E:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.OnDomainBinding">
+            <summary>
+            业务域绑定事件
+            </summary>
+            <example>
+            <para>下面的代码演示了OnDomainBinding的用法</para>
+            <code>
+            <![CDATA[
+            
+            //订阅事件
+            public void Main(){
+            	BusinessTypeManager btm = BusinessTypeManager.FromFile("Demo1_HTML.xml");
+            	btm.OnDomainBinding += new EventHandler<BindEventArgs>(btm_DomainBinding);
+            	btm.Bind();
+            }
+            
+            //响应函数
+            private void btm_DomainBinding(object sender, BindEventArgs e)
+            {
+            	if( e.Domain.Name == "经办人" ) {
+            		e.Domain.Value = e.Value.ToString() + "-" + DateTime.Now.ToString();
+            	}
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.BindDomain(System.String,System.String)">
+            <summary>
+            绑定一个业务域
+            </summary>
+            <param name="domainName">业务域名称</param>
+            <param name="value">业务域值</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.Bind(System.Data.DataTable)">
+            <summary>
+            绑定业务域
+            </summary>
+            <param name="table">数据表</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.Bind(System.Data.DataTable,Wonder4.Map.Extensions.Workflow.BindOption)">
+            <summary>
+            绑定业务域
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>绑定选项信息,参见:<see cref="T:Wonder4.Map.Extensions.Workflow.BindOption"/>类</description></item>
+            </list>
+            </remarks>
+            <param name="table">数据表</param>
+            <param name="option">绑定选项</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.BindGroup(System.String,System.Data.DataTable)">
+            <summary>
+            绑定一个循环域
+            </summary>
+            <param name="groupName">循环域名称</param>
+            <param name="table">数据表</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.BindGroup(System.String,System.Data.DataTable,Wonder4.Map.Extensions.Workflow.BindOption)">
+            <summary>
+            绑定一个循环域
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>绑定选项信息,参见:<see cref="T:Wonder4.Map.Extensions.Workflow.BindOption"/>类</description></item>
+            </list>
+            </remarks>
+            <param name="groupName">循环域名称</param>
+            <param name="table">数据表</param>
+            <param name="option">绑定选项</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.GetDomain(System.String)">
+            <summary>
+            获取业务域
+            </summary>
+            <param name="domainName">业务域名称</param>
+            <returns>业务域对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Workflow.BusinessTypeManager.GetGroup(System.String)">
+            <summary>
+            获取循环域
+            </summary>
+            <param name="groupName">循环域名称</param>
+            <returns>循环域对象</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Workflow.DomainType">
+            <summary>
+            表示业务域Domain的type属性值,与数据库的类型对应
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.DateTime">
+            <summary>
+            表示数据库中DateTime类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Decimal">
+            <summary>
+            表示数据库中Decimal类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Numeric">
+            <summary>
+            表示数据库中Numeric类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Money">
+            <summary>
+            表示数据库中Money类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Real">
+            <summary>
+            表示数据库中Real类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Float">
+            <summary>
+            表示数据库中Float类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.Int">
+            <summary>
+            表示数据库中Int类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.SmallInt">
+            <summary>
+            表示数据库中SmallInt类型
+            </summary>
+        </member>
+        <member name="F:Wonder4.Map.Extensions.Workflow.DomainType.BigInt">
+            <summary>
+            表示数据库中BigInt类型
+            </summary>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Xml.AppFormOption">
+            <summary>
+            表示AppFrom的DefaultXml属性中的一条记录
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.FieldName">
+            <summary>
+            表示DefaultXml中的xml节点名称
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.DefaultValue">
+            <summary>
+            表示DefaultXml中的defaultvalue属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.CreateAPI">
+            <summary>
+            表示DefaultXml中的createapi属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.UpdateAPI">
+            <summary>
+            表示DefaultXml中的updateapi属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.Required">
+            <summary>
+            表示DefaultXml中的req属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.EditValue">
+            <summary>
+            表示DefaultXml中的editvalue属性
+            </summary>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOption.Item(System.String)">
+            <summary>
+            表示未定义为属性成员的其他DefaultXml属性
+            </summary>
+            <param name="key">属性名称</param>
+            <returns>属性值</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Xml.AppFormOptionCollection">
+            <summary>
+            表示AppForm DefaultXml属性的封装
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.AppFormOptionCollection.Create(Wonder4.Map.Extensions.DAL.CPQuery)">
+            <summary>
+            创建一个AppForm DefaultXml 集合
+            </summary>
+            <param name="query">CPQuery查询</param>
+            <returns>DefaultXml集合</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.AppFormOptionCollection.ToXml">
+            <summary>
+            转换为DefaultXml格式
+            </summary>
+            <returns>转换后的xml字符串</returns>
+        </member>
+        <member name="P:Wonder4.Map.Extensions.Xml.AppFormOptionCollection.Item(System.String)">
+            <summary>
+            根据FieldName返回集合中对应的AppFromParameter对象
+            </summary>
+            <param name="key">FiledName属性</param>
+            <returns>获取到的AppFromParameter对象</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Xml.XmlDataEntity">
+            <summary>
+            AppForm生成的单表xml及多表xml保存到数据库的包装
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlDataEntity.ConvertXmlToSingle``1(System.String)">
+            <summary>
+            将Map平台AppForm生成的xml字符串转换为实体对象
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>xml结构为2层,第1层为数据库表名,第2层为字段名</description></item>
+            <item><description>xml结构第1层节点必须包含keyname,keyvalue属性,keyvalue属性可以为空</description></item>
+            <item><description>如果类,属性存在Alias别名标记,则按照别名赋值,否则按照类名,属性名赋值</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了从ConvertXmlToSingle()方法的用法</para>
+            <code>
+            <![CDATA[
+            using System;
+            using System.Collections.Generic;
+            using System.Linq;
+            using System.Text;
+            
+            //引入命名空间
+            using Wonder4.Map.Extensions;
+            using Wonder4.Map.Extensions.Xml;
+            using Wonder4.Map.Extensions.DAL;
+            namespace Demo
+            {
+                public class DemoBusiness
+                {
+            		public void Demo(){
+            			string xml = @"<cb_Contract keyname="ContractGUID" keyvalue="">
+            							  <ContractName>测试合同一</ContractName>
+            							  <ContractCode>HT-001</ContractCode>
+            							   ...其他值
+            						   </cb_Contract>";
+            			CbContract contract = XmlDataEntity.ConvertXmlToSingle<CbContract>(xml);
+            			
+            			//主键为空,表示是新增
+            			if (contract.ContractGUID == Guid.Empty){
+            				contract.ContractGUID = Guid.NewGuid();
+            				//插入到数据库
+            				contract.Insert();
+            			}
+            			else{
+            				//更新到数据库
+            				contract.Update();
+            			}
+            		}
+                }
+            }
+            ]]>
+            </code>
+            </example>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="xml">xml字符串</param>
+            <returns>实体对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlDataEntity.ConvertXmlToList``1(System.String)">
+            <summary>
+            将Map平台AppForm格式xml字符串转换为实体对象集合
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>xml结构为3层,第1层被忽略,第2层为数据库表名,第3层为字段名</description></item>
+            <item><description>xml结构第2层节点必须包含keyname,keyvalue属性,keyvalue属性可以为空</description></item>
+            <item><description>如果类,属性存在Alias别名标记,则按照别名赋值,否则按照类名,属性名赋值</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了从ConvertXmlToList()方法的用法</para>
+            <code>
+            <![CDATA[
+            using System;
+            using System.Collections.Generic;
+            using System.Linq;
+            using System.Text;
+            
+            //引入命名空间
+            using Wonder4.Map.Extensions;
+            using Wonder4.Map.Extensions.Xml;
+            using Wonder4.Map.Extensions.DAL;
+            namespace Demo
+            {
+                public class DemoBusiness
+                {
+            		public void Demo(){
+            			string xml = @"<UserData>
+            						     <cb_Contract keyname="ContractGUID" keyvalue="">
+            							   <ContractName>测试合同一</ContractName>
+            							   <ContractCode>HT-001</ContractCode>
+            							   ...其他值
+            						     </cb_Contract>
+            						     <cb_Contract keyname="ContractGUID" keyvalue="">
+            							   <ContractName>测试合同二</ContractName>
+            							   <ContractCode>HT-002</ContractCode>
+            							   ...其他值
+            						     </cb_Contract>
+            						   </UserData>";
+            						   
+            			List<CbContract> contracts = XmlDataEntity.ConvertXmlToList<CbContract>(xml);
+            			
+            			foreach(CbContract contract in contracts){
+            				//主键为空,表示是新增
+            				if (contract.ContractGUID == Guid.Empty){
+            					contract.ContractGUID = Guid.NewGuid();
+            					//插入到数据库
+            					contract.Insert();
+            				}
+            				else{
+            					//更新到数据库
+            					contract.Update();
+            				}
+            			}
+            		}
+                }
+            }
+            ]]>
+            </code>
+            </example>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="xml">xml字符串</param>
+            <returns>实体对象集合</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.Xml.XmlHelper">
+            <summary>
+            用于XML序列化/反序列化的工具类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlHelper.XmlSerialize(System.Object,System.Text.Encoding)">
+            <summary>
+            将一个对象序列化为XML字符串
+            </summary>
+            <param name="o">要序列化的对象</param>
+            <param name="encoding">编码方式</param>
+            <returns>序列化产生的XML字符串</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlHelper.XmlSerializeToFile(System.Object,System.String,System.Text.Encoding)">
+            <summary>
+            将一个对象按XML序列化的方式写入到一个文件
+            </summary>
+            <param name="o">要序列化的对象</param>
+            <param name="path">保存文件路径</param>
+            <param name="encoding">编码方式</param>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlHelper.XmlDeserialize``1(System.String,System.Text.Encoding)">
+            <summary>
+            从XML字符串中反序列化对象
+            </summary>
+            <typeparam name="T">结果对象类型</typeparam>
+            <param name="s">包含对象的XML字符串</param>
+            <param name="encoding">编码方式</param>
+            <returns>反序列化得到的对象</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.Xml.XmlHelper.XmlDeserializeFromFile``1(System.String,System.Text.Encoding)">
+            <summary>
+            读入一个文件，并按XML的方式反序列化对象。
+            </summary>
+            <typeparam name="T">结果对象类型</typeparam>
+            <param name="path">文件路径</param>
+            <param name="encoding">编码方式</param>
+            <returns>反序列化得到的对象</returns>
+        </member>
+        <member name="T:Wonder4.Map.Extensions.XmlExtensions">
+            <summary>
+            包含XML操作的扩展方法类
+            </summary>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.XmlExtensions.ToXml(System.Object)">
+            <summary>
+            将指定对象序列化为XML字符串
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item><description>序列化的xml时,使用Encoding.Default编码,在CodePage=936情况下,生成的xml头为GB2312</description></item>
+            <item><description>扩展方法实际为<see cref="T:Wonder4.Map.Extensions.Xml.XmlHelper"/>类的XmlSerialize方法包装</description></item>
+            </list>
+            </remarks>
+            <example>
+            <para>下面的代码演示了ToXml的用法</para>
+            <code>
+            <![CDATA[
+            	HttpResult hr = new HttpResult();
+            	hr.Result = true;
+            	hr.KeyValue = Guid.NewGuid().ToString();
+            	string xml = hr.ToXml();
+            	
+            	//xml的内容为:
+            	//<?xml version="1.0" encoding="GB2312" ?>
+            	//<xml result="true" keyvalue="生成的GUID值"/>
+            ]]>
+            </code>
+            </example>
+            <param name="o">对象</param>
+            <returns>Xml字符串</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.XmlExtensions.ToXml(System.Object,System.Text.Encoding)">
+            <summary>
+            将指定对象序列化为XML字符串
+            </summary>
+            <example>
+            <para>下面的代码演示了ToXml的用法</para>
+            <code>
+            <![CDATA[
+            	HttpResult hr = new HttpResult();
+            	hr.Result = true;
+            	hr.KeyValue = Guid.NewGuid().ToString();
+            	string xml = hr.ToXml(Encoding.UTF8);
+            	
+            	//xml的内容为:
+            	//<?xml version="1.0" encoding="utf-8" ?>
+            	//<xml result="true" keyvalue="生成的GUID值"/>
+            ]]>
+            </code>
+            </example>
+            <param name="o">对象</param>
+            <param name="encoding">编码</param>
+            <returns>Xml字符串</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.XmlExtensions.FromXml``1(System.String)">
+            <summary>
+            将指定Xml字符串反序列化为对象实例
+            </summary>
+            <example>
+            <para>下面的代码演示了FromXml的用法</para>
+            <code>
+            <![CDATA[
+            	string xml = @"<xml result='true' keyvalue='57013559-FDF3-4032-A784-2A4F45856B08'></xml>";
+            	HttpResult hr = xml.FromXml<HttpResult>();
+            	
+            	//hr的Result属性将被赋值为true
+            	//hr的KeyValue属性将被赋值为FD4D2306-1023-49FD-8D06-A873541AE222
+            ]]>
+            </code>
+            </example>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="s">Xml字符串</param>
+            <returns>对象实例</returns>
+        </member>
+        <member name="M:Wonder4.Map.Extensions.XmlExtensions.FromXml``1(System.String,System.Text.Encoding)">
+            <summary>
+            将指定Xml字符串反序列化为对象实例
+            </summary>
+            <example>
+            <para>下面的代码演示了FromXml的用法</para>
+            <code>
+            <![CDATA[
+            	string xml = @"<xml result='true' keyvalue='57013559-FDF3-4032-A784-2A4F45856B08'></xml>";
+            	HttpResult hr = xml.FromXml<HttpResult>(Encoding.Default);
+            	
+            	//hr的Result属性将被赋值为true
+            	//hr的KeyValue属性将被赋值为FD4D2306-1023-49FD-8D06-A873541AE222
+            ]]>
+            </code>
+            </example>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="s">Xml字符串</param>
+            <param name="encoding">xml编码方式</param>
+            <returns>对象实例</returns>
+        </member>
+    </members>
+</doc>
