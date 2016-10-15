@@ -1,11 +1,11 @@
 ﻿using System;                                        
 
-namespace N_Bers.Business.Model
+namespace N_Bers.Entity.SysEntity
 {
     /// <summary>
     /// MyMemu:实体类(属性说明自动提取数据库字段的描述信息)
     /// </summary>
-    [Serializable]
+    //[Serializable]
     public partial class MyMenu: NbersBaseModel
     {
         public MyMenu()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using N_Bers.Business;
+using N_Bers.Business.BLL;
+
 namespace WebPages
 {
     /// <summary>
@@ -37,9 +39,9 @@ namespace WebPages
 
         private string GetMune()
         {
-            TestDemo td = new TestDemo();
+            MenuBLL mb = new MenuBLL();
             
-            return td.getName();
+            return mb.Query("id=49");
 
         }
 
