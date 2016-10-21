@@ -2,3 +2,4 @@ D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\N_Bers.Entity.dll
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\N_Bers.Entity.pdb
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\N_Bers.Entity\obj\Debug\N_Bers.Entity.dll
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\N_Bers.Entity\obj\Debug\N_Bers.Entity.pdb
+D:\99CodeBitch\01DotNet\ManagementSys4AJ\N_Bers.Entity\obj\Debug\N_Bers.Entity.csprojResolveAssemblyReference.cache

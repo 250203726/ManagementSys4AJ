@@ -29,7 +29,7 @@ namespace N_Bers.Business.BLL
         /// 查询
         /// </summary>
         /// <returns></returns>
-        string Query(string strfilter);
+        List<object> Query(string strfilter);
 
 
     }

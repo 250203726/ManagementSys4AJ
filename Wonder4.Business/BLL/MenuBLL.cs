@@ -1,7 +1,8 @@
-﻿using N_Bers.Entity.SysEntity;
-using System;
+﻿using System;
 using Wonder4.Map.Extensions;
 using Wonder4.Map.Extensions.DAL;
+using N_Bers.Business.Model;
+using System.Collections.Generic;
 
 namespace N_Bers.Business.BLL
 {
@@ -19,19 +20,23 @@ namespace N_Bers.Business.BLL
             return 0;
         }
 
-        public string Query(string strfilter)
+        public List<MyMenu> Query(string strfilter)
         {
             string queryStr = "select * from nbers_node where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1",strfilter);
             }
-            var menuList = CPQuery.From(queryStr).ToList<MyMenu>();
+            return CPQuery.From(queryStr).ToList<MyMenu>();
 
-            return JsonExtensions.ToJson(menuList);
         }
 
         public int Update(object t)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<object> IBusinessBLL.Query(string strfilter)
         {
             throw new NotImplementedException();
         }

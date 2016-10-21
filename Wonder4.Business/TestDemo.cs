@@ -1,4 +1,5 @@
-﻿using N_Bers.Entity.SysEntity;
+﻿
+using N_Bers.Business.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

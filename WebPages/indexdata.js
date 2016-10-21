@@ -1,7 +1,7 @@
 ﻿var indexdata = 
 [
-    { text: '基础',isexpand:false, children: [ 
-		{url:"demos/base/resizable.htm",text:"改变大小" },
+    { text: '用户管理',isexpand:true, children: [ 
+		{url:"/UserManage/index.aspx",text:"用户管理" },
 		{url:"demos/base/drag.htm",text:"拖动"},
 		{url:"demos/base/drag2.htm",text:"拖动2"},
 		{url:"demos/base/dragresizable.htm",text:"拖动并改变大小"},

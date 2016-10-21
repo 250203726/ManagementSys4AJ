@@ -26,7 +26,12 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-
+        <style type="text/css">
+            .log_alert {
+            margin-bottom:0;
+            min-height:30px;
+            }
+        </style>
     </head>
     <body>                
         <!-- Top content -->
@@ -45,7 +50,7 @@
                         	<div class="form-top">
                         		<div class="form-top-left">
                         			<h3>登陆</h3>
-                                    <p>提示信息...</p>
+                                    <p class="log_alert"> </p>
                         		</div>
                         		<div class="form-top-right" style="line-height:74px;">
                         			<i class="fa fa-key"></i>
@@ -61,7 +66,7 @@
                                         <label class="sr-only" for="form-password">密码</label>
                                         <input type="password" name="form-password" placeholder="密码..." class="form-password form-control" id="form-password">
                                     </div>
-                                    <button type="submit" class="btn">登 陆</button>
+                                    <button id="btn_login" type="button" class="btn">登 陆</button>
                                 </form>
 		                    </div>
                         </div>
@@ -74,7 +79,8 @@
         <script src="assets/js/jquery-1.11.1.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery.backstretch.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <script src="assets/js/Util.js"></script>
+        <script charset="utf-8" src="assets/js/login.js"></script>
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

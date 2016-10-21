@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using N_Bers.Business;
 using N_Bers.Business.BLL;
+using N_Bers.Business.Model;
+using Wonder4.Map.Extensions;
 
 namespace WebPages
 {
@@ -28,8 +30,11 @@ namespace WebPages
             string retJsonStr = string.Empty;
             switch (oprType.ToUpper())
             {
-                case "GETMUNE":
-                    retJsonStr = GetMune();
+                case "GETMENU":
+                    retJsonStr = GetMenu();
+                    break;
+                case "GETUSERS":
+                    retJsonStr = GetUsers();
                     break;
                 default:                   
                     break;
@@ -37,11 +42,29 @@ namespace WebPages
             context.Response.Write(retJsonStr);
         }
 
-        private string GetMune()
+        private string GetUsers()
+        {
+            List<MyUser> list = (new MyUserBLL()).Query("");
+            var grid = new
+            {
+                Rows = list,
+                Total = list.Count
+            };
+
+            return JsonExtensions.ToJson(grid);
+        }
+
+        private string GetMenu()
         {
             MenuBLL mb = new MenuBLL();
-            
-            return mb.Query("id=49");
+
+            List<MyMenu> list = mb.Query("");
+            var grid = new {
+                Rows = list,
+                Total = list.Count
+            };
+
+            return JsonExtensions.ToJson(grid);
 
         }
 

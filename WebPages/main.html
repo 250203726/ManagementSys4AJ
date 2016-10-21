@@ -148,27 +148,10 @@
                     url: url,
                     callback: function ()
                     {
-                        addShowCodeBtn(tabid);
                         addFrameSkinLink(tabid);
                     }
                 });
-            }
-            function addShowCodeBtn(tabid)
-            {
-                var viewSourceBtn = $('<a class="viewsourcelink" href="javascript:void(0)">查看源码</a>');
-                var jiframe = $("#" + tabid);
-                viewSourceBtn.insertBefore(jiframe);
-                viewSourceBtn.click(function ()
-                {
-                    showCodeView(jiframe.attr("src"));
-                }).hover(function ()
-                {
-                    viewSourceBtn.addClass("viewsourcelink-over");
-                }, function ()
-                {
-                    viewSourceBtn.removeClass("viewsourcelink-over");
-                });
-            }
+            }       
             function showCodeView(src)
             {
                 $.ligerDialog.open({
@@ -407,7 +390,7 @@
 <body style="padding:0px;background:#EAEEF5;">
     <div id="pageloading"></div>
     <div id="topmenu" class="l-topmenu">
-        <div class="l-topmenu-logo">jQuery ligerUI Demos导航主页</div>
+        <div class="l-topmenu-logo">安质部管理系统</div>
         <div class="l-topmenu-welcome">
             <label> 切换皮肤：</label>
             <select id="skinSelect">
