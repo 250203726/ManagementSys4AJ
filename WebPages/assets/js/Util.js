@@ -89,6 +89,7 @@ function escape(str)
 更新时间：2016年10月21日11:19:46
 */
 function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
+    if (sfile == "") { sfile = "myHandler.ashx"; }
     var returnValue;
     var rdNum = Math.random();
     var url;

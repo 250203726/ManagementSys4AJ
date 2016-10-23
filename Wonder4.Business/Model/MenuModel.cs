@@ -1,37 +1,32 @@
-﻿using System;                                        
+﻿using System;
+using Wonder4.Map.Extensions.DAL;
 
-namespace N_Bers.Entity.SysEntity
+namespace N_Bers.Business.Model
 {
     /// <summary>
     /// MyMemu:实体类(属性说明自动提取数据库字段的描述信息)
     /// </summary>
-    //[Serializable]
-    public partial class MyMenu: NbersBaseModel
+    [Serializable]
+    [DataEntity(Alias = "nbers_node")]
+    public partial class MenuModel: NbersBaseModel
     {
-        public MyMenu()
+        public MenuModel()
         { }
         #region Model
-        private int _id;
         private string _name;
         private string _title = "NULL";
         private int? _status = 0;
         private string _remark = "NULL";
         private string _sort = "NULL";
-        private string _pid;
+        private int _pid;
         private int _level;
         private int _type = 0;
         private int? _group_id = 0;
+
         /// <summary>
         /// 
         /// </summary>
-        public int id
-        {
-            set { _id = value; }
-            get { return _id; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
+        [DataColumn(Alias = "name",IsNullable =false)]
         public string name
         {
             set { _name = value; }
@@ -40,6 +35,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "title")]
         public string title
         {
             set { _title = value; }
@@ -48,6 +44,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "status")]
         public int? status
         {
             set { _status = value; }
@@ -56,6 +53,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "remark")]
         public string remark
         {
             set { _remark = value; }
@@ -64,6 +62,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "sort")]
         public string sort
         {
             set { _sort = value; }
@@ -72,7 +71,8 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
-        public string pid
+        [DataColumn(Alias = "pid")]
+        public int pid
         {
             set { _pid = value; }
             get { return _pid; }
@@ -80,6 +80,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "level")]
         public int level
         {
             set { _level = value; }
@@ -88,6 +89,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "type")]
         public int type
         {
             set { _type = value; }
@@ -96,6 +98,7 @@ namespace N_Bers.Entity.SysEntity
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "group_id")]
         public int? group_id
         {
             set { _group_id = value; }

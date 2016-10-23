@@ -9,7 +9,14 @@ namespace N_Bers.Business.Model
     /// <summary>
     /// 支持orm实体类的insert update delete
     /// </summary>
-    public class NbersBaseModel
+    public class NbersBaseModel:BaseEntity
     {
+        private int _id;
+        [DataColumn(Alias = "id", PrimaryKey = true, Identity = true)]
+        public int id
+        {
+            set { _id = value; }
+            get { return _id; }
+        }
     }
 }

@@ -1,16 +1,18 @@
 ﻿using System;
+using Wonder4.Map.Extensions.DAL;
+
 namespace N_Bers.Business.Model
 {
     /// <summary>
     /// MyUser:实体类(属性说明自动提取数据库字段的描述信息)
     /// </summary>
     [Serializable]
-    public partial class MyUser
+    [DataEntity(Alias = "nbers_user")]
+    public partial class UserModel:NbersBaseModel
     {
-        public MyUser()
+        public UserModel()
         { }
         #region Model
-        private int _id;
         private string _account;
         private string _nickname;
         private string _password;
@@ -27,17 +29,11 @@ namespace N_Bers.Business.Model
         private int? _type_id = 0;
         private string _info;
         private string _phone;
+
         /// <summary>
         /// 
         /// </summary>
-        public int id
-        {
-            set { _id = value; }
-            get { return _id; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
+        [DataColumn(Alias = "account",IsNullable =false)]
         public string account
         {
             set { _account = value; }
@@ -46,6 +42,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "nickname",IsNullable =false)]
         public string nickname
         {
             set { _nickname = value; }
@@ -54,6 +51,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "password",IsNullable =false)]
         public string password
         {
             set { _password = value; }
@@ -62,6 +60,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "bind_account",IsNullable =false)]
         public string bind_account
         {
             set { _bind_account = value; }
@@ -70,6 +69,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "last_login_time")]
         public int? last_login_time
         {
             set { _last_login_time = value; }
@@ -78,6 +78,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "last_login_ip")]
         public string last_login_ip
         {
             set { _last_login_ip = value; }
@@ -86,6 +87,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "login_count")]
         public int? login_count
         {
             set { _login_count = value; }
@@ -94,6 +96,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "verify")]
         public string verify
         {
             set { _verify = value; }
@@ -102,6 +105,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "email",IsNullable =false)]
         public string email
         {
             set { _email = value; }
@@ -110,6 +114,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "remark")]
         public string remark
         {
             set { _remark = value; }
@@ -118,6 +123,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "create_time",DefaultValue = "GETDATE()")]
         public int create_time
         {
             set { _create_time = value; }
@@ -126,6 +132,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "update_time", DefaultValue = "GETDATE()")]
         public int update_time
         {
             set { _update_time = value; }
@@ -134,6 +141,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "status")]
         public int? status
         {
             set { _status = value; }
@@ -142,6 +150,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "type_id")]
         public int? type_id
         {
             set { _type_id = value; }
@@ -150,6 +159,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "info")]
         public string info
         {
             set { _info = value; }
@@ -158,6 +168,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
+        [DataColumn(Alias = "phone")]
         public string phone
         {
             set { _phone = value; }

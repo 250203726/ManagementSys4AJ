@@ -1,7 +1,7 @@
 ﻿var indexdata = 
 [
     { text: '用户管理',isexpand:true, children: [ 
-		{url:"/UserManage/index.aspx",text:"用户管理" },
+		{url:"/UserManage/UserIndex.aspx",text:"用户管理" },
 		{url:"demos/base/drag.htm",text:"拖动"},
 		{url:"demos/base/drag2.htm",text:"拖动2"},
 		{url:"demos/base/dragresizable.htm",text:"拖动并改变大小"},
@@ -9,8 +9,8 @@
 		{url:"demos/base/tip2.htm",text:"气泡2"}
 	]
     },
-    { text: '过滤器', isexpand: false, children: [
-		{ url: "demos/filter/filter.htm", text: "自定义查询" },
+    { text: '部门管理', isexpand: false, children: [
+		{ url: "/UserManage/UnitIndex.aspx", text: "部门管理" },
 		{ url: "demos/filter/filterwin.htm", text: "在窗口显示" },
 		{ url: "demos/filter/grid.htm", text: "配合表格" } 
 	]

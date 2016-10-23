@@ -57,7 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Wonder4.Map.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\01 C#\Wonder4.Tools\Wonder4.Tools\bin\Wonder4.Map.Extensions.dll</HintPath>
+      <HintPath>..\Wonder4.Business\bin\Wonder4.Map.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -535,7 +535,8 @@
     <Content Include="index.html" />
     <Content Include="indexdata.js" />
     <Content Include="main.html" />
-    <Content Include="UserManage\index.aspx" />
+    <Content Include="UserManage\UnitIndex.aspx" />
+    <Content Include="UserManage\Userindex.aspx" />
     <Content Include="Web.config" />
     <Content Include="welcome.htm" />
   </ItemGroup>
@@ -551,12 +552,16 @@
       <DependentUpon>myHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserManage\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="UserManage\UnitIndex.aspx.cs">
+      <DependentUpon>UnitIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserManage\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="UserManage\Userindex.aspx.cs">
+      <DependentUpon>Userindex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManage\Userindex.aspx.designer.cs">
+      <DependentUpon>Userindex.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -7,36 +7,32 @@ using Wonder4.Map.Extensions.DAL;
 
 namespace N_Bers.Business.BLL
 {
-    public class MyUserBLL : IBusinessBLL
+    public class MyUserBLL : IBusinessBLL<UserModel>
     {
-        public int Delete()
-        {
-            throw new NotImplementedException();
-        }
 
-        public int Insert(object t)
+        public int Insert(UserModel t)
         {
             throw new NotImplementedException();
         }
 
        
 
-        public int Update(object t)
+        public int Update(UserModel t)
         {
             throw new NotImplementedException();
         }
 
-        public List<MyUser> Query(string strfilter)
+        public List<UserModel> Query(string strfilter)
         {
             string queryStr = "select * from nbers_user where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);
             }
-            return CPQuery.From(queryStr).ToList<MyUser>();
+            return CPQuery.From(queryStr).ToList<UserModel>();
         }
 
-        List<object> IBusinessBLL.Query(string strfilter)
+        public int Delete(UserModel t)
         {
             throw new NotImplementedException();
         }

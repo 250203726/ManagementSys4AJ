@@ -6,39 +6,33 @@ using System.Collections.Generic;
 
 namespace N_Bers.Business.BLL
 {
-    public class MenuBLL : IBusinessBLL
+    public class MenuBLL : IBusinessBLL<MenuModel>
     {
-        public int Delete()
+        public int Delete(MenuModel t)
         {
             throw new NotImplementedException();
         }
 
-        public int Insert(object t)
+        public int Insert(MenuModel t)
         {
-            //MyMenu mm = (MyMenu)t;
-            //return mm.Insert();
-            return 0;
+            return t.Insert();
         }
 
-        public List<MyMenu> Query(string strfilter)
+        public List<MenuModel> Query(string strfilter)
         {
             string queryStr = "select * from nbers_node where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1",strfilter);
             }
-            return CPQuery.From(queryStr).ToList<MyMenu>();
+            return CPQuery.From(queryStr).ToList<MenuModel>();
 
         }
 
-        public int Update(object t)
+        public int Update(MenuModel t)
         {
             throw new NotImplementedException();
         }
 
-        List<object> IBusinessBLL.Query(string strfilter)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

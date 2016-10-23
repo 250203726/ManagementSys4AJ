@@ -14,7 +14,7 @@ namespace N_Bers.Business
     {
         public string getName()
         {            
-            var x = CPQuery.From("select * from think_node").ToList<MyMenu>();
+            var x = CPQuery.From("select * from think_node").ToList<MenuModel>();
             return JsonExtensions.ToJson(x);
         }
     }

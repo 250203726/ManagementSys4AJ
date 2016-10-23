@@ -8,28 +8,28 @@ namespace N_Bers.Business.BLL
     /// <summary>
     /// 业务层接口，所有业务接口都要实现
     /// </summary>
-    interface IBusinessBLL
+    interface IBusinessBLL<T>
     {
         /// <summary>
         /// 新增
         /// </summary>
         /// <param name="t"></param>
-        int Insert(object t);
+        int Insert(T t);
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="t"></param>
-        int Update(object t);
+        int Update(T t);
         /// <summary>
         /// 删除
         /// </summary>
         /// <returns></returns>
-        int Delete();
+        int Delete(T t);
         /// <summary>
         /// 查询
         /// </summary>
         /// <returns></returns>
-        List<object> Query(string strfilter);
+        List<T> Query(string strfilter);
 
 
     }
