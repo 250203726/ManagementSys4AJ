@@ -21,8 +21,21 @@ namespace N_Bers.Business.Model
         private int _pid;
         private int _level;
         private int _type = 0;
+        /// <summary>
+        /// 0表示为菜单权限，1表示为按钮权限
+        /// </summary>
         private int? _group_id = 0;
+        private string _url = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataColumn(Alias="url")]
+        public string url 
+        {
+            set { _url = value; }
+            get { return _url; }
+        }
         /// <summary>
         /// 
         /// </summary>
