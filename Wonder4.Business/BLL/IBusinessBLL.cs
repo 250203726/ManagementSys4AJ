@@ -31,6 +31,7 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         List<T> Query(string strfilter);
 
-
+        //根据id获取model
+        T GetModel(int id);
     }
 }

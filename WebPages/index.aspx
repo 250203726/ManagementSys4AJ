@@ -63,11 +63,11 @@
                                 <form runat="server" role="form" action="index.aspx" method="post" class="login-form">
                                     <div class="form-group">
                                         <label class="sr-only" for="form-username">用户名</label>
-                                        <input type="text" name="form-username" placeholder="用户名..." class="form-username form-control" id="form-username">
+                                        <input type="text" name="form-username" placeholder="用户名..." class="form-username form-control" id="form-username" value="admin">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="form-password">密码</label>
-                                        <input type="password" name="form-password" placeholder="密码..." class="form-password form-control" id="form-password">
+                                        <input type="password" name="form-password" placeholder="密码..." class="form-password form-control" id="form-password" value="21232f297a57a5a743894a0e4a801fc3">
                                     </div>
                                     <button id="btn_login" type="submit" class="btn" runat="server">登 陆</button>
                                 </form>

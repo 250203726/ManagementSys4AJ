@@ -7,6 +7,7 @@ using N_Bers.Business.BLL;
 using N_Bers.Business.Model;
 using Wonder4.Map.Extensions;
 using System.IO;
+using System.Web.UI.WebControls;
 
 namespace WebPages
 {
@@ -28,6 +29,7 @@ namespace WebPages
 
             context.Response.ContentType = "text/plain";
             string oprType = context.Request.QueryString["oprtype"];
+            string onlyPara = context.Request.QueryString["strkey"];
             string retJsonStr = string.Empty;
             switch (oprType.ToUpper())
             {
@@ -38,7 +40,7 @@ namespace WebPages
                     retJsonStr = GetUsers();
                     break;
                 case "GETUNITS":
-                    retJsonStr = GetUnits();
+                    retJsonStr = GetUnits(onlyPara);
                     break;
                 case "ADDUNIT":
                     retJsonStr = AddUnit(getPostStr(context));
@@ -46,10 +48,22 @@ namespace WebPages
                 case "TEST":
                     retJsonStr = test();
                     break;
+                case "GETFIRSTLEVELUNIT":
+                    retJsonStr = GetFirstLevelUnit();
+                    break;
+                case "GETUNITMODEL":
+                    retJsonStr = GetUnitModel(onlyPara);
+                    break;
                 default:                   
                     break;
             }
             context.Response.Write(retJsonStr);
+        }
+
+        private string GetFirstLevelUnit()
+        {
+           List<BusinessUnitModel> buList= (new MyUnitBLL()).Query(" ISNULL(pid,0)=0");
+            return JsonExtensions.ToJson(buList);
         }
 
         private string test()
@@ -92,6 +106,9 @@ namespace WebPages
                 });
             }
 
+            //UserModel um = (UserModel)Session["user_info"];
+            
+
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
             bu.createby = 1;
             bu.createon = DateTime.Now;
@@ -105,9 +122,9 @@ namespace WebPages
             });
         }
 
-        private string GetUnits()
+        private string GetUnits(string filter)
         {
-            List<BusinessUnitModel> list = (new MyUnitBLL()).Query("");
+            List<BusinessUnitModel> list = (new MyUnitBLL()).Query(filter);
             var grid = new
             {
                 Rows = list,
@@ -137,6 +154,10 @@ namespace WebPages
             return JsonExtensions.ToJson(grid);
         }
 
-        
+        private string GetUnitModel(string id)
+        {
+            int iid = Convert.ToInt32(id);
+            return JsonExtensions.ToJson((new MyUnitBLL()).GetModel(iid));
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace N_Bers.Business.BLL
             throw new NotImplementedException();
         }
 
+        public MenuModel GetModel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Insert(MenuModel t)
         {
             return t.Insert();

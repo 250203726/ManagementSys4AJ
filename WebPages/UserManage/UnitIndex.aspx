@@ -16,17 +16,8 @@
         var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
         function itemclick(item)
         {
-            $.ligerDialog.tip({
-                title: '提示信息', content: '      新增成功！', callback: function () {
-                    //setTimeout(function ()
-                    //{
-                    //    $(t).remove(); //5秒延迟后关闭tip
-                    //}, 3000);
-                    //console.log(t);
-                    alert();
-                }
-            });
-        }
+            myTips("测试tips");
+        } 
 
         $(function ()
         {            
@@ -46,9 +37,9 @@
                 rownumbers: true,
                 toolbar: {
                     items: [
-                    { text: '增加', click: AddUser, icon: 'add' },
+                    { text: '增加', click: AddUnit, icon: 'add' },
                     { line: true },
-                    { text: '修改', click: itemclick, icon: 'modify' },
+                    { text: '修改', click: EditItem, icon: 'modify' },
                     { line: true },
                     { text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' }
                     ]
@@ -56,49 +47,35 @@
                 //autoFilter: true
             });
              
-            //window['f'] = $("#form2").ligerForm({
-            //    inputWidth: 170, labelWidth: 80, space: 40,
-            //    fields: [
-            //        { name: "id", type: "hidden" },
-            //        { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort:true },
-            //        { display: "上级部门 ", name: "id", type: "text", newline: false, comboboxName: "unit_name", options: { valueFieldID: "id" } },
-            //        {
-            //            display: "部门类型 ", name: "unit_type", newline: true, type: "select", comboboxName: "text", options: { valueFieldID: "id" },
-            //            data: [
-            //                {
-            //                    id: 0,
-            //                    text:"分类一"
-            //                }, {
-            //                    id: 1,
-            //                    text: "分类er"
-            //                }
-            //            ]
-            //        },
-            //        //{ display: "折扣", name: "QuantityPerUnit", newline: false, type: "number" },
-            //        //{ display: "单价", name: "UnitPrice", newline: true, type: "number" },
-            //        //{ display: "库存量", name: "UnitsInStock", newline: true, type: "digits", group: "库存", groupicon: groupicon },
-            //        //{ display: "订购量", name: "UnitsOnOrder", newline: false, type: "digits" },
-            //        { display: "备注", name: "Remark", newline: true, type: "text" }
-            //    ]
-            //});
-
-            //$("#test1").ligerComboBox({
-            //    width : 200,
-            //    data: [
-            //        { text: '北京', id: 'bj' },
-            //        { text: '天津', id: 'tj' },
-            //        { text: '厦门', id: '44' },
-            //        { text: '广州', id: 'gz' },
-            //        { text: '深圳', id: 'sz' },
-            //        { text: '上海', id: 'ss' }
-            //    ], valueFieldID: 'test3',
-            //    autocomplete: true,
-            //    rowClsRender : function(row){
-            //        if (row.id == "bj")
-            //        {
-            //            return "beijing";
-            //        }
-            //    },
+            window['f'] = $("#myform").ligerForm({
+                inputWidth: 170, labelWidth: 90, space: 60,
+                fields: [
+                    { name: "id", type: "hidden", options: {value:"0000"} },
+                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort:true },
+                    {
+                        display: "上级部门 ", name: "pid", type: "select", newline: false, comboboxName: "pid_name", options: {
+                            valueFieldID: "id",
+                            textField: "unit_name",
+                            url: "../myHandler.ashx?oprtype=GetFirstLevelUnit"
+                        }
+                    },
+                    {
+                        display: "部门类型 ", name: "unit_type", newline: true, type: "select", comboboxName: "unit_type", options: {
+                            valueFieldID: "id",
+                            data: [
+                                {
+                                    id: 0,
+                                    text: "分类一"
+                                }, {
+                                    id: 1,
+                                    text: "分类er"
+                                }
+                            ]
+                        },                        
+                    },
+                    { display: "备注", name: "remark", newline: true, type: "text" }
+                ]
+            });
 
             $("#pageloading").hide();
         });
@@ -108,12 +85,13 @@
             g.deleteSelectedRow();
 
         }
-
-        function AddUser()
+        //新增部门
+        function AddUnit()
         {
-            //myfunc();
+            //初始化form
+            InitForm();
             $.ligerDialog.open({
-                target: $("#target1"), width: 640, title: "新增部门",
+                target: $("#mytarget"), width: 680, title: "新增部门",
                 buttons: [
                     { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -122,10 +100,33 @@
 
         }
 
+        //编辑部门
+        function EditItem()
+        {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
+            }
+
+            var returnStr = GetDataByAjax("../myHandler.ashx", "GetUnitModel", rows[0].id);
+            //初始化form
+            InitForm(returnStr);
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 680, title: "编辑部门",
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+            
+        }
+
         function f_save() {
             var returnStr = GetDataByAjax("../myHandler.ashx", "AddUnit", "", "", JSON.stringify(f.getData()));
 
             if (returnStr.result) {
+                //TODO:tips延迟自动关闭
                 $.ligerDialog.tip({ title: '提示信息', content: '      新增成功！' ,callback:function(t)
                 {
                     //setTimeout(function ()
@@ -136,19 +137,18 @@
                 }});
                 window['g'].reload();
             }
-            //console.log(returnStr);
+        }
 
-        }
-        function f_close() {
-            //$.ligerDialog.close()
-        };
-        function getCountryData()
+        function InitForm(data)
         {
-            return [
-          { unit_type: '宣传部', unit_typeid: '0' },
-          { unit_type: '组织部', unit_typeid: '1' }
-            ];
+            if (typeof (data) == "undefined") {
+                data = [{
+                    remark: "",
+                }];
+            }           
+            f.setData( data);
         }
+
   </script> 
 </head>
 <body style="overflow-x:hidden; padding:2px;">
@@ -158,36 +158,8 @@
     <div id="maingrid"></div>
   <div style="display:none;">
 </div>
-     <div id="target1" style="width:99%; margin:3px; display:none;">
-         <%--<div id="form2"></div>--%>
-         <div id="form_unit" class="liger-form">
-          <div class="fields">
-              <input data-type="text" data-label="部门名称" data-name="unit_name" />
-              <div data-type="select" data-label="上级部门" data-name="pid_name" data-newline="false" >
-                    <input class="editor"  data-data="getCountryData()" data-onSelected="f_onCountryChanged" data-textField="unit_type" data-valueField="unit_typeid"/> 
-              </div>
-              <div data-type="select" data-label="部门类型" data-name="unit_type">
-                  <input class="editor"  data-data="getCountryData()" data-onSelected="f_onCountryChanged" data-textField="unit_type" data-valueField="unit_typeid"/> 
-              </div>
-             <input data-type="text" data-label="备注" data-name="remark" data-newline="false"/>
-         </div>  
-     </div>
+     <div id="mytarget" style="width:99%; margin:3px; display:none;">
+         <div id="myform"></div>
      </div> 
 </body>
 </html>
-
-<%--<div class="l-form-container"><ul><li class="l-fieldcontainer l-fieldcontainer-first" fieldindex="0"><ul><li style="width:90px;text-align:left;">标题：</li>
-    <li id="form1|0" style="width:180px;text-align:left;">
-        <div class="l-text" style="width: 178px;"><input type="text" id="1477202896346_1_Title" name="Title" class="l-text-field" ligeruiid="Title" style="width: 174px;"><div class="l-text-l"></div><div class="l-text-r"></div></div></li><li style="width:40px;"></li></ul></li></ul>
-    <ul><li class="l-fieldcontainer l-fieldcontainer-first" fieldindex="1">
-            <ul><li style="width:90px;text-align:left;">入职日期：</li><li id="form1|1" style="width:180px;text-align:left;">
-                <div class="l-text-wrapper" style="width: 178px;"><div class="l-text l-text-date" style="width: 178px;">
-                    <input type="text" id="1477202896350_1_addDate" name="addDate" class="l-text-field" ligeruiid="addDate" style="width: 158px;">
-                    <div class="l-text-l"></div><div class="l-text-r"></div><div class="l-trigger"><div class="l-trigger-icon"></div></div>
-                    <div class="l-trigger l-trigger-cancel" style="display: none;"><div class="l-trigger-icon"></div></div></div></div></li>
-                <li style="width:40px;"></li></ul></li></ul><ul><li class="l-fieldcontainer l-fieldcontainer-first" fieldindex="2">
-                    <ul><li style="width:90px;text-align:left;">国家：</li><li id="form1|2" style="width:180px;text-align:left;">
-                        <div class="l-text-wrapper"><div class="l-text l-text-combobox l-text-focus" style="width: 178px;">
-                            <input type="text" id="1477202896377_1_Country" name="CountryName" readonly="" data-comboboxid="Country" class="l-text-field" ligeruiid="Country" style="width: 158px;"><div class="l-text-l"></div><div class="l-text-r"></div><div class="l-trigger"><div class="l-trigger-icon"></div></div><div class="l-trigger l-trigger-cancel" style="display: none;"><div class="l-trigger-icon"></div></div></div><input type="hidden" name="Country" id="Country" data-ligerid="Country" value="ZG"></div></li><li style="width:40px;"></li></ul></li></ul><div class="l-clear"></div></div></div> 
- <div class="liger-button l-button" data-click="f_setData" data-width="150" ligeruiid="Button1000" style="width: 150px;">设置数据<div class="l-button-l"></div><div class="l-button-r"></div><span>设置数据</span></div>
-   <div class="liger-button l-button" data-click="f_getData" data-width="150" ligeruiid="Button1001" style="width: 150px;">获取数据<div class="l-button-l"></div><div class="l-button-r"></div><span>获取数据</span></div>--%>

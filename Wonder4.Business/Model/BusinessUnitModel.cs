@@ -42,7 +42,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 
         /// </summary>
-        [DataColumn(Alias = "pid",IsNullable =false,DefaultValue ="0")]
+        [DataColumn(Alias = "pid",IsNullable =false)]
         public int? pid
         {
             set { _pid = value; }

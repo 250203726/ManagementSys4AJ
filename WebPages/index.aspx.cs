@@ -1,10 +1,15 @@
-﻿using System;
+﻿using N_Bers.Business.BLL;
+using N_Bers.Business.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Wonder4.Map.Extensions.DAL;
+
 namespace WebPages
 {
     public partial class index : System.Web.UI.Page
@@ -23,6 +28,18 @@ namespace WebPages
                 else//数据库校验
                 {
 
+                    string sqlQuery = "SELECT account,nickname,password,email FROM nbers_user WHERE ( account=@uid OR nickname=@uid) AND password=@pwd";
+
+                    UserModel ui = CPQuery.From(sqlQuery, new { uid = user_name, pwd = user_pwd }).ToSingle<UserModel>();
+
+                    if (ui!=null)
+                    {
+                        Session["user_info"] = ui;
+                    }
+                    else
+                    {
+
+                    }
                 }              
 
 

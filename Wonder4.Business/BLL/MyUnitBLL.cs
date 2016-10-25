@@ -17,6 +17,12 @@ namespace N_Bers.Business.BLL
             //return model.Delete();
         }
 
+        public BusinessUnitModel GetModel(int id)
+        {
+            List<BusinessUnitModel> buList = Query("id =" + id);
+            return buList.Count > 0 ? buList[0] : null;
+        }
+
         public int Insert(BusinessUnitModel model)
         {
             return 0;

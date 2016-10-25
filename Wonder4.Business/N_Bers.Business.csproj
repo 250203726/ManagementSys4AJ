@@ -50,6 +50,7 @@
     <Compile Include="Model\MyHttpResult.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
+    <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Model\NbersBaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

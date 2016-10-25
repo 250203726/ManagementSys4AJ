@@ -143,3 +143,17 @@ function GetDataByAjaxSync(sfile, oprtype, strkey, strkey2, args,callback) {
         }
     });
 }
+
+
+//重写tip插件,方便后期优化
+function myTips(scontent, stitle, fncallback) {
+    stitle = stitle == "" ? "提示信息" : stitle;
+    scontent = scontent == "" ? "提示内容" : scontent;
+    $.ligerDialog.tip({
+        title: stitle, content: scontent, callback: function (data) {
+            if (typeof (callback)=="function") {
+                fncallback(data);
+            }
+        }
+    });
+}
