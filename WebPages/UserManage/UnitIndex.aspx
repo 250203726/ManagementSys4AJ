@@ -56,31 +56,31 @@
                 //autoFilter: true
             });
              
-            //window['f'] = $("#form2").ligerForm({
-            //    inputWidth: 170, labelWidth: 80, space: 40,
-            //    fields: [
-            //        { name: "id", type: "hidden" },
-            //        { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort:true },
-            //        { display: "上级部门 ", name: "id", type: "text", newline: false, comboboxName: "unit_name", options: { valueFieldID: "id" } },
-            //        {
-            //            display: "部门类型 ", name: "unit_type", newline: true, type: "select", comboboxName: "text", options: { valueFieldID: "id" },
-            //            data: [
-            //                {
-            //                    id: 0,
-            //                    text:"分类一"
-            //                }, {
-            //                    id: 1,
-            //                    text: "分类er"
-            //                }
-            //            ]
-            //        },
-            //        //{ display: "折扣", name: "QuantityPerUnit", newline: false, type: "number" },
-            //        //{ display: "单价", name: "UnitPrice", newline: true, type: "number" },
-            //        //{ display: "库存量", name: "UnitsInStock", newline: true, type: "digits", group: "库存", groupicon: groupicon },
-            //        //{ display: "订购量", name: "UnitsOnOrder", newline: false, type: "digits" },
-            //        { display: "备注", name: "Remark", newline: true, type: "text" }
-            //    ]
-            //});
+            window['f'] = $("#form2").ligerForm({
+                inputWidth: 170, labelWidth: 80, space: 40,
+                fields: [
+                    { name: "id", type: "hidden" },
+                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort:true },
+                    { display: "上级部门 ", name: "id", type: "text", newline: false, comboboxName: "unit_name", options: { valueFieldID: "id" } },
+                    {
+                        display: "部门类型 ", name: "unit_type", newline: true, type: "select", comboboxName: "text", options: { valueFieldID: "id" },
+                        data: [
+                            {
+                                id: 0,
+                                text:"分类一"
+                            }, {
+                                id: 1,
+                                text: "分类er"
+                            }
+                        ]
+                    },
+                    //{ display: "折扣", name: "QuantityPerUnit", newline: false, type: "number" },
+                    //{ display: "单价", name: "UnitPrice", newline: true, type: "number" },
+                    //{ display: "库存量", name: "UnitsInStock", newline: true, type: "digits", group: "库存", groupicon: groupicon },
+                    //{ display: "订购量", name: "UnitsOnOrder", newline: false, type: "digits" },
+                    { display: "备注", name: "Remark", newline: true, type: "text" }
+                ]
+            });
 
             //$("#test1").ligerComboBox({
             //    width : 200,
@@ -159,8 +159,8 @@
   <div style="display:none;">
 </div>
      <div id="target1" style="width:99%; margin:3px; display:none;">
-         <%--<div id="form2"></div>--%>
-         <div id="form_unit" class="liger-form">
+         <div id="form2"></div>
+         <%--<div id="form_unit" class="liger-form">
           <div class="fields">
               <input data-type="text" data-label="部门名称" data-name="unit_name" />
               <div data-type="select" data-label="上级部门" data-name="pid_name" data-newline="false" >
@@ -170,7 +170,7 @@
                   <input class="editor"  data-data="getCountryData()" data-onSelected="f_onCountryChanged" data-textField="unit_type" data-valueField="unit_typeid"/> 
               </div>
              <input data-type="text" data-label="备注" data-name="remark" data-newline="false"/>
-         </div>  
+         </div>  --%>
      </div>
      </div> 
 </body>

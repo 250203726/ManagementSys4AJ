@@ -1,6 +1,10 @@
 ﻿var indexdata = 
 [
-    { text: '用户管理',isexpand:true, children: [ 
+    {
+        text: '用户管理',
+        isexpand: true,
+        children:
+        [
 		{url:"/UserManage/UserIndex.aspx",text:"用户管理" },
 		{url:"demos/base/drag.htm",text:"拖动"},
 		{url:"demos/base/drag2.htm",text:"拖动2"},

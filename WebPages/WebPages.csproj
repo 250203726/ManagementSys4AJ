@@ -39,10 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="N_Bers.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\N_Bers.Business.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -528,9 +524,9 @@
     <Content Include="assets\lib\ligerUI\skins\Tab\images\win\dialog-winbtns.gif" />
     <Content Include="assets\lib\ligerUI\skins\Tab\images\win\dialogbtn.gif" />
     <Content Include="assets\lib\ligerUI\skins\Tab\images\win\dialogicon.gif" />
+    <Content Include="bin\WebPages.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
-    <Content Include="bin\Wonder4.Map.Extensions.xml" />
     <Content Include="index.aspx" />
     <Content Include="index.html" />
     <Content Include="indexdata.js" />
@@ -604,6 +600,7 @@
     <Content Include="assets\font-awesome\scss\_variables.scss" />
     <Content Include="README.md" />
     <Content Include="myHandler.ashx" />
+    <Content Include="bin\WebPages.dll.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -613,6 +610,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="SystemManage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonder4.Business\N_Bers.Business.csproj">
+      <Project>{2f486268-99d1-4eb4-8617-f608bdbb28a9}</Project>
+      <Name>N_Bers.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

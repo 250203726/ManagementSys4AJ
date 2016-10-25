@@ -47,13 +47,22 @@
     <Compile Include="BLL\MenuBLL.cs" />
     <Compile Include="BLL\MyUnitBLL.cs" />
     <Compile Include="BLL\MyUserBLL.cs" />
+    <Compile Include="BLL\RoleBLL.cs" />
+    <Compile Include="Model\menu.cs" />
+    <Compile Include="Model\menuChildren.cs" />
     <Compile Include="Model\MyHttpResult.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
+    <Compile Include="Model\RoleModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Model\NbersBaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDemo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Wonder4.Map.Extensions.dll" />
+    <Content Include="bin\Wonder4.Map.Extensions.pdb" />
+    <Content Include="bin\Wonder4.Map.Extensions.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
