@@ -43,13 +43,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\AccessBLL.cs" />
     <Compile Include="BLL\IBusinessBLL.cs" />
     <Compile Include="BLL\MenuBLL.cs" />
     <Compile Include="BLL\MyUnitBLL.cs" />
     <Compile Include="BLL\MyUserBLL.cs" />
+    <Compile Include="BLL\RoleBLL.cs" />
+    <Compile Include="BLL\RoleUserBLL.cs" />
+    <Compile Include="BLL\ValidAccessBLL.cs" />
+    <Compile Include="Model\AccessModel.cs" />
+    <Compile Include="Model\BaseConst.cs" />
     <Compile Include="Model\MyHttpResult.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
+    <Compile Include="Model\RoleModel.cs" />
+    <Compile Include="Model\RoleUserModel.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Model\NbersBaseModel.cs" />

@@ -13,110 +13,97 @@ namespace N_Bers.Business.Model
         public MenuModel()
         { }
         #region Model
-        private string _name;
-        private string _title = "NULL";
-        private int? _status = 0;
-        private string _remark = "NULL";
-        private string _sort = "NULL";
-        private int _pid;
-        private int _level;
-        private int _type = 0;
-        /// <summary>
-        /// 0表示为菜单权限，1表示为按钮权限
-        /// </summary>
-        private int? _group_id = 0;
-        private string _url = null;
+	
+		private long _version;
+        private int _parentid;
+		private string _name;
+		private string _url;
+		private string _params;
+        private string _icon;
+        private int _levels;
+        private int _sortcode;
+        private string _moduleid;
+        private string _enable;
+        private int _group_id;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias="url")]
-        public string url 
+		[DataColumn(Alias = "version",IsNullable=true)]
+        public long version
         {
-            set { _url = value; }
-            get { return _url; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "name",IsNullable =false)]
+            get{ return _version; }
+            set{ _version = value; }
+        }        
+	
+		[DataColumn(Alias = "parentId",IsNullable=false)]
+        public int parentId
+        {
+            get{ return _parentid; }
+            set{ _parentid = value; }
+        }        
+		
+
+		[DataColumn(Alias = "name",IsNullable=false)]
         public string name
         {
-            set { _name = value; }
-            get { return _name; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "title")]
-        public string title
+            get{ return _name; }
+            set{ _name = value; }
+        }        
+	
+
+		[DataColumn(Alias = "url",IsNullable=true)]
+        public string url
         {
-            set { _title = value; }
-            get { return _title; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "status")]
-        public int? status
+            get{ return _url; }
+            set{ _url = value; }
+        }        	
+
+		[DataColumn(Alias = "params",IsNullable=true)]
+        public string paramss
         {
-            set { _status = value; }
-            get { return _status; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "remark")]
-        public string remark
+            get{ return _params; }
+            set{ _params = value; }
+        }        
+	
+		[DataColumn(Alias = "icon",IsNullable=true)]
+        public string icon
         {
-            set { _remark = value; }
-            get { return _remark; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "sort")]
-        public string sort
+            get{ return _icon; }
+            set{ _icon = value; }
+        }        
+	
+		[DataColumn(Alias = "levels",DefaultValue="0",IsNullable=true)]
+        public int levels
         {
-            set { _sort = value; }
-            get { return _sort; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "pid")]
-        public int pid
+            get{ return _levels; }
+            set{ _levels = value; }
+        }        
+	
+		[DataColumn(Alias = "sortCode",IsNullable=true)]
+        public int sortCode
         {
-            set { _pid = value; }
-            get { return _pid; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "level")]
-        public int level
+            get{ return _sortcode; }
+            set{ _sortcode = value; }
+        }        
+
+		[DataColumn(Alias = "moduleId",IsNullable=true)]
+        public string moduleId
         {
-            set { _level = value; }
-            get { return _level; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "type")]
-        public int type
+            get{ return _moduleid; }
+            set{ _moduleid = value; }
+        }        
+	
+		[DataColumn(Alias = "enable",IsNullable=true)]
+        public string enable
         {
-            set { _type = value; }
-            get { return _type; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataColumn(Alias = "group_id")]
-        public int? group_id
+            get{ return _enable; }
+            set{ _enable = value; }
+        }        
+	
+		[DataColumn(Alias = "group_id",DefaultValue="0",IsNullable=true)]
+        public int group_id
         {
-            set { _group_id = value; }
-            get { return _group_id; }
-        }
+            get{ return _group_id; }
+            set{ _group_id = value; }
+        }        
         #endregion Model
 
     }

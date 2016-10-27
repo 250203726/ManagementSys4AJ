@@ -27,6 +27,10 @@ namespace N_Bers.Business.BLL
             return t.Delete();
         }
 
+        public AccessModel GetModel(int id)
+        {
+            return GetModel(id);
+        }
         public List<AccessModel> Query(string strfilter)
         {
             throw new NotImplementedException();

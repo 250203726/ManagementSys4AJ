@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using N_Bers.Business;
-using N_Bers.Business.BLL;
-using N_Bers.Business.Model;
 using Wonder4.Map.Extensions;
 using System.IO;
 using System.Web.UI.WebControls;
+using N_Bers.Business;
+using N_Bers.Business.BLL;
+using N_Bers.Business.Model;
 
 namespace WebPages
 {
@@ -53,6 +53,12 @@ namespace WebPages
                     break;
                 case "GETUNITMODEL":
                     retJsonStr = GetUnitModel(onlyPara);
+                    break;
+                case "GETPARENTMENUSBYJSON":
+                    retJsonStr = getParentMenusByJson();
+                    break;
+                case "GETSUBMENUSBYJSON":
+                    retJsonStr = getSubMenusByJson();
                     break;
                 default:                   
                     break;
@@ -159,5 +165,37 @@ namespace WebPages
             int iid = Convert.ToInt32(id);
             return JsonExtensions.ToJson((new MyUnitBLL()).GetModel(iid));
         }
+
+
+        /// <summary>
+        /// 获取用户一级菜单的json，给sidebarData
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private string getParentMenusByJson()
+        {
+            UserModel user = new UserModel();
+            user.id = 1;//后面替换成参数
+            return JsonExtensions.ToJson((new MenuBLL()).getParentMenus(user));
+        }
+
+        /// <summary>
+        /// 获取用户所有子菜单的json，给navigateData
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private string getSubMenusByJson()
+        {
+            UserModel user = new UserModel();
+            user.id = 1;
+            return JsonExtensions.ToJson((new MenuBLL()).getSubMenus(user));
+        }
+
+        //private string getButtonMenusByJson()
+        //{
+        //    UserModel user = new UserModel();
+        //    user.id=1;
+        //    return (new MenuBLL()).getButtonMenus(user, "5");
+        //}
     }
 }

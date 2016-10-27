@@ -7,11 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UserManage
 {
-    public partial class Unitindex : System.Web.UI.Page
+    public partial class Unitindex :BasePage
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

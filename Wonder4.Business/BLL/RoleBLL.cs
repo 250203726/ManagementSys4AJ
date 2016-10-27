@@ -26,6 +26,10 @@ namespace N_Bers.Business.BLL
             return t.Delete();
         }
 
+        public RoleModel GetModel(int id) {
+            return GetModel(id);
+        }
+
         public List<RoleModel> Query(string strfilter)
         {
             string queryStr = "select i* from nbers_role where 1=1";

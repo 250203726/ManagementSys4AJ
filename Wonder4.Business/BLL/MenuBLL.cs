@@ -31,7 +31,6 @@ namespace N_Bers.Business.BLL
                 queryStr = queryStr.Replace("1=1",strfilter);
             }
             return CPQuery.From(queryStr).ToList<MenuModel>();
-
         }
 
         public int Update(MenuModel t)
@@ -39,9 +38,65 @@ namespace N_Bers.Business.BLL
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 验证页面权限
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="menu"></param>
+        /// <returns></returns>
+        public bool CheckPageMenu(UserModel user, MenuModel menu)
+        {
+            List<MenuModel> list = Query("id in (select node_id from nbers_access where node_id="+menu.id+" and role_id in(select id from nbers_role where id in (select role_id from nbers_role_user where user_id="+user.id+")) )");
+            if (list.Count > 0)
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            } 
+        }
+        /// <summary>
+        /// 获取用户的一级菜单
+        /// </summary>
+        /// <returns></returns>
+        public List<MenuModel> getParentMenus(UserModel user)
+        {
+            return Query("parentId=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
+        }
+        /// <summary>
+        /// 获取用户的所有子菜单
+        /// </summary>
+        /// <returns></returns>
+        public List<MenuModel> getSubMenus(UserModel user)
+        {
+            return Query("parentId!=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
+        }
 
+        /// <summary>
+        /// 获取用户的某个页面的按钮权限json字符串
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="parentNodeId"></param>
+        /// <returns></returns>
+        public String getButtonMenus(UserModel user,MenuModel node)
+        {
+            String buttonMenusString="[{ line: true },";
+            List<MenuModel> list = Query("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
+            foreach (MenuModel menu in list)
+            {
+                if (menu.name.Equals("增加"))
+                    buttonMenusString += "{ text: '增加', click: AddUnit, icon: 'add' },{ line: true },";
+                else if (menu.name.Equals("修改"))
+                    buttonMenusString += "{ text: '修改', click: EditItem, icon: 'modify' },{ line: true },";
+                else if(menu.name.Equals("删除"))
+                    buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
+            }
+            buttonMenusString += "]";
+            return buttonMenusString;
+        }
 
-        #region 菜单加载
+        #region 菜单加载 作废
         /// <summary>
         /// 菜单根目录内部类
         /// </summary>
@@ -66,30 +121,31 @@ namespace N_Bers.Business.BLL
         /// <returns>二级菜单indexdata的json数据</returns>
         public string getMenu(UserModel user) 
         {
-            //查询到的userid拥有的一级目录列表MenuModel
-            List<MenuModel> rootList = Query(" pid=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='"+user.id+"') )");
-            //菜单实际需要转成json的列表
-            List<menu> menus = new List<menu>();
-            //用循环addmenu到list中
-            foreach (MenuModel m in rootList)
-            {
-                menu root = new menu();
-                root.text = m.title;
-                root.isexpand = false;
-                List<menuChildren> menuchildren=new List<menuChildren>();
-                //查询到userid拥有的二级目录列表MenuList
-                List<MenuModel> MenuModelChildren = Query(" pid=" + m.id + " and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + userid + "') )");
-                foreach (MenuModel MenuModelChild in MenuModelChildren)
-                {
-                    menuChildren menuchild=new menuChildren();
-                    menuchild.text=MenuModelChild.title;
-                    menuchild.url = MenuModelChild.url;
-                    menuchildren.Add(menuchild);
-                }
-                root.children = menuchildren;
-                menus.Add(root);
-            }
-            return JsonExtensions.ToJson(menus);
+            ////查询到的userid拥有的一级目录列表MenuModel
+            //List<MenuModel> rootList = Query(" pid=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='"+user.id+"') )");
+            ////菜单实际需要转成json的列表
+            //List<menu> menus = new List<menu>();
+            ////用循环addmenu到list中
+            //foreach (MenuModel m in rootList)
+            //{
+            //    menu root = new menu();
+            //    root.text = m.title;
+            //    root.isexpand = false;
+            //    List<menuChildren> menuchildren=new List<menuChildren>();
+            //    //查询到userid拥有的二级目录列表MenuList
+            //    List<MenuModel> MenuModelChildren = Query(" pid=" + m.id + " and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
+            //    foreach (MenuModel MenuModelChild in MenuModelChildren)
+            //    {
+            //        menuChildren menuchild=new menuChildren();
+            //        menuchild.text=MenuModelChild.title;
+            //        menuchild.url = MenuModelChild.url;
+            //        menuchildren.Add(menuchild);
+            //    }
+            //    root.children = menuchildren;
+            //    menus.Add(root);
+            //}
+            //return JsonExtensions.ToJson(menus);
+            return null;
         }
         #endregion
     }

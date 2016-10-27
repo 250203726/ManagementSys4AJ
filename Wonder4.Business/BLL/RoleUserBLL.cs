@@ -31,7 +31,10 @@ namespace N_Bers.Business.BLL
         {
             throw new NotImplementedException();
         }
-
+        public RoleUserModel GetModel(int id)
+        {
+            return GetModel(id);
+        }
         /// <summary>
         /// 给用户分配角色
         /// </summary>

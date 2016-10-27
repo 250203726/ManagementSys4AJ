@@ -35,14 +35,16 @@
                 url: "../myHandler.ashx?oprtype=getunits",
                 pageSize: 30,
                 rownumbers: true,
-                toolbar: {
-                    items: [
-                    { text: '增加', click: AddUnit, icon: 'add' },
-                    { line: true },
-                    { text: '修改', click: EditItem, icon: 'modify' },
-                    { line: true },
-                    { text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' }
-                    ]
+                toolbar:     {
+                    items: 
+                    <%= buttonJson %>
+               
+                //    { text: '增加', click: AddUnit, icon: 'add' },
+                //    { line: true },
+                //    { text: '修改', click: EditItem, icon: 'modify' },
+                //    { line: true },
+                //    { text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },
+                //    ]
                 },
                 //autoFilter: true
             });
