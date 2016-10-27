@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -51,6 +52,7 @@
     <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\RoleUserBLL.cs" />
     <Compile Include="BLL\ValidAccessBLL.cs" />
+    <Compile Include="Core\SystemContext.cs" />
     <Compile Include="Model\AccessModel.cs" />
     <Compile Include="Model\BaseConst.cs" />
     <Compile Include="Model\MyHttpResult.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDemo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

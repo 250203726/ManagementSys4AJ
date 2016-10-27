@@ -58,5 +58,9 @@ namespace N_Bers.Business.BLL
             return roles[0];
         }
         
+        public int DeleteByIDs(string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

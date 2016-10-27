@@ -534,9 +534,7 @@
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
     <Content Include="index.aspx" />
-    <Content Include="indexdata.js" />
     <Content Include="login.aspx" />
-    <Content Include="main.html" />
     <Content Include="resources\css\archiveDetail.html" />
     <Content Include="resources\css\base.css" />
     <Content Include="resources\css\common.css" />
@@ -1105,6 +1103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="assets\kindeditor\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

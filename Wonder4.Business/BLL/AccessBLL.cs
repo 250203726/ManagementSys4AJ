@@ -35,5 +35,10 @@ namespace N_Bers.Business.BLL
         {
             throw new NotImplementedException();
         }
+
+        public int DeleteByIDs(string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

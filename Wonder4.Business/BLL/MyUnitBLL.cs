@@ -17,6 +17,16 @@ namespace N_Bers.Business.BLL
             //return model.Delete();
         }
 
+        public int DeleteByIDs(string ids)
+        {
+            if (string.IsNullOrEmpty(ids))
+            {
+                return 0;
+            }
+            string sqlStr = "DELETE FROM dbo.nbers_businessunit WHERE id IN({0})";            
+            return CPQuery.From(string.Format(sqlStr, ids)).ExecuteNonQuery();
+        }
+
         public BusinessUnitModel GetModel(int id)
         {
             List<BusinessUnitModel> buList = Query("id =" + id);
@@ -31,7 +41,7 @@ namespace N_Bers.Business.BLL
 
         public List<BusinessUnitModel> Query(string strfilter)
         {
-            string queryStr = "select id,unit_name,unit_fullname,pid,createby,unit_type,unit_auditorname,unit_auditor,remark from nbers_businessunit where 1=1";
+            string queryStr = "select id,unit_name,unit_fullname,pid,createby,unit_type,unit_auditorname,unit_auditor,remark,unit_duty,unit_figure from nbers_businessunit where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

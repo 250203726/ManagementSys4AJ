@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Wonder4.Map.Extensions;
-using System.IO;
-using System.Web.UI.WebControls;
 using N_Bers.Business;
 using N_Bers.Business.BLL;
 using N_Bers.Business.Model;
+using Wonder4.Map.Extensions;
+using System.IO;
+using System.Web.UI.WebControls;
+using N_Bers.Business.Core;
 
 namespace WebPages
 {
@@ -23,10 +24,11 @@ namespace WebPages
                 throw new NotImplementedException();
             }
         }
-
+        MyUnitBLL mubll = new MyUnitBLL();
+        HttpContext currentCon;
         public void ProcessRequest(HttpContext context)
         {
-
+            currentCon = context;
             context.Response.ContentType = "text/plain";
             string oprType = context.Request.QueryString["oprtype"];
             string onlyPara = context.Request.QueryString["strkey"];
@@ -45,8 +47,8 @@ namespace WebPages
                 case "ADDUNIT":
                     retJsonStr = AddUnit(getPostStr(context));
                     break;
-                case "TEST":
-                    retJsonStr = test();
+                case "DELETEUNITS":
+                    retJsonStr = DeleteUnits(onlyPara);
                     break;
                 case "GETFIRSTLEVELUNIT":
                     retJsonStr = GetFirstLevelUnit();
@@ -65,6 +67,17 @@ namespace WebPages
             }
             context.Response.Write(retJsonStr);
         }
+
+        private string DeleteUnits(string onlyPara)
+        {
+            return JsonExtensions.ToJson(new MyHttpResult
+            {
+                result = true,
+                msg = "操作成功，共删除 " + mubll.DeleteByIDs(onlyPara) + " 条数据。",
+            });
+        }
+            
+        
 
         private string GetFirstLevelUnit()
         {
@@ -116,15 +129,26 @@ namespace WebPages
             
 
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
-            bu.createby = 1;
+            //var context = SystemContext.UserCode;
+            //var userid = currentCon.Session[SystemContext.SessionType.UserID.ToString()];
+            bu.createby = Convert.ToInt32(1);
             bu.createon = DateTime.Now;
-            bu.pid = 0;
-            bu.unit_type = 0;
+
             bu.unit_fullname = bu.unit_name;
+
+            int iResult ;
+            if (bu.id==0)
+            {
+                iResult = bu.Insert();
+            }
+            else
+            {
+                iResult = bu.Update();
+            }
 
             return JsonExtensions.ToJson(new MyHttpResult
             {                
-                result = bu.Insert() >0?true:false,
+                result = iResult > 0?true:false,
             });
         }
 

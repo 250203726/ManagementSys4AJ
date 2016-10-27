@@ -33,5 +33,7 @@ namespace N_Bers.Business.BLL
 
         //根据id获取model
         T GetModel(int id);
+
+        int DeleteByIDs(string ids);
     }
 }

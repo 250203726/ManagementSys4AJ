@@ -13,7 +13,7 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 用户session值
         /// </summary>
-        public static string USERSESSION = "";
+        public static string USERSESSION = "wonder4";
 
     }
 }

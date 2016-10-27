@@ -12,12 +12,24 @@
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
+    <style type="text/css">
+        /*.height200 {
+            height:200px;
+        }*/
+        #unit_duty,#unit_figure {
+        height:200px;
+        /*border:none;*/
+        }
+        #unit_duty:hover,#unit_figure:hover {
+      border: 1px solid #D0D0D0;
+        /*border:none;*/
+        }
+        input[name=pid_name],input[name=unit_type] {        
+        display:none;
+        }
+    </style>
     <script type="text/javascript">
         var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
-        function itemclick(item)
-        {
-            myTips("测试tips");
-        } 
 
         $(function ()
         {            
@@ -53,30 +65,51 @@
                 inputWidth: 170, labelWidth: 90, space: 60,
                 fields: [
                     { name: "id", type: "hidden", options: {value:"0000"} },
-                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort:true },
+                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort: true },
+                     { display: "部门全称", name: "unit_fullname", type: "text", newline: false },
                     {
-                        display: "上级部门 ", name: "pid", type: "select", newline: false, comboboxName: "pid_name", options: {
+                        display: "上级部门 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
                             valueFieldID: "id",
                             textField: "unit_name",
                             url: "../myHandler.ashx?oprtype=GetFirstLevelUnit"
                         }
                     },
                     {
-                        display: "部门类型 ", name: "unit_type", newline: true, type: "select", comboboxName: "unit_type", options: {
+                        display: "部门性质 ", name: "unit_type", newline: false, type: "select", comboboxName: "unit_type", options: {
                             valueFieldID: "id",
                             data: [
                                 {
-                                    id: 0,
-                                    text: "分类一"
+                                    id:"农电",
+                                    text: "农电"
                                 }, {
-                                    id: 1,
-                                    text: "分类er"
+                                    id: "长工",
+                                    text: "长工"
                                 }
                             ]
                         },                        
                     },
-                    { display: "备注", name: "remark", newline: true, type: "text" }
-                ]
+                    //{ display: "备注", name: "remark", newline: true, type: "text" }
+                ],
+                tab: {
+                    items: [
+                        {
+                            title: '形象及宗旨', fields: [
+                                   {
+                                       display: "形象及宗旨", name: "unit_figure", newline: true, type: "textarea", width: 625, 
+                                       validate: {}, hideLabel: true
+                                   }
+                            ]
+                        },
+                        {
+                            title: '部门职责', fields: [
+                                   {
+                                       display: "部门职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
+                                       validate: {}, hideLabel: true
+                                   }
+                            ]
+                        }
+                    ]
+                }
             });
 
             $("#pageloading").hide();
@@ -84,14 +117,28 @@
 
         function deleteRow()
         {
-            g.deleteSelectedRow();
+            var rows = g.getSelectedRows();
+            if (rows.length ==0) {
+                myTips("请选择一条数据进行删除！");
+                return;
+            }
+            //服务端删除，合并id为ids
+            var ids = rows.map(function (data, index) { return data.id }).join(",");
+            var returnStr = GetDataByAjax("../myHandler.ashx", "DeleteUnits", ids);
 
+            if (returnStr.result) {
+                g.deleteSelectedRow();
+                myTips(returnStr.msg);
+            } else {
+                myTips("删除失败，请联系管理员！");
+            }          
         }
         //新增部门
         function AddUnit()
         {
             //初始化form
-            InitForm();
+            InitForm(null);
+            //f.setEnabled("unit_type",false);
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 680, title: "新增部门",
                 buttons: [
@@ -124,12 +171,14 @@
             
         }
 
+        function setbiz_duty()
+        { }
         function f_save() {
             var returnStr = GetDataByAjax("../myHandler.ashx", "AddUnit", "", "", JSON.stringify(f.getData()));
 
             if (returnStr.result) {
                 //TODO:tips延迟自动关闭
-                $.ligerDialog.tip({ title: '提示信息', content: '      新增成功！' ,callback:function(t)
+                $.ligerDialog.tip({ title: '提示信息', content: '操作成功！' ,callback:function(t)
                 {
                     //setTimeout(function ()
                     //{
@@ -143,12 +192,21 @@
 
         function InitForm(data)
         {
-            if (typeof (data) == "undefined") {
-                data = [{
+            if (data == null) {
+                data = {
+                    id: "0000",
+                    unit_name: "",
+                    unit_fullname: "",
+                    pid: "",
+                    unit_type: "",
+                    unit_duty: "",
+                    unit_figure: "",
                     remark: "",
-                }];
-            }           
-            f.setData( data);
+                };
+            } else {
+                //f.set("readonly", true);
+            }
+            f.setData(data);
         }
 
   </script> 

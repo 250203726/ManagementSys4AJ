@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Wonder4.Map.Extensions.DAL;
 using N_Bers.Business.BLL;
 using N_Bers.Business.Model;
+using N_Bers.Business.Core;
 
 namespace WebPages
 {
@@ -33,6 +34,7 @@ namespace WebPages
                     if (ui != null)
                     {
                         Session[BaseConst.USERSESSION] = ui;
+                        Session[SystemContext.SessionType.UserID.ToString()] = ui.id;
                         Response.Redirect("index.aspx");
                     }
                     else

@@ -40,5 +40,9 @@ namespace N_Bers.Business.BLL
             return CPQuery.From(queryStr).ToList<RoleModel>();
         }
 
+        public int DeleteByIDs(string ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
