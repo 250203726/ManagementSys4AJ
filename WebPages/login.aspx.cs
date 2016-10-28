@@ -35,6 +35,8 @@ namespace WebPages
                     {
                         Session[BaseConst.USERSESSION] = ui;
                         Session[SystemContext.SessionType.UserID.ToString()] = ui.id;
+
+                        var userid = Session[SystemContext.SessionType.UserID.ToString()];
                         Response.Redirect("index.aspx");
                     }
                     else
@@ -43,7 +45,7 @@ namespace WebPages
                     }
                 }
 
-
+               
                 
             }            
 

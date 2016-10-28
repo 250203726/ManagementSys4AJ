@@ -15,5 +15,9 @@ namespace N_Bers.Business.Model
         /// </summary>
         public static string USERSESSION = "wonder4";
 
+        public enum SessionType {
+
+        }
+
     }
 }

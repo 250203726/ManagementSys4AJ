@@ -294,7 +294,7 @@
                 	<span class="spliter">
                     	<img src="resources/images/sysicon.gif" width="30" height="22" alt="公司Logo" />
                     </span>
-                    <span class="h2">同管理系统</span>
+                    <span class="h2">内部同管理系统</span>
                 </div>
             </div>
             <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown">

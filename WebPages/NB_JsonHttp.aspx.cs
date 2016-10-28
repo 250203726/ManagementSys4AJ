@@ -1,38 +1,31 @@
-﻿using System;
+﻿using N_Bers.Business.BLL;
+using N_Bers.Business.Core;
+using N_Bers.Business.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
-using N_Bers.Business;
-using N_Bers.Business.BLL;
-using N_Bers.Business.Model;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Wonder4.Map.Extensions;
-using System.IO;
-using System.Web;
-using N_Bers.Business.Core;
 
 namespace WebPages
 {
-    /// <summary>
-    /// myHandler 的摘要说明
-    /// </summary>
-    public class myHandler : IHttpHandler
+    public partial class NB_JsonHttp : System.Web.UI.Page
     {
-        public bool IsReusable
+        protected void Page_Load(object sender, EventArgs e)
         {
-            get
+            if (Session[SystemContext.SessionType.UserCode.ToString()]!=null && string.IsNullOrEmpty(Session[SystemContext.SessionType.UserCode.ToString()].ToString()))
             {
-                throw new NotImplementedException();
+                Response.ContentType = "text/html";
+                Response.Clear();
+                Response.Write("服务器超时！");
+                Response.End();
             }
-        }
-        MyUnitBLL mubll = new MyUnitBLL();
-        HttpContext currentCon;
-        public void ProcessRequest(HttpContext context)
-        {
-            currentCon = context;
-            context.Response.ContentType = "text/plain";
-            string oprType = context.Request.QueryString["oprtype"];
-            string onlyPara = context.Request.QueryString["strkey"];
-            string retJsonStr = string.Empty;
+            string oprType, onlyPara,retJsonStr=string.Empty;
+            oprType = Request.QueryString["oprtype"];
+            onlyPara = Request.QueryString["strkey"];
             switch (oprType.ToUpper())
             {
                 case "GETMENU":
@@ -45,7 +38,7 @@ namespace WebPages
                     retJsonStr = GetUnits(onlyPara);
                     break;
                 case "ADDUNIT":
-                    retJsonStr = AddUnit(getPostStr(context));
+                    retJsonStr = AddUnit(getPostStr());
                     break;
                 case "DELETEUNITS":
                     retJsonStr = DeleteUnits(onlyPara);
@@ -62,10 +55,13 @@ namespace WebPages
                 case "GETSUBMENUSBYJSON":
                     retJsonStr = getSubMenusByJson();
                     break;
-                default:                   
+                default:
                     break;
             }
-            context.Response.Write(retJsonStr);
+            Response.ContentType = "text/HTML";
+            Response.Clear();
+            Response.Write(retJsonStr);
+            Response.End();
         }
 
         private string DeleteUnits(string onlyPara)
@@ -73,15 +69,15 @@ namespace WebPages
             return JsonExtensions.ToJson(new MyHttpResult
             {
                 result = true,
-                msg = "操作成功，共删除 " + mubll.DeleteByIDs(onlyPara) + " 条数据。",
+                msg = "操作成功，共删除 " + (new MyUnitBLL()).DeleteByIDs(onlyPara) + " 条数据。",
             });
         }
-            
-        
+
+
 
         private string GetFirstLevelUnit()
         {
-           List<BusinessUnitModel> buList= (new MyUnitBLL()).Query(" ISNULL(pid,0)=0");
+            List<BusinessUnitModel> buList = (new MyUnitBLL()).Query(" ISNULL(pid,0)=0");
             return JsonExtensions.ToJson(buList);
         }
 
@@ -104,10 +100,10 @@ namespace WebPages
         /// <summary>
         /// 功能：获取采用Post方式Send过来的值
         /// </summary>
-        private string getPostStr(HttpContext context)
+        private string getPostStr()
         {
             string requestMsg;
-            using (StreamReader sr = new StreamReader(context.Request.InputStream))  
+            using (StreamReader sr = new StreamReader(Request.InputStream))
             {
                 requestMsg = sr.ReadLine();
             }
@@ -119,26 +115,27 @@ namespace WebPages
         {
             if (string.IsNullOrEmpty(input))
             {
-                return JsonExtensions.ToJson(new MyHttpResult {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
                     result = false,
                     msg = "提交数据错误！"
                 });
             }
 
             //UserModel um = (UserModel)Session["user_info"];
-            
+
 
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
             //var context = SystemContext.UserCode;
-            var session=HttpContext.Current.Session;
-            var userid = currentCon.Session[SystemContext.SessionType.UserID.ToString()];
+            var session = HttpContext.Current.Session;
+            var userid =Session[SystemContext.SessionType.UserID.ToString()];
             bu.createby = Convert.ToInt32(1);
             bu.createon = DateTime.Now;
 
             bu.unit_fullname = bu.unit_name;
 
-            int iResult ;
-            if (bu.id==0)
+            int iResult;
+            if (bu.id == 0)
             {
                 iResult = bu.Insert();
             }
@@ -148,8 +145,8 @@ namespace WebPages
             }
 
             return JsonExtensions.ToJson(new MyHttpResult
-            {                
-                result = iResult > 0?true:false,
+            {
+                result = iResult > 0 ? true : false,
             });
         }
 
@@ -178,7 +175,8 @@ namespace WebPages
         private string GetMenu()
         {
             List<MenuModel> list = (new MenuBLL()).Query("");
-            var grid = new {
+            var grid = new
+            {
                 Rows = list,
                 Total = list.Count
             };
@@ -215,12 +213,5 @@ namespace WebPages
             user.id = 1;
             return JsonExtensions.ToJson((new MenuBLL()).getSubMenus(user));
         }
-
-        //private string getButtonMenusByJson()
-        //{
-        //    UserModel user = new UserModel();
-        //    user.id=1;
-        //    return (new MenuBLL()).getButtonMenus(user, "5");
-        //}
     }
 }
