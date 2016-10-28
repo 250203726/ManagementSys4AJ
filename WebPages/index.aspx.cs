@@ -17,6 +17,13 @@ namespace WebPages
 {
     public partial class index : System.Web.UI.Page
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            if (Session[BaseConst.USERSESSION] == null)
+            {
+                Response.Redirect("login.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.IsPostBack)
@@ -45,12 +52,10 @@ namespace WebPages
 
                     }
                 }
-
-
                 var user_id = SystemContext.UserCode;
-
                 Response.Redirect("main.html");
             }            
         }
+        
     }
 }
