@@ -6,4 +6,4 @@ E:\项目\安质部管理系统\ManagementSys4AJ\WebPages\bin\N_Bers.Business.dl
 E:\项目\安质部管理系统\ManagementSys4AJ\WebPages\bin\N_Bers.Business.pdb
 E:\项目\安质部管理系统\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.dll
 E:\项目\安质部管理系统\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.csprojResolveAssemblyReference.cache
+E:\项目\安质部管理系统\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.csprojResolveAssemblyReference.cache

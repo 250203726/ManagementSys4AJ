@@ -42,7 +42,7 @@
     <Reference Include="N_Bers.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\N_Bers.Business.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -535,7 +535,7 @@
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
     <Content Include="index.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="NB_JsonHttp.aspx" />
+    <Content Include="main.html" />
     <Content Include="resources\css\archiveDetail.html" />
     <Content Include="resources\css\base.css" />
     <Content Include="resources\css\common.css" />
@@ -1013,6 +1013,8 @@
     <Content Include="resources\uploadify\uploadify-cancel.png" />
     <Content Include="resources\uploadify\uploadify.css" />
     <Content Include="resources\uploadify\uploadify.swf" />
+    <Content Include="SystemManage\MenuEdit.aspx" />
+    <Content Include="SystemManage\MenuIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\Userindex.aspx" />
     <Content Include="Web.config" />
@@ -1038,14 +1040,21 @@
     <Compile Include="myHandler.ashx.cs">
       <DependentUpon>myHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="NB_JsonHttp.aspx.cs">
-      <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManage\MenuEdit.aspx.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="NB_JsonHttp.aspx.designer.cs">
-      <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
+    <Compile Include="SystemManage\MenuEdit.aspx.designer.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManage\MenuIndex.aspx.cs">
+      <DependentUpon>MenuIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\MenuIndex.aspx.designer.cs">
+      <DependentUpon>MenuIndex.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UserManage\UnitIndex.aspx.cs">
       <DependentUpon>UnitIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -10,12 +10,12 @@ namespace N_Bers.Business.BLL
     {
         public int Delete(MenuModel t)
         {
-            throw new NotImplementedException();
+            return t.Delete() ;
         }
 
         public MenuModel GetModel(int id)
         {
-            throw new NotImplementedException();
+            return GetModel(id);
         }
 
         public int Insert(MenuModel t)
@@ -35,7 +35,7 @@ namespace N_Bers.Business.BLL
 
         public int Update(MenuModel t)
         {
-            throw new NotImplementedException();
+            return t.Update();
         }
 
         /// <summary>
@@ -72,7 +72,6 @@ namespace N_Bers.Business.BLL
         {
             return Query("parentId!=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
         }
-
         /// <summary>
         /// 获取用户的某个页面的按钮权限json字符串
         /// </summary>
@@ -86,7 +85,7 @@ namespace N_Bers.Business.BLL
             foreach (MenuModel menu in list)
             {
                 if (menu.name.Equals("增加"))
-                    buttonMenusString += "{ text: '增加', click: AddUnit, icon: 'add' },{ line: true },";
+                    buttonMenusString += "{ text: '增加', click: AddItem, icon: 'add' },{ line: true },";
                 else if (menu.name.Equals("修改"))
                     buttonMenusString += "{ text: '修改', click: EditItem, icon: 'modify' },{ line: true },";
                 else if(menu.name.Equals("删除"))

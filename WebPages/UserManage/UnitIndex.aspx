@@ -134,7 +134,7 @@
             }          
         }
         //新增部门
-        function AddUnit()
+        function AddItem()
         {
             //初始化form
             InitForm(null);
@@ -188,6 +188,9 @@
                 }});
                 window['g'].reload();
             }
+            else{
+            }
+
         }
 
         function InitForm(data)

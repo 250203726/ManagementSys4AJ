@@ -31,7 +31,9 @@ namespace WebPages
             currentCon = context;
             context.Response.ContentType = "text/plain";
             string oprType = context.Request.QueryString["oprtype"];
-            string onlyPara = context.Request.QueryString["strkey"];
+            string onlyPara = context.Request.QueryString["strkey"];//前台第一个参数
+            string onlyPara2 = context.Request.QueryString["strkey2"];//前台第二个参数
+            string postData = getPostStr(context);//post数据
             string retJsonStr = string.Empty;
             switch (oprType.ToUpper())
             {
@@ -45,7 +47,7 @@ namespace WebPages
                     retJsonStr = GetUnits(onlyPara);
                     break;
                 case "ADDUNIT":
-                    retJsonStr = AddUnit(getPostStr(context));
+                    retJsonStr = AddUnit(postData);
                     break;
                 case "DELETEUNITS":
                     retJsonStr = DeleteUnits(onlyPara);
@@ -61,6 +63,12 @@ namespace WebPages
                     break;
                 case "GETSUBMENUSBYJSON":
                     retJsonStr = getSubMenusByJson();
+                    break;
+                case "GETALLMENUS":
+                    retJsonStr = getAllMenus();
+                    break;
+                case "DELETEMENU":
+                    retJsonStr = DeleteMenu(onlyPara);
                     break;
                 default:                   
                     break;
@@ -191,7 +199,6 @@ namespace WebPages
             return JsonExtensions.ToJson((new MyUnitBLL()).GetModel(iid));
         }
 
-
         /// <summary>
         /// 获取用户一级菜单的json，给sidebarData
         /// </summary>
@@ -222,5 +229,41 @@ namespace WebPages
         //    user.id=1;
         //    return (new MenuBLL()).getButtonMenus(user, "5");
         //}
+
+        /// <summary>
+        /// 获取Menu列表传给MenuIndex显示
+        /// </summary>
+        /// <returns></returns>
+        public string getAllMenus()
+        {
+            return JsonExtensions.ToJson((new MenuBLL()).Query(""));
+        }
+
+        /// <summary>
+        /// 删除菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string DeleteMenu(String id)
+        {
+            if (String.Empty!=id)
+            {
+                MenuModel menu=new MenuModel();
+                menu.id=int.Parse(id);
+                int i=(new MenuBLL()).Delete(menu);
+                if (i!=0)
+                {
+                    return "操作成功！";
+                }
+                else
+                {
+                    return "操作失败！";
+                }
+            }
+            else
+            {
+                return "操作失败，菜单ID为空！";
+            }
+        }
     }
 }

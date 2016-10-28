@@ -23,59 +23,7 @@
         var tree = null;
         var tabItems = [];
         var sidebarData = GetDataByAjax('../myHandler.ashx', "getParentMenusByJson");
-		//[
-		//{ "menuId": "1420714976353939", "version": 3, "icon": "", "name": "系统设置", "code": "", "url": "", "params": null, "levels": 1, "sortCode": 1, "parentId": "0", "moduleId": "admin", "enable": "1" },
-		//{ "menuId": "1420711336094951", "version": 2, "icon": "", "name": "基础信息", "code": "", "url": "", "params": null, "levels": 1, "sortCode": 2, "parentId": "0", "moduleId": "basic", "enable": "1" },
-		//{ "menuId": "14772850175791039", "version": 2, "icon": "", "name": "固定资产", "code": "gdzc", "url": "", "params": null, "levels": 1, "sortCode": 3, "parentId": "0", "moduleId": "asset", "enable": "1" }];
         var navigateData = GetDataByAjax('../myHandler.ashx', "getSubMenusByJson");
-        //[
-        //{ "menuId": "14772852690089630", "version": 0, "icon": "", "name": "部门", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 1, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772852925375921", "version": 0, "icon": "", "name": "供应商", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 2, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772865293066423", "version": 0, "icon": "", "name": "厂商", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 3, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772865535855333", "version": 0, "icon": "", "name": "项目", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 4, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772865656659681", "version": 0, "icon": "", "name": "维护公司", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 5, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714763978062", "version": 3, "icon": "", "name": "客户（模板）", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 6, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714774585853", "version": 3, "icon": "", "name": "施工单位（模板）", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 7, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714784255032", "version": 3, "icon": "", "name": "项目经理（模板）", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 8, "parentId": "1420711336094951", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714805866899", "version": 1, "icon": "", "name": "客户新建", "code": "", "url": "/customer/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420714763978062", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714835269892", "version": 2, "icon": "", "name": "客户列表", "code": "khlb", "url": "/customer/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420714763978062", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714861773820", "version": 1, "icon": "", "name": "单位新建", "code": "", "url": "/company/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420714774585853", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714878474292", "version": 2, "icon": "", "name": "单位列表", "code": "dwlb", "url": "/company/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420714774585853", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714906132844", "version": 1, "icon": "", "name": "项目经理新建", "code": "", "url": "/manager/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420714784255032", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714929015955", "version": 1, "icon": "", "name": "项目经理列表", "code": "", "url": "/manager/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420714784255032", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1420714987907349", "version": 1, "icon": "", "name": "用户", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 1, "parentId": "1420714976353939", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715003825582", "version": 1, "icon": "", "name": "角色", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 2, "parentId": "1420714976353939", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715080055842", "version": 1, "icon": "", "name": "url过滤", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 3, "parentId": "1420714976353939", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715096172014", "version": 1, "icon": "", "name": "系统资源", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 4, "parentId": "1420714976353939", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715114059104", "version": 1, "icon": "", "name": "数据导入", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 5, "parentId": "1420714976353939", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715154089567", "version": 1, "icon": "", "name": "用户新建", "code": "", "url": "/userRole/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420714987907349", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715180833246", "version": 2, "icon": "", "name": "用户列表", "code": "yhlb", "url": "/user/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420714987907349", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715229679779", "version": 1, "icon": "", "name": "角色新建", "code": "", "url": "/role/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420715003825582", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715239271120", "version": 1, "icon": "", "name": "角色列表", "code": "", "url": "/role/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420715003825582", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715259164060", "version": 1, "icon": "", "name": "url新建", "code": "", "url": "/urlFilter/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420715080055842", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715277527339", "version": 2, "icon": "", "name": "url列表", "code": "ljlb", "url": "/urlFilter/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420715080055842", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715296434232", "version": 2, "icon": "", "name": "菜单", "code": "cdlb", "url": "/menu/list", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420715096172014", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715311385655", "version": 2, "icon": "", "name": "权限", "code": "qxlb", "url": "/auth/list", "params": null, "levels": 3, "sortCode": 2, "parentId": "1420715096172014", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715328320527", "version": 3, "icon": "", "name": "总包导入", "code": "", "url": "/import/zb", "params": null, "levels": 3, "sortCode": 1, "parentId": "1420715114059104", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "14211187290244018", "version": 2, "icon": "", "name": "分包导入", "code": "fbdr", "url": "/import/fb", "params": null, "levels": 2, "sortCode": 2, "parentId": "1420715114059104", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "1420715342703513", "version": 3, "icon": "", "name": "资金导入", "code": "zjdr", "url": "/import/fund", "params": null, "levels": 3, "sortCode": 3, "parentId": "1420715114059104", "moduleId": "admin", "enable": "1" },
-        //{ "menuId": "14772852154601912", "version": 0, "icon": "", "name": "资产", "code": "zc", "url": "", "params": null, "levels": 2, "sortCode": 1, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772867472516161", "version": 0, "icon": "", "name": "资产名称", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 2, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772867607857754", "version": 0, "icon": "", "name": "资产类别", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 3, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772867720972587", "version": 0, "icon": "", "name": "资产购置", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 4, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772868833544411", "version": 0, "icon": "", "name": "资产报损", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 5, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772869040906982", "version": 0, "icon": "", "name": "资产维护", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 6, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772869338986538", "version": 0, "icon": "", "name": "资产调拨", "code": "", "url": "", "params": null, "levels": 2, "sortCode": 7, "parentId": "14772850175791039", "moduleId": "asset", "enable": "1" },
-        //{ "menuId": "14772854018894844", "version": 1, "icon": "", "name": "部门新建", "code": "", "url": "/infomanage/depart/add", "params": null, "levels": 3, "sortCode": 1, "parentId": "14772852690089630", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772864882915599", "version": 2, "icon": "", "name": "部门列表", "code": "", "url": "/infomanage/depart/toList", "params": null, "levels": 3, "sortCode": 2, "parentId": "14772852690089630", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772854190891008", "version": 0, "icon": "", "name": "供应商新建", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 1, "parentId": "14772852925375921", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772865108746357", "version": 0, "icon": "", "name": "供应商列表", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 2, "parentId": "14772852925375921", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772866147062469", "version": 0, "icon": "", "name": "厂商新建", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 1, "parentId": "14772865293066423", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772866301533281", "version": 0, "icon": "", "name": "厂商列表", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 2, "parentId": "14772865293066423", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772866557058439", "version": 0, "icon": "", "name": "项目新建", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 1, "parentId": "14772865535855333", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772866691464823", "version": 0, "icon": "", "name": "项目列表", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 2, "parentId": "14772865535855333", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "1477286681754305", "version": 0, "icon": "", "name": "维护公司新建", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 1, "parentId": "14772865656659681", "moduleId": "basic", "enable": "1" },
-        //{ "menuId": "14772866946501411", "version": 0, "icon": "", "name": "维护公司列表", "code": "", "url": "", "params": null, "levels": 3, "sortCode": 2, "parentId": "14772865656659681", "moduleId": "basic", "enable": "1" }];
         $(function () {
             //自定义步骤，写入一级菜单资源的 HTML，需在 LigerUI 布局方法之前完成
             var tempHtml = "";
@@ -291,56 +239,55 @@
         <div class="topmask">
             <div class="l-topmenu-logo">
                 <div class="sysname">
-                	<span class="spliter">
-                    	<img src="resources/images/sysicon.gif" width="30" height="22" alt="公司Logo" />
+                    <span class="spliter">
+                        <img src="resources/images/sysicon.gif" width="30" height="22" alt="公司Logo" />
                     </span>
-                    <span class="h2">内部同管理系统</span>
+                    <span class="h2">管理系统</span>
                 </div>
             </div>
             <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown">
-                <label id="wel_label" class="wel_label">欢迎您：
+                <label id="wel_label" class="wel_label">
+                    欢迎您：
                 	<a>
-                		测试用户
-                		<span class="caret"></span>
-                	</a>
+                        <%= ((N_Bers.Business.Model.UserModel)Session[N_Bers.Business.Model.BaseConst.USERSESSION]).nickname %>
+                        <span class="caret"></span>
+                    </a>
                 </label>
-               	<ul class="t_profile" id="dropdown-menu" style="display: none;">
-               		<li class="fir">
-               			<a class="myaccount" id="userInfo">
-	               			<span class="icon"></span>
-	               			<span>我的资料</span>
-               			</a>
-               		</li>
-               		<li>
-               			<a class="modifypwd" id="changePwd">
-               				<span class="icon"></span>
-	               			<span>修改密码</span>               			
-               			</a>
-               		</li>
-               		<li>
+                <ul class="t_profile" id="dropdown-menu" style="display: none;">
+                    <li class="fir">
+                        <a class="myaccount" id="userInfo">
+                            <span class="icon"></span>
+                            <span>我的资料</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="modifypwd" id="A1">
+                            <span class="icon"></span>
+                            <span>修改密码</span>
+                        </a>
+                    </li>
+                    <li>
                			<a class="logout" href="${path }/logonOut">
                				<span class="icon"></span>
 	               			<span>退&nbsp;&nbsp;出</span>               			
                			</a>
                		</li>
-               	</ul>
+                </ul>
             </div>
-            <div class="l-topmenu-welcome">            	
+            <div class="l-topmenu-welcome">
                 <span class="wel_links">
-                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1003535092&amp;site=qq&amp;menu=yes" class="icn_help" title="点击求助： @三峡大学计算机与信息学院" target="_blank">
-                        在线求助
+                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1003535092&amp;site=qq&amp;menu=yes" class="icn_help" title="点击求助： @三峡大学计算机与信息学院" target="_blank">在线求助
                     </a>
                 </span>
             </div>
         </div>
     </div>
     <div id="layout1" style="width: 100%; margin: 0 auto;">
-        <div position="left" title="系统功能菜单" id="accordion1" style="overflow-y:auto;">
-            
+        <div position="left" title="系统功能菜单" id="accordion1" style="overflow-y: auto;">
         </div>
         <div position="center" id="framecenter">
             <div tabid="home" title="<span class='icn_home'>我的主页</sapn>" style="height: 300px">
-                
+
                 <iframe frameborder="0" name="home" id="home" src="main.html"></iframe>
             </div>
         </div>
