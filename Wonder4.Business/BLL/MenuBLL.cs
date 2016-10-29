@@ -15,7 +15,8 @@ namespace N_Bers.Business.BLL
 
         public MenuModel GetModel(int id)
         {
-            return GetModel(id);
+            List<MenuModel> list = Query(" id = " + id);
+            return list.Count > 0 ? list[0] : null;
         }
 
         public int Insert(MenuModel t)
@@ -84,10 +85,10 @@ namespace N_Bers.Business.BLL
             List<MenuModel> list = Query("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
             foreach (MenuModel menu in list)
             {
-                if (menu.name.Equals("增加"))
-                    buttonMenusString += "{ text: '增加', click: AddItem, icon: 'add' },{ line: true },";
-                else if (menu.name.Equals("修改"))
-                    buttonMenusString += "{ text: '修改', click: EditItem, icon: 'modify' },{ line: true },";
+                if (menu.name.Equals("新增"))
+                    buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
+                else if (menu.name.Equals("编辑"))
+                    buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
                 else if(menu.name.Equals("删除"))
                     buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
             }

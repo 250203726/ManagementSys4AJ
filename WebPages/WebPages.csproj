@@ -568,6 +568,7 @@
     <Content Include="resources\css\list.html" />
     <Content Include="resources\css\main.css" />
     <Content Include="resources\css\main2.css" />
+    <Content Include="resources\css\myform.css" />
     <Content Include="resources\css\print_adapter.css" />
     <Content Include="resources\css\print_screen.css" />
     <Content Include="resources\css\theme\entrance.teal.css" />

@@ -9,6 +9,7 @@
     <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="../resources/css/myform.css" rel="stylesheet" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
@@ -30,15 +31,14 @@
             display: none;
         }
     </style>
-
-
     <script type="text/javascript">
         var menuTree = null;
         var menuBar=null;
-        $(document).ready(function () {
+        $(function () {
             //初始化tree
             var data = [];
-            var JSONdata = GetDataByAjax('../myHandler.ashx', "getAllMenus");
+            var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
+            //菜单树加载
             menuTree = $("#menuTree").ligerTree({
                 data: JSONdata,
                 isExpand: 2,
@@ -50,137 +50,190 @@
                 parentIDFieldName: 'parentId',
                 textFieldName: 'name',
             });
+            //工具栏加载
             menuBar = $("#menuBar").ligerToolBar({
                 items: <%= buttonJson %>
             });
+            f=$('#myform').ligerForm();
         });
-    var state;//记录是增加还是修改
-
-
-    //重新按钮
-    function refresh() {
-        window.location.reload();
+    
+    //新增
+    function AddItem(){
+        openDialog(1);
+    }
+    
+    //编辑
+    function EditItem(){
+        openDialog(2);
     }
 
-    //添加
-    function AddItem()
+    //state判断是新增还是编辑，1为新增，2为编辑
+    function openDialog(state)
     {
-        state=1;
         var node = menuTree.getSelected();
         if(node){
-            openDialog("菜单","MenuEdit.aspx?parentId="+node.data.id);
+            if(state==1)//新增
+            {
+                //myTips("点击添加"+node.data.id);
+                //初始化表格
+                data={ id: "",
+                    parentId: node.data.id,
+                    code: "",
+                    moduleId: "",
+                    url: "",
+                    icon: "",
+                    levels: "0",
+                    sortCode: "0",
+                    enable:"1",
+                    group_id:'0',
+                };
+                InitForm(data);
+                //打开对话框
+                $.ligerDialog.open({
+                    target: $("#mytarget"), width: 680, title: "新增",
+                    buttons: [
+                        { text: '确定', onclick: function (item, dialog) { f_save(dialog);  } },
+                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                    ]
+                });
+            }
+            else if(state==2)//编辑
+            {
+                //myTips("点击修改"+node.data.id);
+                //初始化表格
+                var data = GetDataByAjax("../NB_JsonHttp.aspx", "getMenuById", node.data.id);
+                InitForm(data);
+                //打开对话框
+                $.ligerDialog.open({
+                    target: $("#mytarget"), width: 680, title: "编辑",
+                    buttons: [
+                        { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
+                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                    ]
+                });
+            }
         }else{
-            parent.Public.tips({type: 2, content : "请选择节点！"});
+            myTips("请选择节点！");
         }
     }
-    //修改
-    function EditItem()
-    {
-        state=2;
-        var node = menuTree.getSelected();
-        if(node){
-            openDialog("菜单","MenuEdit.aspx?id="+node.data.id);
-        }else{
-            parent.Public.tips({type: 2, content : "请选择节点！"});
+    
+    //保存按钮操作
+    function f_save(dialog) {
+        var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "addMenu", "", "", JSON.stringify(f.getData()));
+        if (returnStr.result) {
+            myTips("操作成功！");
+            window.location.reload();
+            dialog.hidden();
+        }
+        else{
+            myTips("操作失败！");
         }
     }
-    //删除
+
+    //删除按钮
     function deleteRow()
     {
         var node = menuTree.getSelected();
         if (node){
-            GetDataByAjaxSync('../myHandler.ashx', "DeleteMenu",node.data.id,'','',function(data){
-                data=eval(data);
-                if(data.state){
-                    menuTree.remove(node.target);
-                    parent.Public.tips({type: 0, content : data.message});
-                }else{
-                    parent.Public.tips({type: 1, content : data.message});
-                }
-            });
+            //myTips("点击删除"+node.data.id);
+            var returnStr= GetDataByAjax("../NB_JsonHttp.aspx","deleteMenu",node.data.id,"","");
+            if(returnStr)
+            {
+                menuTree.remove(node.target);
+                myTips("删除成功！");
+            }else{
+                myTips("删除失败，请联系管理员！");
+            }
         }
         else
-            parent.Public.tips({type: 2, content : "请选择节点！"});
+            myTips("请选择节点！");
     }
 
+    //初始化表格
     function InitForm(data)
     {
         if (data == null) {
             data = {
-                id: "0000",
-                unit_name: "",
-                unit_fullname: "",
-                pid: "",
-                unit_type: "",
-                unit_duty: "",
-                unit_figure: "",
-                remark: "",
+                id: "0",
+                parentId: "",
+                code: "",
+                moduleId: "",
+                url: "",
+                icon: "",
+                levels: "0",
+                sortCode: "0",
+                enable:"1",
+                group_id:'0',
             };
         } else {
             //f.set("readonly", true);
         }
         f.setData(data);
     }
-
-    /**
-     * 菜单编辑框
-     */
-    function openDialog(title,url){
-        $.ligerDialog.open({ title: title, name:'menuSelector',width: 800,height:400,isResize:true,timeParmName:'tmp', url: url, buttons: [
-             { text: '确定', onclick: OK },
-             { text: '取消', onclick: Cancel }
-        ]});
-        return false;
-    }
-
-    function OK(item, dialog)
-    {
-        var fn = dialog.frame.f_save || dialog.frame.window.f_save; 
-        var data = fn(); 
-        if (null!=data)
-        {
-            data=eval(data);
-            if(data.state){
-                parent.Public.tips({type: 0, content : data.message});
-                if(state==1){//增加
-                    parent.Public.ajaxPost("${path}/menu/detail?id="+data.param,"",function(obj){
-                        var node = menuTree.getSelected();
-                        var nodes = [];
-                        nodes.push(obj);
-                        if (node)
-                            menuTree.append(node.target, nodes); 
-                    });
-                }else if(state==2){//更新
-                    parent.Public.ajaxPost("${path}/menu/detail?id="+data.param,"",function(obj){
-                        var node = menuTree.getSelected();
-                        if (node)
-                            menuTree.update(node.target, obj);
-                    });
-                }else{}
-            }else{
-                parent.Public.tips({type: 1, content : data.message});
-            }
-            dialog.close();
-            return;
-        }
-    }
-        
-    function Cancel(item, dialog)
-    {
-        dialog.close();
-    }
-
     </script>
 </head>
 <body>
-
-
     <div id="menuBar"></div>
     <div id="menuTree"></div>
-
-    <div id="mytarget" style="width: 99%; margin: 3px; display: none;">
-        <div id="myform"></div>
+    <div id="mytarget" style="width: 99%; margin: 3px; display: none">
+        <div id="myform">
+            <table class="op_tb">
+                <caption style="text-align: center;">
+                    <input type="hidden" name="id" value="" />
+                </caption>
+                <tbody>
+                    <tr>
+                        <td class="label">菜单名称：</td>
+                        <td>
+                            <input type="text" id="name" name="name" value="" /></td>
+                        <td class="label">父级菜单：</td>
+                        <td><input type="text" name="parentId" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">菜单简码：</td>
+                        <td>
+                            <input type="text" name="code" value="" /></td>
+                        <td class="label">模块简码：</td>
+                        <td>
+                            <input type="text" name="moduleId" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">请求路径：</td>
+                        <td colspan="3">
+                            <input type="text" name="url" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">图标路径：</td>
+                        <td colspan="3">
+                            <input type="text" name="icon" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">层&nbsp;&nbsp;&nbsp;&nbsp;级：</td>
+                        <td>
+                            <input type="text" name="levels" value="" /></td>
+                        <td class="label">显示顺序：</td>
+                        <td>
+                            <input type="text" name="sortCode" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label">是否启用</td>
+                        <td >
+                            <select name="enable">
+                                <option value="1">启用</option>
+                                <option value="0">停用</option>
+                            </select>
+                        </td>
+                        <td class="label">菜单类型</td>
+                        <td>
+                            <select name="group_id">
+                                <option value="0">菜单</option>
+                                <option value="1">按钮</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
 </body>
 </html>

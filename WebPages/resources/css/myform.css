@@ -1,0 +1,79 @@
+﻿table caption{
+	color: #006e6b;
+	font-family: "楷体";
+	font-size: 1.5em;
+	font-weight: 700;
+	padding: 10px 0;
+}
+
+table.op_tb{
+	margin: 0 auto;
+	width: 100%;
+}
+
+.op_tb input[type="text"],
+.op_tb input[type="password"] 
+.op_tb select {
+	height: 24px;
+	line-height: 24px;
+}
+
+.op_tb input[type="text"],
+.op_tb input[type="password"] {
+	width: 60%;
+}
+	
+.op_tb th{
+	height: 24px;
+	white-space: nowrap;	
+	color: #666;
+}
+
+.op_tb th.objhead{	
+	text-align: left;
+}
+
+.op_tb th,
+.op_tb td{
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+
+.op_tb th{
+	width: 15%;
+}
+.op_tb td{
+	background: #FFF;	
+}
+
+.op_tb .label{
+	width: 15% ;
+	text-align: center;
+	font-weight: bold;
+}
+
+.op_tb th.lbl,
+.op_tb td.lbl{
+	min-width: 200px;
+	width: 20%;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.op_tb th.lbl label,
+.op_tb td.lbl label{	
+	margin-right: 20px;
+}
+
+.op_tb .req em{
+	color:red;
+	padding: 0 4px;
+}
+
+.op_tb label.error{
+	background: url(../images/error.png) no-repeat;
+	background-position: 0 1px;
+	margin: 0 0 0 1%;
+	padding-left: 20px;
+	color: #e40;
+}

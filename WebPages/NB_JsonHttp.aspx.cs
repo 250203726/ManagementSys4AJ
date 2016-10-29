@@ -59,7 +59,13 @@ namespace WebPages
                     retJsonStr = getAllMenus();
                     break;
                 case "DELETEMENU":
-                    retJsonStr = DeleteMenu(onlyPara);
+                    retJsonStr = deleteMenu(onlyPara);
+                    break;
+                case "GETMENUBYID":
+                    retJsonStr=getMenuById(onlyPara);
+                    break;
+                case "ADDMENU":
+                    retJsonStr = addMenu(getPostStr());
                     break;
                 default:
                     break;
@@ -230,29 +236,64 @@ namespace WebPages
         }
 
         /// <summary>
+        /// 通过Id得到菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string getMenuById(string id)
+        {
+            MenuModel menu = (new MenuBLL()).GetModel(int.Parse(id));
+            return JsonExtensions.ToJson(menu);
+        }
+
+        /// <summary>
+        /// 通过json获取传过来的MenuModel，执行Add或Update
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string addMenu(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = false,
+                    msg = "提交数据错误！"
+                });
+            }
+            MenuModel menu = JsonExtensions.FromJson<MenuModel>(input);
+            int iResult;
+            if (menu.id == 0)
+            {
+                iResult = menu.Insert();
+            }
+            else
+            {
+                iResult = menu.Update();
+            }
+            return JsonExtensions.ToJson(new MyHttpResult
+            {
+                result = iResult > 0 ? true : false,
+            });
+        }
+
+        /// <summary>
         /// 删除菜单
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string DeleteMenu(String id)
+        public string deleteMenu(String id)
         {
             if (String.Empty != id)
             {
                 MenuModel menu = new MenuModel();
                 menu.id = int.Parse(id);
                 int i = (new MenuBLL()).Delete(menu);
-                if (i != 0)
-                {
-                    return "操作成功！";
-                }
-                else
-                {
-                    return "操作失败！";
-                }
+                return i.ToString();
             }
             else
             {
-                return "操作失败，菜单ID为空！";
+                return "0";
             }
         }
     }
