@@ -28,15 +28,13 @@ namespace WebPages
                 {
 
                     string sqlQuery = "SELECT id,account,nickname,password,email FROM nbers_user WHERE ( account=@uid OR nickname=@uid) AND password=@pwd";
-
-                    UserModel ui = CPQuery.From(sqlQuery, new { uid = user_name, pwd = user_pwd }).ToSingle<UserModel>();
+                    //密码使用md5加密（AesHelper类提供加密相关函数,后期再拓展，单纯的md5是不行的）
+                    UserModel ui = CPQuery.From(sqlQuery, new { uid = user_name, pwd = AesHelper.MD5Encrypt(user_pwd) }).ToSingle<UserModel>();
 
                     if (ui != null)
                     {
                         Session[BaseConst.USERSESSION] = ui;
-                        Session[SystemContext.SessionType.UserID.ToString()] = ui.id;
-
-                        var userid = Session[SystemContext.SessionType.UserID.ToString()];
+                        
                         Response.Redirect("index.aspx");
                     }
                     else

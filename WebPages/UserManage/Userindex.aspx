@@ -30,7 +30,7 @@
                     { display: '邮件', name: 'email' },
                      { display: '备注', name: 'remark' }
                 ],
-                url: "../myHandler.ashx?oprtype=getusers",
+                url: "../NB_JsonHttp.aspx?oprtype=getusers",
                 pageSize: 30,
                 rownumbers: true,
                 toolbar: {

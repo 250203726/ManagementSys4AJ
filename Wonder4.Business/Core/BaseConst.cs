@@ -13,11 +13,9 @@ namespace N_Bers.Business.Model
         /// <summary>
         /// 用户session值
         /// </summary>
-        public static string USERSESSION = "wonder4";
+        public static string USERSESSION = "user_info";
 
-        public enum SessionType {
-
-        }
+        
 
     }
 }

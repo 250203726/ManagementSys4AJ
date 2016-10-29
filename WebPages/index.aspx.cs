@@ -44,7 +44,7 @@ namespace WebPages
 
                     if (ui!=null)
                     {                        
-                        Session[SystemContext.SessionType.UserCode.ToString()] = ui.id;
+                        Session[BaseConst.USERSESSION] = ui;
 
                     }
                     else
@@ -52,7 +52,6 @@ namespace WebPages
 
                     }
                 }
-                var user_id = SystemContext.UserCode;
                 Response.Redirect("main.html");
             }            
         }

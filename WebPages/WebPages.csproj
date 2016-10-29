@@ -536,6 +536,7 @@
     <Content Include="index.aspx" />
     <Content Include="login.aspx" />
     <Content Include="main.html" />
+    <Content Include="NB_JsonHttp.aspx" />
     <Content Include="resources\css\archiveDetail.html" />
     <Content Include="resources\css\base.css" />
     <Content Include="resources\css\common.css" />
@@ -1017,6 +1018,7 @@
     <Content Include="SystemManage\MenuIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\Userindex.aspx" />
+    <Content Include="Validate.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -1037,8 +1039,12 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="myHandler.ashx.cs">
-      <DependentUpon>myHandler.ashx</DependentUpon>
+    <Compile Include="NB_JsonHttp.aspx.cs">
+      <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NB_JsonHttp.aspx.designer.cs">
+      <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManage\MenuEdit.aspx.cs">
@@ -1065,6 +1071,13 @@
     </Compile>
     <Compile Include="UserManage\Userindex.aspx.designer.cs">
       <DependentUpon>Userindex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Validate.aspx.cs">
+      <DependentUpon>Validate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Validate.aspx.designer.cs">
+      <DependentUpon>Validate.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1106,7 +1119,6 @@
     <Content Include="assets\font-awesome\scss\_stacked.scss" />
     <Content Include="assets\font-awesome\scss\_variables.scss" />
     <Content Include="README.md" />
-    <Content Include="myHandler.ashx" />
     <Content Include="resources\images\f11.psd" />
     <Content Include="error\403.html" />
     <Content Include="error\404.html" />

@@ -16,7 +16,7 @@ namespace WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session[SystemContext.SessionType.UserCode.ToString()]!=null && string.IsNullOrEmpty(Session[SystemContext.SessionType.UserCode.ToString()].ToString()))
+            if (Session[BaseConst.USERSESSION]!=null && string.IsNullOrEmpty(Session[BaseConst.USERSESSION].ToString()))
             {
                 Response.ContentType = "text/html";
                 Response.Clear();
@@ -54,6 +54,12 @@ namespace WebPages
                     break;
                 case "GETSUBMENUSBYJSON":
                     retJsonStr = getSubMenusByJson();
+                    break;
+                case "GETALLMENUS":
+                    retJsonStr = getAllMenus();
+                    break;
+                case "DELETEMENU":
+                    retJsonStr = DeleteMenu(onlyPara);
                     break;
                 default:
                     break;
@@ -128,7 +134,7 @@ namespace WebPages
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
             //var context = SystemContext.UserCode;
             var session = HttpContext.Current.Session;
-            var userid =Session[SystemContext.SessionType.UserID.ToString()];
+            var userid =((UserModel)Session[BaseConst.USERSESSION]).id;
             bu.createby = Convert.ToInt32(1);
             bu.createon = DateTime.Now;
 
@@ -212,6 +218,42 @@ namespace WebPages
             UserModel user = new UserModel();
             user.id = 1;
             return JsonExtensions.ToJson((new MenuBLL()).getSubMenus(user));
+        }
+
+        /// <summary>
+        /// 获取Menu列表传给MenuIndex显示
+        /// </summary>
+        /// <returns></returns>
+        public string getAllMenus()
+        {
+            return JsonExtensions.ToJson((new MenuBLL()).Query(""));
+        }
+
+        /// <summary>
+        /// 删除菜单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string DeleteMenu(String id)
+        {
+            if (String.Empty != id)
+            {
+                MenuModel menu = new MenuModel();
+                menu.id = int.Parse(id);
+                int i = (new MenuBLL()).Delete(menu);
+                if (i != 0)
+                {
+                    return "操作成功！";
+                }
+                else
+                {
+                    return "操作失败！";
+                }
+            }
+            else
+            {
+                return "操作失败，菜单ID为空！";
+            }
         }
     }
 }

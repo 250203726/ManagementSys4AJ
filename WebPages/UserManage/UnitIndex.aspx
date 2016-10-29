@@ -44,19 +44,12 @@
                     { display: '创建时间', name: 'createon' },
                      { display: '备注', name: 'remark' }
                 ],
-                url: "../myHandler.ashx?oprtype=getunits",
+                url: "../NB_JsonHttp.aspx?oprtype=getunits",
                 pageSize: 30,
                 rownumbers: true,
                 toolbar:     {
                     items: 
-                    <%= buttonJson %>
-               
-                //    { text: '增加', click: AddUnit, icon: 'add' },
-                //    { line: true },
-                //    { text: '修改', click: EditItem, icon: 'modify' },
-                //    { line: true },
-                //    { text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },
-                //    ]
+                    <%= buttonJson %>   
                 },
                 //autoFilter: true
             });
@@ -71,7 +64,7 @@
                         display: "上级部门 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
                             valueFieldID: "id",
                             textField: "unit_name",
-                            url: "../myHandler.ashx?oprtype=GetFirstLevelUnit"
+                            url: "../NB_JsonHttp.aspx?oprtype=GetFirstLevelUnit"
                         }
                     },
                     {
@@ -124,7 +117,7 @@
             }
             //服务端删除，合并id为ids
             var ids = rows.map(function (data, index) { return data.id }).join(",");
-            var returnStr = GetDataByAjax("../myHandler.ashx", "DeleteUnits", ids);
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DeleteUnits", ids);
 
             if (returnStr.result) {
                 g.deleteSelectedRow();
@@ -158,7 +151,7 @@
                 return;
             }
 
-            var returnStr = GetDataByAjax("../myHandler.ashx", "GetUnitModel", rows[0].id);
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUnitModel", rows[0].id);
             //初始化form
             InitForm(returnStr);
             $.ligerDialog.open({
@@ -174,7 +167,7 @@
         function setbiz_duty()
         { }
         function f_save() {
-            var returnStr = GetDataByAjax("../myHandler.ashx", "AddUnit", "", "", JSON.stringify(f.getData()));
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "AddUnit", "", "", JSON.stringify(f.getData()));
 
             if (returnStr.result) {
                 //TODO:tips延迟自动关闭

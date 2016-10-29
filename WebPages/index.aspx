@@ -6,9 +6,9 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <title>管理系统</title>
+    <title>首页</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shoucut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon">
     <link href="resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" type="text/css">
     <link href="resources/css/index.css" rel="stylesheet" type="text/css">
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
@@ -22,8 +22,8 @@
         var accordion = null;
         var tree = null;
         var tabItems = [];
-        var sidebarData = GetDataByAjax('../myHandler.ashx', "getParentMenusByJson");
-        var navigateData = GetDataByAjax('../myHandler.ashx', "getSubMenusByJson");
+        var sidebarData = GetDataByAjax('../NB_JsonHttp.aspx', "getParentMenusByJson");
+        var navigateData = GetDataByAjax('../NB_JsonHttp.aspx', "getSubMenusByJson");
         $(function () {
             //自定义步骤，写入一级菜单资源的 HTML，需在 LigerUI 布局方法之前完成
             var tempHtml = "";

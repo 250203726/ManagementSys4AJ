@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>欢迎登录</title>
     <link rel="stylesheet" type="text/css" href="resources/css/theme/entrance.teal.css" />
+    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon"/>
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/base.css" rel="stylesheet" type="text/css" />
     <script src="resources/js/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -44,7 +45,7 @@
 	    }*/
 
         function showImage(node) {
-            var imageHtml = '<img src="authImg?rand=' + Math.random() + '" onclick="showImage(this);" width="100" height="26"/>';
+            var imageHtml = '<img src="Validate.aspx?rand=' + Math.random() + '" onclick="showImage(this);" width="100" height="26"/>';
             $(node).replaceWith(imageHtml);
         }
     </script>
@@ -76,14 +77,14 @@
                                 <tr>
                                     <td class="right">密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
                                     <td class="left">
-                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="21232f297a57a5a743894a0e4a801fc3" />
+                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="admin" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="right">验证码：</td>
                                     <td class="left">
                                         <input type="text" name="authCode" id="authCode" class="login-text" style="width: 90px;" />
-                                        <img alt="" src="authImg" onclick="showImage(this)" width="100" height="25" style="vertical-align: middle;">
+                                        <img alt="" src="Validate.aspx" onclick="showImage(this)" width="100" height="25" style="vertical-align: middle;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,7 +103,7 @@
                     </form>
                 </div>
                 <div class="panel-c-r">
-                    <h1 class="t-orgname">工程项目资金与合同管理系统&nbsp;&raquo;</h1>
+                    <h1 class="t-orgname">内部管理系统&nbsp;&raquo;</h1>
                     <div class="ht_10"></div>
                     <div>
                         <ul class="ul-tips">
@@ -118,9 +119,9 @@
         </div>
         <div class="logincopyright">
             <p>
-                <span style="font-family: 'Microsoft Yahei', arial, Sans-Serif;">&copy;</span> 2014 宜昌望朔信息科技有限责任公司 Wangshuo Co.,Ltd.
+                <span style="font-family: 'Microsoft Yahei', arial, Sans-Serif;">&copy;</span> 2016 新兵工作室 N_Bers Co.,Ltd.
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    Powered  by WSMIS.
+                    Powered  by N_Bers.
             </p>
         </div>
     </div>
