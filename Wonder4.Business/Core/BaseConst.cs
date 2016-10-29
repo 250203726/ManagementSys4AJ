@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace N_Bers.Business.Model
+namespace N_Bers.Business.Core
 {
     /// <summary>
     /// 全局常量，用作系统参数

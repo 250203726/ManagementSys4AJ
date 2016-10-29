@@ -30,7 +30,6 @@
     </style>
     <script type="text/javascript">
         var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
-
         $(function ()
         {            
             window['g'] =
@@ -108,6 +107,7 @@
             $("#pageloading").hide();
         });
 
+        //功能：删除部门
         function deleteRow()
         {
             var rows = g.getSelectedRows();
@@ -126,12 +126,12 @@
                 myTips("删除失败，请联系管理员！");
             }          
         }
+       
         //新增部门
         function AddItem()
         {
             //初始化form
             InitForm(null);
-            //f.setEnabled("unit_type",false);
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 680, title: "新增部门",
                 buttons: [
@@ -150,7 +150,7 @@
                 myTips("请选择一条数据进行编辑！");
                 return;
             }
-
+            
             var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUnitModel", rows[0].id);
             //初始化form
             InitForm(returnStr);

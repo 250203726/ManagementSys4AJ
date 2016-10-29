@@ -56,7 +56,7 @@
     <Compile Include="Core\Public.cs" />
     <Compile Include="Model\AccessModel.cs" />
     <Compile Include="Core\BaseConst.cs" />
-    <Compile Include="Model\MyHttpResult.cs" />
+    <Compile Include="Core\MyHttpResult.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\RoleModel.cs" />

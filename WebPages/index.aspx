@@ -249,7 +249,7 @@
                 <label id="wel_label" class="wel_label">
                     欢迎您：
                 	<a>
-                        <%= ((N_Bers.Business.Model.UserModel)Session[N_Bers.Business.Model.BaseConst.USERSESSION]).nickname %>
+                        <%= ((N_Bers.Business.Model.UserModel)Session[N_Bers.Business.Core.BaseConst.USERSESSION]).nickname %>
                         <span class="caret"></span>
                     </a>
                 </label>

@@ -10,6 +10,13 @@ namespace N_Bers.Business.Core
     /// </summary>
    public static class Public
     {
-        
+        public static string GetBaseDirectory()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            path = path.Replace(@"\bin\", @"\").Replace(@"\bin", @"\");
+
+            return path;
+        }
     }
 }

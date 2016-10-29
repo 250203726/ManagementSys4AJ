@@ -16,11 +16,11 @@ namespace WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session[BaseConst.USERSESSION]!=null && string.IsNullOrEmpty(Session[BaseConst.USERSESSION].ToString()))
+            if ( null == Session[BaseConst.USERSESSION] || string.IsNullOrEmpty(Session[BaseConst.USERSESSION].ToString()))
             {
                 Response.ContentType = "text/html";
                 Response.Clear();
-                Response.Write("服务器超时！");
+                Response.Write((new MyHttpResult(false,"登陆超时，请重新登陆！")).ToString());
                 Response.End();
             }
             string oprType, onlyPara,retJsonStr=string.Empty;
@@ -72,11 +72,11 @@ namespace WebPages
 
         private string DeleteUnits(string onlyPara)
         {
-            return JsonExtensions.ToJson(new MyHttpResult
+            return (new MyHttpResult
             {
                 result = true,
                 msg = "操作成功，共删除 " + (new MyUnitBLL()).DeleteByIDs(onlyPara) + " 条数据。",
-            });
+            }).ToString();
         }
 
 
@@ -84,7 +84,7 @@ namespace WebPages
         private string GetFirstLevelUnit()
         {
             List<BusinessUnitModel> buList = (new MyUnitBLL()).Query(" ISNULL(pid,0)=0");
-            return JsonExtensions.ToJson(buList);
+            return (new MyHttpResult(true,buList)).ToString();
         }
 
         private string test()

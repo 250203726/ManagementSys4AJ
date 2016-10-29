@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using N_Bers.Business.BLL;
 using N_Bers.Business.Model;
+using N_Bers.Business.Core;
+
 namespace WebPages
 {
     public class BasePage : System.Web.UI.Page
@@ -11,6 +13,10 @@ namespace WebPages
         ValidAccessBLL validAccess = new ValidAccessBLL();
 
         public string buttonJson = "";
+        /// <summary>
+        /// 系统地址
+        /// </summary>
+        public string root_path = Public.GetBaseDirectory();
         protected void Page_Init(object sender, EventArgs e)
         {
             UserModel user=(UserModel)Session[BaseConst.USERSESSION];
