@@ -211,7 +211,7 @@ namespace WebPages
         {
             UserModel user = new UserModel();
             user.id = 1;//后面替换成参数
-            return JsonExtensions.ToJson((new MenuBLL()).getParentMenus(user));
+            return (new MyHttpResult(true, (new MenuBLL()).getParentMenus(user))).ToString();
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace WebPages
         {
             UserModel user = new UserModel();
             user.id = 1;
-            return JsonExtensions.ToJson((new MenuBLL()).getSubMenus(user));
+            return (new MyHttpResult(true, (new MenuBLL()).getSubMenus(user))).ToString();
         }
 
         /// <summary>

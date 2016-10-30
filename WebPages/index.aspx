@@ -27,7 +27,7 @@
         $(function () {
             //自定义步骤，写入一级菜单资源的 HTML，需在 LigerUI 布局方法之前完成
             var tempHtml = "";
-            $.each(sidebarData, function () {
+            $.each(sidebarData.data, function () {
                 tempHtml += "<div title='" + this.name + "' class='1-scroll'>"
 						   + "	<ul data-module='" + this.moduleId + "' id='tree_" + this.menuId + "' style='margin-top:1px;'>"
 						   + "</div>";
@@ -80,7 +80,7 @@
                 //取得某一个 ul#tree 的code
                 var moduleId = $(this).attr("data-module");
                 //根据 code 过滤 navigateData 中属于该 code 的子菜单资源
-                var myData = $.grep(navigateData, function (item) {
+                var myData = $.grep(navigateData.data, function (item) {
                     return item.moduleId == moduleId;
                 }, false);
 

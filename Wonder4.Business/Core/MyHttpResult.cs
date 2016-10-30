@@ -19,7 +19,7 @@ namespace N_Bers.Business.Core
         /// <summary>
         /// data 请求需要返回的数据，比如菜单异步请求的菜单数据，都在data中。
         /// </summary>
-        public string data { get; set; }
+        public object data { get; set; }
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -32,7 +32,7 @@ namespace N_Bers.Business.Core
         public MyHttpResult(bool res, string msg)
         {
             this.result = res;
-            this.data = string.Empty;
+            this.data = null;
             this.msg = msg;
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace N_Bers.Business.Core
         public MyHttpResult(bool res, object data)
         {
             this.result = res;
-            this.data = JsonExtensions.ToJson(data);
+            this.data = data;
         }
         /// <summary>
         /// 构造函数
@@ -53,7 +53,7 @@ namespace N_Bers.Business.Core
         /// <param name="msg"></param>
         public MyHttpResult(bool res,object data, string msg) {
             this.result = res;
-            this.data = JsonExtensions.ToJson( data);
+            this.data = data;
             this.msg = msg;
         }
 
