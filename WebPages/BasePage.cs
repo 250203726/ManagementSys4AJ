@@ -24,7 +24,7 @@ namespace WebPages
                 //    Response.Redirect("../error/404.html");
                 //}
                 //2、验证按钮权限
-                buttonJson = validAccess.getButton(user.id.ToString(), nodeid);
+                buttonJson = validAccess.getButton(user, nodeid);
             }
             else
             {

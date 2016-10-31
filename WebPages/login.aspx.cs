@@ -33,8 +33,10 @@ namespace WebPages
 
                     if (ui != null)
                     {
-                        Session[BaseConst.USERSESSION] = ui;
-                        
+                        Session[Public.SessionType.User_Info.ToString()] = ui;
+                        var user =(UserModel)Public.User_Info;
+
+                        var userid = user.id;
                         Response.Redirect("index.aspx");
                     }
                     else

@@ -83,13 +83,16 @@ namespace N_Bers.Business.BLL
         {
             String buttonMenusString="[{ line: true },";
             List<MenuModel> list = Query("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
+            //当前用户是否管理员 管理员直接显示所有菜单
+            bool isAdmin = Core.Public.IsAdmin();
+            
             foreach (MenuModel menu in list)
             {
-                if (menu.name.Equals("新增"))
+                if (menu.name.Equals("新增") || isAdmin)
                     buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
-                else if (menu.name.Equals("编辑"))
+                if (menu.name.Equals("编辑") || isAdmin)
                     buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
-                else if(menu.name.Equals("删除"))
+                 if(menu.name.Equals("删除") || isAdmin)
                     buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
             }
             buttonMenusString += "]";

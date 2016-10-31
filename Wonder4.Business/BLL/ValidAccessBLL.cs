@@ -30,13 +30,11 @@ namespace N_Bers.Business.BLL
         /// <summary>
         /// 获取按钮json
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="user"></param>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        public String getButton(string userId, string nodeId)
+        public String getButton(UserModel user, string nodeId)
         {
-            UserModel user = new UserModel();
-            user.id = int.Parse(userId);
             MenuModel node = new MenuModel();
             node.id = int.Parse(nodeId);
             return (new MenuBLL()).getButtonMenus(user, node);
