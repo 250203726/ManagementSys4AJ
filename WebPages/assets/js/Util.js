@@ -105,12 +105,12 @@ function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
         dataType: "json",
         success: function (data) {//定义交互完成，并且服务器正确返回数据时调用的回调函数
             returnValue = data;
-            if (!data.result)                
+            if (!data.result) {
                 console.log(data.msg);
                 window.location.href = "../error/404.html";
-            }           
+            }
         },
-        error:function(){
+        error: function () {
             window.location.href = "../error/404.html";
         },
         async: false
