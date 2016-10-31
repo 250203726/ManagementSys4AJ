@@ -104,10 +104,9 @@ function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
         data: args,           //发送给服务器段的数据
         dataType: "json",
         success: function (data) {//定义交互完成，并且服务器正确返回数据时调用的回调函数
-            if (data.result) {
-                returnValue = data;
-            } else {
-                alert(data.mes);
+            returnValue = data;
+            if (!data.result)                
+                console.log(data.msg);
                 window.location.href = "../error/404.html";
             }           
         },

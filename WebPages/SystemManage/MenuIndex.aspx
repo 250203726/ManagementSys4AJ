@@ -40,7 +40,7 @@
             var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
             //菜单树加载
             menuTree = $("#menuTree").ligerTree({
-                data: JSONdata,
+                data: JSONdata.data,
                 isExpand: 2,
                 nodeWidth: 300,
                 checkbox: false,

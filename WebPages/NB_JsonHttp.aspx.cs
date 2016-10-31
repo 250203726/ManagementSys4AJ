@@ -93,21 +93,6 @@ namespace WebPages
             return (new MyHttpResult(true,buList)).ToString();
         }
 
-        private string test()
-        {
-            UserModel um = new UserModel();
-
-            um.account = "wonder4";
-            um.nickname = "庄少东";
-            um.password = "wwerwe";
-            um.bind_account = "hbsnjzsd@1qc.com";
-            um.email = "sdf";
-
-            um.info = "12";
-
-            return um.Insert().ToString();
-        }
-
         #region 获取采用Post方式Send过来的值
         /// <summary>
         /// 功能：获取采用Post方式Send过来的值
@@ -170,7 +155,7 @@ namespace WebPages
                 Rows = list,
                 Total = list.Count
             };
-            return JsonExtensions.ToJson(grid);
+            return (new MyHttpResult(true,grid)).ToString();
         }
 
         private string GetUsers()
@@ -232,7 +217,7 @@ namespace WebPages
         /// <returns></returns>
         public string getAllMenus()
         {
-            return JsonExtensions.ToJson((new MenuBLL()).Query(""));
+            return new MyHttpResult(true, (new MenuBLL()).Query("")).ToString();
         }
 
         /// <summary>

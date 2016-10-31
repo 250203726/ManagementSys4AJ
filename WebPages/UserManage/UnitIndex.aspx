@@ -32,6 +32,8 @@
         var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
         $(function ()
         {            
+            var grid_data=GetDataByAjax("../NB_JsonHttp.aspx","getunits","","",null);
+            var unit_data=GetDataByAjax("../NB_JsonHttp.aspx","GetFirstLevelUnit","","",null);
             window['g'] =
             $("#maingrid").ligerGrid({
                 height: '99%',
@@ -43,7 +45,7 @@
                     { display: '创建时间', name: 'createon' },
                      { display: '备注', name: 'remark' }
                 ],
-                url: "../NB_JsonHttp.aspx?oprtype=getunits",
+                data:grid_data.data,
                 pageSize: 30,
                 rownumbers: true,
                 toolbar:     {
@@ -63,7 +65,7 @@
                         display: "上级部门 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
                             valueFieldID: "id",
                             textField: "unit_name",
-                            url: "../NB_JsonHttp.aspx?oprtype=GetFirstLevelUnit"
+                            data:unit_data.data
                         }
                     },
                     {
