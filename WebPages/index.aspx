@@ -261,13 +261,13 @@
                         </a>
                     </li>
                     <li>
-                        <a class="modifypwd" id="A1">
+                        <a class="modifypwd" id="changePwd">
                             <span class="icon"></span>
                             <span>修改密码</span>
                         </a>
                     </li>
                     <li>
-               			<a class="logout" href="${path }/logonOut">
+               			<a class="logout" href="login.aspx?RemoveSession=1">
                				<span class="icon"></span>
 	               			<span>退&nbsp;&nbsp;出</span>               			
                			</a>
@@ -276,7 +276,7 @@
             </div>
             <div class="l-topmenu-welcome">
                 <span class="wel_links">
-                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1003535092&amp;site=qq&amp;menu=yes" class="icn_help" title="点击求助： @三峡大学计算机与信息学院" target="_blank">在线求助
+                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1003535092&amp;site=qq&amp;menu=yes" class="icn_help" title="点击求助： @N_bers" target="_blank">在线求助
                     </a>
                 </span>
             </div>
@@ -287,7 +287,6 @@
         </div>
         <div position="center" id="framecenter">
             <div tabid="home" title="<span class='icn_home'>我的主页</sapn>" style="height: 300px">
-
                 <iframe frameborder="0" name="home" id="home" src="main.html"></iframe>
             </div>
         </div>
@@ -307,14 +306,44 @@
                 $(this).toggleClass("profileHover");
             });
             $("#userInfo").click(function (e) {
-                f_addTab("grzl", "个人资料", "user/userInfo?id=${USERSESSION.user.userId}");
+                f_addTab("grzl", "个人资料", "UserManage/UserInfo.aspx?nodeid=-1");
                 e.preventDefault();
             });
             $("#changePwd").click(function (e) {
-                f_addTab("xgmm", "修改密码", "user/changePwd");
+                $.ligerDialog.open({
+                    target: $("#form_changepwd"), width: 360, title: "修改密码",
+                    buttons: [
+                        { text: '确定', onclick: function (item, dialog) { f_changepwd(); dialog.hidden(); } },
+                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                    ]
+                });
                 e.preventDefault();
             });
+            window['f'] = $("#myform_changepwd").ligerForm({
+                inputWidth: 170, labelWidth: 90, space: 60,
+                fields: [
+                     { display: "新密码", name: "new_pwd", type: "password",labelAlign:"right" },
+                     { display: "确认密码", name: "re_pwd", type: "password", labelAlign: "right"},
+                ]
+            });
         });
+
+        
+        function f_changepwd()
+        {
+            var changeData = f.getData();
+            if (changeData.new_pwd != changeData.re_pwd) {
+                $.ligerDialog.error('两次密码输入不一样!');
+                return;
+            }
+            var returnJson = GetDataByAjax("NB_JsonHttp.aspx", "changepwd", changeData.new_pwd, "", null);
+            if (returnJson.result) {
+                myTips(returnJson.msg);
+            }
+        }
     </script>
+    <div id ="form_changepwd" class="form_changepwd" style="width:99%; margin:3px; display:none;">
+        <div id="myform_changepwd"></div>
+    </div>
 </body>
 </html>

@@ -15,6 +15,12 @@ namespace WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string isLogout = Request.QueryString["RemoveSession"];
+            //注销系统
+            if (!string.IsNullOrEmpty(isLogout) && isLogout.Equals("1"))
+            {
+                Public.Logout();
+            }
             if (this.IsPostBack)
             {
                 string user_name = Request.Form["form-username"];
@@ -26,29 +32,26 @@ namespace WebPages
                 }
                 else//数据库校验
                 {
-
-                    string sqlQuery = "SELECT id,account,nickname,password,email FROM nbers_user WHERE ( account=@uid OR nickname=@uid) AND password=@pwd";
+                    string sqlQuery = "SELECT id,account,nickname,email FROM nbers_user WHERE ( account=@uid OR nickname=@uid) AND password=@pwd";
                     //密码使用md5加密（AesHelper类提供加密相关函数,后期再拓展，单纯的md5是不行的）
                     UserModel ui = CPQuery.From(sqlQuery, new { uid = user_name, pwd = AesHelper.MD5Encrypt(user_pwd) }).ToSingle<UserModel>();
 
                     if (ui != null)
                     {
                         Session[Public.SessionType.User_Info.ToString()] = ui;
-                        var user =(UserModel)Public.User_Info;
+                        var user = (UserModel)Public.User_Info;
 
                         var userid = user.id;
                         Response.Redirect("index.aspx");
                     }
                     else
                     {
-                        Response.Write("<script>alert('验证用户信息不正确')</script>");
+                        Response.Write("<script>alert('用户名或密码错误！')</script>");
                     }
-                }
-
-               
-                
-            }            
+                }                
+            }        
 
         }
+
     }
 }

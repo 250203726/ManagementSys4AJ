@@ -82,6 +82,7 @@
     <Content Include="assets\ico\favicon.png" />
     <Content Include="assets\img\backgrounds\1%402x.jpg" />
     <Content Include="assets\img\backgrounds\1.jpg" />
+    <Content Include="assets\js\index.js" />
     <Content Include="assets\js\jquery-1.11.1.js" />
     <Content Include="assets\js\jquery-1.11.1.min.js" />
     <Content Include="assets\js\jquery.backstretch.js" />
@@ -529,6 +530,8 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
+    <Content Include="UserManage\UserInfo.aspx" />
+    <Content Include="UserManage\changePwd.html" />
     <Content Include="index.aspx" />
     <Content Include="login.aspx" />
     <Content Include="main.html" />
@@ -1058,6 +1061,13 @@
     <Compile Include="SystemManage\MenuIndex.aspx.designer.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserManage\UserInfo.aspx.cs">
+      <DependentUpon>UserInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManage\UserInfo.aspx.designer.cs">
+      <DependentUpon>UserInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UserManage\UnitIndex.aspx.cs">
       <DependentUpon>UnitIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1130,6 +1140,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\kindeditor\" />
+    <Folder Include="assets\lib\jquery\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

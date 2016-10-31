@@ -62,10 +62,19 @@ namespace WebPages
                     retJsonStr = deleteMenu(onlyPara);
                     break;
                 case "GETMENUBYID":
-                    retJsonStr=getMenuById(onlyPara);
+                    retJsonStr = getMenuById(onlyPara);
                     break;
                 case "ADDMENU":
                     retJsonStr = addMenu(getPostStr());
+                    break;
+                case "CHANGEPWD":
+                    retJsonStr = changePwd(onlyPara);
+                    break;
+                case "GETUSERINFO":
+                    retJsonStr = GetUserInfo();
+                    break;
+                case "UPDATEUSER":
+                    retJsonStr = UpdateUser(getPostStr());
                     break;
                 default:
                     break;
@@ -74,6 +83,69 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        /// <summary>
+        /// 修改个人资料
+        /// </summary>
+        /// <returns></returns>
+        private string UpdateUser(string user_json)
+        {
+            if (string.IsNullOrEmpty(user_json))
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = false,
+                    msg = "提交数据错误！"
+                });
+            }
+            UserModel new_model = JsonExtensions.FromJson<UserModel>(user_json);
+            UserModel old_model = (new MyUserBLL()).GetModel(new_model.id);
+            if (null== old_model)
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = false,
+                    msg = "提交数据错误！"
+                });
+            }
+
+            old_model.nickname = new_model.nickname;
+            old_model.email = new_model.email;
+            old_model.phone = new_model.phone;
+            old_model.type_id = new_model.type_id;
+            old_model.info = new_model.info;
+
+            return JsonExtensions.ToJson(new MyHttpResult
+            {
+                result = old_model.Update()>0?true:false,
+                msg = "修改用户资料成功！"
+            });
+
+        }
+
+        /// <summary>
+        /// 获取当前用户信息 add by wonder4 2016年10月31日22:33:55
+        /// </summary>
+        /// <returns></returns>
+        private string GetUserInfo()
+        {
+            UserModel model = (UserModel)Public.User_Info;
+
+            return (new MyHttpResult(true, model)).ToString();
+        }
+
+        /// <summary>
+        /// 用户修改密码 by wonder4 2016年10月31日21:38:04
+        /// </summary>
+        /// <returns></returns>
+        private string changePwd(string new_pwd)
+        {
+            UserModel model = (UserModel)Public.User_Info;
+            model.password = AesHelper.MD5Encrypt(new_pwd);
+            //model.update_time = Public.GetDateTime;
+
+            return (new MyHttpResult(model.Update()>0?true:false,"密码修改成功！")).ToString();
         }
 
         private string DeleteUnits(string onlyPara)

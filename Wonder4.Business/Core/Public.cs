@@ -69,5 +69,22 @@ namespace N_Bers.Business.Core
                 return GetSessionValue(SessionType.User_Info);
             }
         }
+
+        /// <summary>
+        /// 注销系统
+        /// </summary>
+        public static void Logout()
+        {
+            System.Web.HttpContext.Current.Session.Clear();
+        }
+
+        public static int GetDateTime
+        {
+            get
+            {
+                TimeSpan tss = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                return Convert.ToInt32(tss.TotalMilliseconds);
+            }
+        }
     }
 }

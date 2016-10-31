@@ -78,7 +78,7 @@ function escape(str)
 }
 
 /*
-功能：ajax同步请求
+功能：ajax异步请求
 参数：
         url 请求地址
         oprtype 业务类别
@@ -106,8 +106,8 @@ function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
         success: function (data) {//定义交互完成，并且服务器正确返回数据时调用的回调函数
             returnValue = data;
             if (!data.result) {
-                console.log(data.msg);
-                window.location.href = "../error/404.html";
+                alert(data.msg);//弹出错误提示，不跳转。
+                //window.location.href = "../error/404.html";
             }
         },
         error: function () {
@@ -120,7 +120,7 @@ function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
 
 
 /*
-功能：ajax异步请求
+功能：ajax同步请求
 参数：
     url 请求地址
     oprtype 业务类别

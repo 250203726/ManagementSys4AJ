@@ -19,7 +19,7 @@ namespace N_Bers.Business.BLL
 
         public int Update(UserModel t)
         {
-            throw new NotImplementedException();
+           return t.Update();
         }
 
         public List<UserModel> Query(string strfilter)
@@ -39,7 +39,8 @@ namespace N_Bers.Business.BLL
 
         public UserModel GetModel(int id)
         {
-            throw new NotImplementedException();
+            List<UserModel> userList = Query("id =" + id);
+            return userList.Count > 0 ? userList[0] : null;
         }
 
         public UserInfo MyLogin(Dictionary<string,string> dic)

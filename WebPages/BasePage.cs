@@ -28,7 +28,7 @@ namespace WebPages
             }
             else
             {
-                Response.Redirect("../error/404.html");
+                Response.Redirect("../login.aspx");
             }
         }
     }
