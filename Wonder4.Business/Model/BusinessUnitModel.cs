@@ -18,7 +18,8 @@ namespace N_Bers.Business.Model
         private int? _pid;
         private int? _createby;
         private DateTime? _createon;
-        private string _unit_type;
+        private int _unit_type;
+        private string _child_type;
         private string _remark;
         private string _unit_duty;
         private string _unit_figure;
@@ -72,10 +73,19 @@ namespace N_Bers.Business.Model
         /// 
         /// </summary>
         [DataColumn(Alias = "unit_type", IsNullable = true)]
-        public string unit_type
+        public int unit_type
         {
             set { _unit_type = value; }
             get { return _unit_type; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataColumn(Alias = "child_type", IsNullable = true)]
+        public string child_type
+        {
+            set { _child_type = value; }
+            get { return _child_type; }
         }
         /// <summary>
         /// 

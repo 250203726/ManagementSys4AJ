@@ -71,7 +71,7 @@ namespace WebPages
                     retJsonStr = changePwd(onlyPara);
                     break;
                 case "GETUSERINFO":
-                    retJsonStr = GetUserInfo();
+                    retJsonStr = GetUserInfo(onlyPara);
                     break;
                 case "UPDATEUSER":
                     retJsonStr = UpdateUser(getPostStr());
@@ -128,11 +128,19 @@ namespace WebPages
         /// 获取当前用户信息 add by wonder4 2016年10月31日22:33:55
         /// </summary>
         /// <returns></returns>
-        private string GetUserInfo()
+        private string GetUserInfo(string user_id)
         {
-            UserModel model = (UserModel)Public.User_Info;
+            int userid;
+            if (string.IsNullOrEmpty(user_id))
+            {
+                userid= ((UserModel)Public.User_Info).id;
+            }
+            else
+            {
+                userid = Convert.ToInt32(user_id);
+            }
 
-            return (new MyHttpResult(true, model)).ToString();
+            return (new MyHttpResult(true, (new MyUserBLL()).GetModel(userid))).ToString();
         }
 
         /// <summary>
@@ -227,7 +235,7 @@ namespace WebPages
                 Rows = list,
                 Total = list.Count
             };
-            return (new MyHttpResult(true,grid)).ToString();
+            return (new MyHttpResult(true, list)).ToString();
         }
 
         private string GetUsers()
@@ -300,7 +308,7 @@ namespace WebPages
         public string getMenuById(string id)
         {
             MenuModel menu = (new MenuBLL()).GetModel(int.Parse(id));
-            return JsonExtensions.ToJson(menu);
+            return (new MyHttpResult(true,menu)).ToString();
         }
 
         /// <summary>

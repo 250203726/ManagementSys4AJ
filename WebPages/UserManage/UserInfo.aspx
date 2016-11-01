@@ -15,7 +15,7 @@
     <script type="text/javascript">
         $(function () {
             var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
-            var user_info = GetDataByAjax("../NB_JsonHttp.aspx", "GETUSERINFO");
+            var user_info = GetDataByAjax("../NB_JsonHttp.aspx", "GETUSERINFO","","",null);
             window['f'] = $("#myform").ligerForm({
                 inputWidth: 190, labelWidth: 100, space: 90,
                 fields: [
@@ -47,7 +47,7 @@
                     { display: "备注", name: "info", type: "textarea", labelAlign: "right",width:570 },
                 ],
                 buttons: [
-                    { text: '保存', click: submitform, width: 60, align: "center" },
+                    { text: '保存', click: submitform, width: 60, align: "center"},
                     { text: '重置', click: resetfrom, width: 60, align: "center" }
                 ],
             });
@@ -68,7 +68,9 @@
         }
         function resetfrom()
         {
-            f.setData({ account: "", nickname: "", email: "", phone: "", type_id: '0', info: "", });
+            f.setData({ nickname: "", email: "", phone: "", type_id: '0', info: "", });
+            //f.setData({ account: "", nickname: "", email: "", phone: "", type_id: '0', info: "", });
+
         }
     </script>
     <style type="text/css">

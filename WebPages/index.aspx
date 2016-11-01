@@ -97,9 +97,8 @@
                     textFieldName: 'name',
                     onClick: function (node) {
                         if (!node.data.url) return;
-                        var tabid = node.data.code;
+                        var tabid ="tab_"+ node.data.id;
                         if (!tabid) {
-                            tabid = new Date().getTime();
                             $(node.target).attr("tabid", tabid);
                         }
                         f_addTab(tabid, node.data.name, node.data.url);

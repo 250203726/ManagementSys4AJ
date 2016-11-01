@@ -534,6 +534,7 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
+    <Content Include="UserManage\UnitIndex_bak.aspx" />
     <Content Include="UserManage\UserInfo.aspx" />
     <Content Include="UserManage\changePwd.html" />
     <Content Include="index.aspx" />
@@ -1064,6 +1065,10 @@
     </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.designer.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserManage\UnitIndex_bak.aspx.cs">
+      <DependentUpon>UnitIndex_bak.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserManage\UserInfo.aspx.cs">
       <DependentUpon>UserInfo.aspx</DependentUpon>

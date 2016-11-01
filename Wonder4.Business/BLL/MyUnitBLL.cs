@@ -41,7 +41,7 @@ namespace N_Bers.Business.BLL
 
         public List<BusinessUnitModel> Query(string strfilter)
         {
-            string queryStr = "select id,unit_name,unit_fullname,pid,createby,unit_type,unit_auditorname,unit_auditor,remark,unit_duty,unit_figure from nbers_businessunit where 1=1";
+            string queryStr = "select id,unit_name,unit_fullname,isnull(pid,0) pid,createby,unit_type,unit_auditorname,unit_auditor,remark,unit_duty,unit_figure from nbers_businessunit where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

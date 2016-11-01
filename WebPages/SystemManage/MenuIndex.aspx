@@ -128,7 +128,11 @@
     
     //保存按钮操作
     function f_save(dialog) {
-        var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "addMenu", "", "", JSON.stringify(f.getData()));
+        var postData=f.getData();
+        if (!postData.id) {
+            postData.id=0;
+        }
+        var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "addMenu", "", "", JSON.stringify(postData));
         if (returnStr.result) {
             myTips("操作成功！");
             window.location.reload();
