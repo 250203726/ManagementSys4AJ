@@ -88,11 +88,11 @@ namespace N_Bers.Business.BLL
             
             foreach (MenuModel menu in list)
             {
-                if (menu.name.Equals("新增") || isAdmin)
+                if (menu.name.Equals("新增") && isAdmin)
                     buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
-                if (menu.name.Equals("编辑") || isAdmin)
+                if (menu.name.Equals("编辑") && isAdmin)
                     buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
-                 if(menu.name.Equals("删除") || isAdmin)
+                 if(menu.name.Equals("删除") && isAdmin)
                     buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
             }
             buttonMenusString += "]";

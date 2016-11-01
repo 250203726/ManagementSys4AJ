@@ -57,6 +57,12 @@
             f=$('#myform').ligerForm();
         });
     
+        //初始化表格
+        function InitForm(data)
+        {
+            f.setData(data);
+        }
+
     //新增
     function AddItem(){
         openDialog(1);
@@ -76,18 +82,21 @@
             {
                 //myTips("点击添加"+node.data.id);
                 //初始化表格
-                data={ id: "",
-                    parentId: node.data.id,
-                    code: "",
-                    moduleId: "",
-                    url: "",
-                    icon: "",
-                    levels: "0",
-                    sortCode: "0",
-                    enable:"1",
-                    group_id:'0',
+                dataNull={
+                    version:1,
+                    parentId:node.data.id,
+                    name:"",
+                    url:"",
+                    paramss:"",
+                    icon:"",
+                    levels:0,
+                    sortCode:0,
+                    moduleId:"",
+                    enable:1,
+                    group_id:1,
+                    id:0
                 };
-                InitForm(data);
+                InitForm(dataNull);
                 //打开对话框
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 680, title: "新增",
@@ -102,7 +111,7 @@
                 //myTips("点击修改"+node.data.id);
                 //初始化表格
                 var data = GetDataByAjax("../NB_JsonHttp.aspx", "getMenuById", node.data.id);
-                InitForm(data);
+                InitForm(data.data);
                 //打开对话框
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 680, title: "编辑",
@@ -149,27 +158,7 @@
             myTips("请选择节点！");
     }
 
-    //初始化表格
-    function InitForm(data)
-    {
-        if (data == null) {
-            data = {
-                id: "0",
-                parentId: "",
-                code: "",
-                moduleId: "",
-                url: "",
-                icon: "",
-                levels: "0",
-                sortCode: "0",
-                enable:"1",
-                group_id:'0',
-            };
-        } else {
-            //f.set("readonly", true);
-        }
-        f.setData(data);
-    }
+    
     </script>
 </head>
 <body>
@@ -179,41 +168,41 @@
         <div id="myform">
             <table class="op_tb">
                 <caption style="text-align: center;">
-                    <input type="hidden" name="id" value="" />
+                    <input type="hidden" name="id"  />
                 </caption>
                 <tbody>
                     <tr>
                         <td class="label">菜单名称：</td>
                         <td>
-                            <input type="text" id="name" name="name" value="" /></td>
+                            <input type="text" id="name" name="name" /></td>
                         <td class="label">父级菜单：</td>
-                        <td><input type="text" name="parentId" value="" /></td>
+                        <td><input type="text" name="parentId"  /></td>
                     </tr>
                     <tr>
                         <td class="label">菜单简码：</td>
                         <td>
-                            <input type="text" name="code" value="" /></td>
+                            <input type="text" name="code" /></td>
                         <td class="label">模块简码：</td>
                         <td>
-                            <input type="text" name="moduleId" value="" /></td>
+                            <input type="text" name="moduleId" /></td>
                     </tr>
                     <tr>
                         <td class="label">请求路径：</td>
                         <td colspan="3">
-                            <input type="text" name="url" value="" /></td>
+                            <input type="text" name="url" /></td>
                     </tr>
                     <tr>
                         <td class="label">图标路径：</td>
                         <td colspan="3">
-                            <input type="text" name="icon" value="" /></td>
+                            <input type="text" name="icon" /></td>
                     </tr>
                     <tr>
                         <td class="label">层&nbsp;&nbsp;&nbsp;&nbsp;级：</td>
                         <td>
-                            <input type="text" name="levels" value="" /></td>
+                            <input type="text" name="levels" /></td>
                         <td class="label">显示顺序：</td>
                         <td>
-                            <input type="text" name="sortCode" value="" /></td>
+                            <input type="text" name="sortCode" /></td>
                     </tr>
                     <tr>
                         <td class="label">是否启用</td>
@@ -226,8 +215,8 @@
                         <td class="label">菜单类型</td>
                         <td>
                             <select name="group_id">
-                                <option value="0">菜单</option>
                                 <option value="1">按钮</option>
+                                <option value="0">菜单</option>
                             </select>
                         </td>
                     </tr>
