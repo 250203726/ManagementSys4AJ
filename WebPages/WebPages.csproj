@@ -1022,7 +1022,6 @@
     <Content Include="resources\uploadify\uploadify-cancel.png" />
     <Content Include="resources\uploadify\uploadify.css" />
     <Content Include="resources\uploadify\uploadify.swf" />
-    <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\MenuIndex.aspx" />
     <Content Include="UserManage\UserIndex.aspx" />
     <Content Include="Validate.aspx" />
@@ -1054,13 +1053,6 @@
       <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemManage\MenuEdit.aspx.cs">
-      <DependentUpon>MenuEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SystemManage\MenuEdit.aspx.designer.cs">
-      <DependentUpon>MenuEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

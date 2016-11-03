@@ -10,11 +10,11 @@ namespace WebPages
     public class BasePage : System.Web.UI.Page
     {
         ValidAccessBLL validAccess = new ValidAccessBLL();
-
+        public UserModel user;
         public string buttonJson = "";
         protected void Page_Init(object sender, EventArgs e)
         {
-            UserModel user=(UserModel)Session[BaseConst.USERSESSION];
+            user = (UserModel)Session[BaseConst.USERSESSION];
             String nodeid=Request.QueryString["nodeid"];
             
             if (user != null)

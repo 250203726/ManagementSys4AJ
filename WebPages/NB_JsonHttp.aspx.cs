@@ -80,6 +80,18 @@ namespace WebPages
                 case "UPDATEUSER":
                     retJsonStr = UpdateUser(getPostStr());
                     break;
+                case "GETROLES":
+                    retJsonStr = getRoles();
+                    break;
+                case "GETROLEBYID":
+                    retJsonStr = getRoleById(onlyPara);
+                    break;
+                case "DELETEROLE":
+                    retJsonStr = deleteRole(onlyPara);
+                    break;
+                case "ADDROLE":
+                    retJsonStr = addRole(onlyPara,getPostStr());
+                    break;
                 case "GETSTATIONLIST":
                     retJsonStr = GetStationList(getPostStr());
                     break;
@@ -419,6 +431,56 @@ namespace WebPages
             {
                 return "0";
             }
+        }
+
+        public string getRoles()
+        {
+            var grid = new {
+                Rows = new RoleBLL().Query(""),
+                Total = new RoleBLL().Query("").Count
+            };
+            return new MyHttpResult(true, grid).ToString();
+        }
+        public string getRoleById(string id) {
+            RoleBLL rolebll = new RoleBLL();
+            RoleModel model = rolebll.GetModel(int.Parse(id));
+            return (new MyHttpResult(true, model)).ToString();
+        }
+        public string deleteRole(string id) {
+            if (String.Empty != id)
+            {
+                RoleModel model = new RoleModel();
+                model.id = int.Parse(id);
+                int i = (new RoleBLL()).Delete(model);
+                return new MyHttpResult(true,i.ToString()).ToString();
+            }
+            else
+            {
+                return new MyHttpResult(false, "0").ToString();
+            }
+        }
+        /// <summary>
+        /// Role实体和权限字符串
+        /// </summary>
+        /// <param name="auth"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public string addRole(string auth,string json) {
+            
+            if (string.IsNullOrEmpty(json)) {
+                return new MyHttpResult(false, "提交数据错误！").ToString();
+            }
+            RoleModel model = JsonExtensions.FromJson<RoleModel>(json);
+            int result;
+            //1.判断是新增角色还是编辑角色
+            if (model.id == 0)//新增
+            {
+                result = model.Insert();
+            }
+            else {//编辑
+                result = model.Update();
+            }
+            return new MyHttpResult(result > 0 ? true : false, "").ToString();
         }
     }
 }
