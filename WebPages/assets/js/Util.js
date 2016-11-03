@@ -104,11 +104,11 @@ function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
         data: args,           //发送给服务器段的数据
         dataType: "json",
         success: function (data) {//定义交互完成，并且服务器正确返回数据时调用的回调函数
-            returnValue = data;
-            if (!data.result) {
-                alert(data.msg);//弹出错误提示，不跳转。
+            returnValue = data;//请求正常，则不做任何处理，便于ligerui的控件采用服务端取数
+            //if (!data.result) {
+            //    alert(data.msg);//弹出错误提示，不跳转。
                 //window.location.href = "../error/404.html";
-            }
+            //}
         },
         error: function () {
             window.location.href = "../error/404.html";
@@ -164,3 +164,6 @@ function myTips(scontent, stitle, fncallback) {
         }
     });
 }
+
+//
+var company_name = "安质管理工程局";

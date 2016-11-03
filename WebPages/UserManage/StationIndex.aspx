@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UnitIndex_bak.aspx.cs" Inherits="WebPages.UserManage.UnitIndex_bak" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StationIndex.aspx.cs" Inherits="WebPages.UserManage.StationIndex" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>部门管理</title>
+    <title>岗位管理</title>
     <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
@@ -17,7 +17,7 @@
             height:200px;
         }*/
         #unit_duty,#unit_figure {
-        height:200px;
+        height:220px;
         /*border:none;*/
         }
         #unit_duty:hover,#unit_figure:hover {
@@ -30,22 +30,23 @@
     </style>
     <script type="text/javascript">
         var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
+        var unit_data;
         $(function ()
-        {            
-            var grid_data=GetDataByAjax("../NB_JsonHttp.aspx","getunits","","",null);
-            var unit_data=GetDataByAjax("../NB_JsonHttp.aspx","GetFirstLevelUnit","","",null);
-            window['g'] =
+        {   
+            unit_data=GetDataByAjax("../NB_JsonHttp.aspx","GetFirstLevelUnit","1","",null);
+            window["g"] =
             $("#maingrid").ligerGrid({
                 height: '99%',
                 checkbox:true,
                 columns: [
-                    { display: '部门名称', name: 'unit_name', align: 'left' },
-                    { display: '部门全名', name: 'unit_fullname' },
+                    { display: '岗位名称', name: 'unit_name', align: 'left' },
+                    { display: '岗位全名', name: 'unit_fullname' },
                     { display: '类型', name: 'child_type', minWidth: 140 },
+                    { display: '所属部门', name: 'pid',render:f_render_pid },
                     { display: '创建时间', name: 'createon' },
                      { display: '备注', name: 'remark' }
                 ],
-                data:grid_data.data,
+                url:"../NB_JsonHttp.aspx?oprtype=GetStationList4Grid",
                 pageSize: 30,
                 rownumbers: true,
                 toolbar:     {
@@ -58,18 +59,19 @@
             window['f'] = $("#myform").ligerForm({
                 inputWidth: 170, labelWidth: 90, space: 60,
                 fields: [
-                    { name: "id", type: "hidden", options: {value:"0000"} },
-                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort: true },
-                     { display: "部门全称", name: "unit_fullname", type: "text", newline: false },
+                    { name: "id", type: "hidden", options: {value:"0"} },
+                    { name: "unit_type", type: "hidden", options: {value:"2"} },
+                    { display: "岗位名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort: true },
+                     { display: "岗位全称", name: "unit_fullname", type: "text", newline: false },
                     {
-                        display: "上级部门 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
+                        display: "所属上级 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
                             valueFieldID: "id",
                             textField: "unit_name",
                             data:unit_data.data
                         }
                     },
                     {
-                        display: "部门性质 ", name: "child_type", newline: false, type: "select", comboboxName: "unit_type", options: {
+                        display: "岗位性质 ", name: "child_type", newline: false, type: "select", comboboxName: "unit_type", options: {
                             valueFieldID: "id",
                             data: [
                                 {
@@ -82,7 +84,6 @@
                             ]
                         },                        
                     },
-                    //{ display: "备注", name: "remark", newline: true, type: "text" }
                 ],
                 tab: {
                     items: [
@@ -95,9 +96,9 @@
                             ]
                         },
                         {
-                            title: '部门职责', fields: [
+                            title: '岗位职责', fields: [
                                    {
-                                       display: "部门职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
+                                       display: "岗位职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
                                        validate: {}, hideLabel: true
                                    }
                             ]
@@ -109,7 +110,7 @@
             $("#pageloading").hide();
         });
 
-        //功能：删除部门
+        //功能：删除岗位
         function deleteRow()
         {
             var rows = g.getSelectedRows();
@@ -129,13 +130,13 @@
             }          
         }
        
-        //新增部门
+        //新增岗位
         function AddItem()
         {
             //初始化form
             InitForm(null);
             $.ligerDialog.open({
-                target: $("#mytarget"), width: 680, title: "新增部门",
+                target: $("#mytarget"), width: 680, title: "新增岗位",
                 buttons: [
                     { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -144,7 +145,7 @@
 
         }
 
-        //编辑部门
+        //编辑岗位
         function EditItem()
         {
             var rows = g.getSelectedRows();
@@ -157,7 +158,7 @@
             //初始化form
             InitForm(returnStr);
             $.ligerDialog.open({
-                target: $("#mytarget"), width: 680, title: "编辑部门",
+                target: $("#mytarget"), width: 680, title: "编辑岗位",
                 buttons: [
                     { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -181,11 +182,15 @@
                     //}, 3000);
                     //console.log(t);
                 }});
-                window['g'].reload();
+                g_reflesh();
             }
             else{
             }
 
+        }
+
+        function g_reflesh(){
+            g.reload();
         }
 
         function InitForm(data)
@@ -196,7 +201,7 @@
                     unit_name: "",
                     unit_fullname: "",
                     pid: "",
-                    unit_type: "",
+                    unit_type: "2",
                     unit_duty: "",
                     unit_figure: "",
                     remark: "",
@@ -207,11 +212,19 @@
             f.setData(data);
         }
 
+        //渲染上级id到name
+        function f_render_pid(rowdata,index,colvalue){
+            var a= unit_data.data.map(function(value){
+                if (colvalue==value.id) {
+                    return value.unit_name;
+                }
+            });
+            return a.join("");
+        }
   </script> 
 </head>
 <body style="overflow-x:hidden; padding:2px;">
 <div class="l-loading" style="display:block" id="pageloading"></div>
- <a class="l-button" style="width:120px;float:left; margin-left:10px; display:none;" onclick="deleteRow()">删除选择的行</a>
  <div class="l-clear"></div>
     <div id="maingrid"></div>
   <div style="display:none;">

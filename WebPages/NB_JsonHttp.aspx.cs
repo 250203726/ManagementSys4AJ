@@ -32,10 +32,14 @@ namespace WebPages
                     retJsonStr = GetMenu();
                     break;
                 case "GETUSERS":
-                    retJsonStr = GetUsers();
+                    retJsonStr = GetUsers(getPostStr());
                     break;
                 case "GETUNITS":
                     retJsonStr = GetUnits(onlyPara);
+                    break;
+                //GetUnits4Tree
+                case "GETUNITS4TREE":
+                    retJsonStr = GetUnits4Tree(onlyPara);
                     break;
                 case "ADDUNIT":
                     retJsonStr = AddUnit(getPostStr());
@@ -44,7 +48,7 @@ namespace WebPages
                     retJsonStr = DeleteUnits(onlyPara);
                     break;
                 case "GETFIRSTLEVELUNIT":
-                    retJsonStr = GetFirstLevelUnit();
+                    retJsonStr = GetFirstLevelUnit(onlyPara);
                     break;
                 case "GETUNITMODEL":
                     retJsonStr = GetUnitModel(onlyPara);
@@ -76,6 +80,18 @@ namespace WebPages
                 case "UPDATEUSER":
                     retJsonStr = UpdateUser(getPostStr());
                     break;
+                case "GETSTATIONLIST":
+                    retJsonStr = GetStationList(getPostStr());
+                    break;
+                case "GETROLE":
+                    retJsonStr = GetRole();
+                    break;
+                case "GETSTATIONLIST4GRID":
+                    retJsonStr = GetStationList4Grid(getPostStr());
+                    break;
+                case "DELETEUSERS":
+                    retJsonStr = DeleteUsers(onlyPara);
+                    break;
                 default:
                     break;
             }
@@ -83,6 +99,43 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        private string DeleteUsers(string onlyPara)
+        {
+            return (new MyHttpResult
+            {
+                result = true,
+                msg = "操作成功，共删除 " + (new MyUserBLL()).DeleteByIDs(onlyPara) + " 条数据。",
+            }).ToString();
+        }
+
+        private string GetStationList4Grid(string filter)
+        {
+            filter = "unit_type=2";
+            var list = (new MyUnitBLL()).Query(filter);
+            var grid =new  {
+                Rows=list,
+                Total=list.Count()
+            };
+            return JsonExtensions.ToJson(grid);
+        }
+
+        private string GetRole()
+        {
+            return new MyHttpResult(true, (new MenuBLL()).Query("")).ToString();
+        }
+
+        /// <summary>
+        /// 获取岗位
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        private string GetStationList(string filter)
+        {
+           filter = "unit_type=2";
+            var data = (new MyUnitBLL()).Query(filter);
+            return (new MyHttpResult(true, data)).ToString();
         }
 
         /// <summary>
@@ -103,10 +156,11 @@ namespace WebPages
             UserModel old_model = (new MyUserBLL()).GetModel(new_model.id);
             if (null== old_model)
             {
+                new_model.password = AesHelper.MD5Encrypt(new_model.password);
                 return JsonExtensions.ToJson(new MyHttpResult
                 {
-                    result = false,
-                    msg = "提交数据错误！"
+                    result = new_model.Insert()>0?true:false,
+                    msg = "新增用户成功！"
                 });
             }
 
@@ -115,6 +169,7 @@ namespace WebPages
             old_model.phone = new_model.phone;
             old_model.type_id = new_model.type_id;
             old_model.info = new_model.info;
+            old_model.unit_id = new_model.unit_id;
 
             return JsonExtensions.ToJson(new MyHttpResult
             {
@@ -167,9 +222,10 @@ namespace WebPages
 
 
 
-        private string GetFirstLevelUnit()
+        private string GetFirstLevelUnit(string spid)
         {
-            List<BusinessUnitModel> buList = (new MyUnitBLL()).Query(" ISNULL(pid,0)=0");
+            spid = string.IsNullOrEmpty(spid) ? "0" : spid;
+            List<BusinessUnitModel> buList = (new MyUnitBLL()).Query(" ISNULL(unit_type,0) in("+ spid+")");
             return (new MyHttpResult(true,buList)).ToString();
         }
 
@@ -198,21 +254,14 @@ namespace WebPages
                     msg = "提交数据错误！"
                 });
             }
-
-            //UserModel um = (UserModel)Session["user_info"];
-
-
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
-            //var context = SystemContext.UserCode;
-            var session = HttpContext.Current.Session;
+
             var userid =((UserModel)Session[BaseConst.USERSESSION]).id;
             bu.createby = Convert.ToInt32(1);
             bu.createon = DateTime.Now;
 
-            bu.unit_fullname = bu.unit_name;
-
             int iResult;
-            if (bu.id == 0)
+            if (bu.id == 0)//新增id=0
             {
                 iResult = bu.Insert();
             }
@@ -229,18 +278,28 @@ namespace WebPages
 
         private string GetUnits(string filter)
         {
-            List<BusinessUnitModel> list = (new MyUnitBLL()).Query(filter);
+            List<BusinessUnitModel> list = (new MyUnitBLL()).Query("unit_type=1");
             var grid = new
             {
                 Rows = list,
                 Total = list.Count
             };
+            return JsonExtensions.ToJson(grid);
+        }
+
+        private string GetUnits4Tree(string filter)
+        {
+            List<BusinessUnitModel> list = (new MyUnitBLL()).Query(filter);
             return (new MyHttpResult(true, list)).ToString();
         }
 
-        private string GetUsers()
+        private string GetUsers(string filter)
         {
-            List<UserModel> list = (new MyUserBLL()).Query("");
+            if (filter.IndexOf("unit_id")<0)
+            {
+                filter = "";
+            }
+            List<UserModel> list = (new MyUserBLL()).Query(filter);
             var grid = new
             {
                 Rows = list,

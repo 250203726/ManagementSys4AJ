@@ -71,8 +71,8 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public List<MenuModel> getSubMenus(UserModel user)
         {
-            //return Query("parentId!=0 and group_id=0 ");
-            return Query("parentId!=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
+            return Query("parentId!=0 and group_id=0 ");
+            //return Query("parentId!=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
         }
         /// <summary>
         /// 获取用户的某个页面的按钮权限json字符串
@@ -87,15 +87,18 @@ namespace N_Bers.Business.BLL
             //当前用户是否管理员 管理员直接显示所有菜单
             bool isAdmin = Core.Public.IsAdmin();
             
-            foreach (MenuModel menu in list)
-            {
-                if (menu.name.Equals("新增") && isAdmin)
-                    buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
-                if (menu.name.Equals("编辑") && isAdmin)
-                    buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
-                 if(menu.name.Equals("删除") && isAdmin)
-                    buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
-            }
+            //foreach (MenuModel menu in list)
+            //{
+            //    if (menu.name.Equals("新增") && isAdmin)
+            //        buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
+            //    if (menu.name.Equals("编辑") && isAdmin)
+            //        buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
+            //     if(menu.name.Equals("删除") && isAdmin)
+            //        buttonMenusString+="{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
+            //}
+            buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
+            buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
+            buttonMenusString += "{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
             buttonMenusString += "]";
             return buttonMenusString;
         }

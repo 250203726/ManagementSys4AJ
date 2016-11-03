@@ -410,6 +410,7 @@
     <Content Include="assets\lib\ligerUI\skins\icons\cut.gif" />
     <Content Include="assets\lib\ligerUI\skins\icons\database.gif" />
     <Content Include="assets\lib\ligerUI\skins\icons\delete.gif" />
+    <Content Include="assets\lib\ligerUI\skins\icons\department.png" />
     <Content Include="assets\lib\ligerUI\skins\icons\discuss.gif" />
     <Content Include="assets\lib\ligerUI\skins\icons\down.gif" />
     <Content Include="assets\lib\ligerUI\skins\icons\edit.gif" />
@@ -534,7 +535,9 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
-    <Content Include="UserManage\UnitIndex_bak.aspx" />
+    <Content Include="SystemManage\RoleIndex.aspx" />
+    <Content Include="UserManage\StationIndex.aspx" />
+    <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\UserInfo.aspx" />
     <Content Include="UserManage\changePwd.html" />
     <Content Include="index.aspx" />
@@ -1021,8 +1024,7 @@
     <Content Include="resources\uploadify\uploadify.swf" />
     <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\MenuIndex.aspx" />
-    <Content Include="UserManage\UnitIndex.aspx" />
-    <Content Include="UserManage\Userindex.aspx" />
+    <Content Include="UserManage\UserIndex.aspx" />
     <Content Include="Validate.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -1066,8 +1068,19 @@
     <Compile Include="SystemManage\MenuIndex.aspx.designer.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserManage\UnitIndex_bak.aspx.cs">
-      <DependentUpon>UnitIndex_bak.aspx</DependentUpon>
+    <Compile Include="SystemManage\RoleIndex.aspx.cs">
+      <DependentUpon>RoleIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
+      <DependentUpon>RoleIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserManage\StationIndex.aspx.cs">
+      <DependentUpon>StationIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManage\UnitIndex.aspx.cs">
+      <DependentUpon>UnitIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserManage\UserInfo.aspx.cs">
@@ -1077,16 +1090,9 @@
     <Compile Include="UserManage\UserInfo.aspx.designer.cs">
       <DependentUpon>UserInfo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserManage\UnitIndex.aspx.cs">
-      <DependentUpon>UnitIndex.aspx</DependentUpon>
+    <Compile Include="UserManage\UserIndex.aspx.cs">
+      <DependentUpon>UserIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserManage\Userindex.aspx.cs">
-      <DependentUpon>Userindex.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserManage\Userindex.aspx.designer.cs">
-      <DependentUpon>Userindex.aspx</DependentUpon>
     </Compile>
     <Compile Include="Validate.aspx.cs">
       <DependentUpon>Validate.aspx</DependentUpon>

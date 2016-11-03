@@ -66,7 +66,12 @@ namespace N_Bers.Business.BLL
 
         public int DeleteByIDs(string ids)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(ids))
+            {
+                return 0;
+            }
+            string sqlStr = "DELETE FROM dbo.nbers_user WHERE id IN({0})";
+            return CPQuery.From(string.Format(sqlStr, ids)).ExecuteNonQuery();
         }
     }
 }

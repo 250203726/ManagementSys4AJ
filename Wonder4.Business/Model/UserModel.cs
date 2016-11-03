@@ -29,6 +29,7 @@ namespace N_Bers.Business.Model
         private int? _type_id = 0;
         private string _info;
         private string _phone;
+        private int _unit_id;
 
         /// <summary>
         /// 
@@ -173,6 +174,12 @@ namespace N_Bers.Business.Model
         {
             set { _phone = value; }
             get { return _phone; }
+        }
+        [DataColumn(Alias = "unit_id")]
+        public int unit_id
+        {
+            set { _unit_id = value; }
+            get { return _unit_id; }
         }
         #endregion Model
 

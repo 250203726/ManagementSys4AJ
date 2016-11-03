@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UnitIndex.aspx.cs" Inherits="WebPages.UserManage.Unitindex" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UnitIndex.aspx.cs" Inherits="WebPages.UserManage.UnitIndex" %>
 
 <!DOCTYPE html>
 
@@ -11,72 +11,218 @@
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
-<%--    <script src="../assets/lib/ligerUI/js/core/base.js" type="text/javascript"></script>
-    <script src="../assets/lib/ligerUI/js/plugins/ligerTree.js" type="text/javascript"></script>--%>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <style type="text/css">
-        #layout1{  width:100%;margin:0; padding:0;  }
+        /*.height200 {
+            height:200px;
+        }*/
+        #unit_duty,#unit_figure {
+        height:220px;
+        /*border:none;*/
+        }
+        #unit_duty:hover,#unit_figure:hover {
+      border: 1px solid #D0D0D0;
+        /*border:none;*/
+        }
+        input[name=pid_name],input[name=unit_type] {        
+        display:none;
+        }
     </style>
     <script type="text/javascript">
-        var data = [];
-        $(function () {
+        var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
 
-            var tree_data = GetDataByAjax('../NB_JsonHttp.aspx', "GetUnits", "");
-
-            var tree = $("#tree1").ligerTree({
-                data: tree_data.data,
-                idFieldName: 'id',
-                textFieldName: 'unit_name',
-                parentIDFieldName: 'pid',
-                checkbox:false
-            });
-            //treeManager = $("#tree1").ligerGetTreeManager();
-            //treeManager.collapseAll();
-            window['g'] =
+        $(function ()
+        {   
+            var unit_data=GetDataByAjax("../NB_JsonHttp.aspx","GetFirstLevelUnit","","",null);
+            window["g"] =
             $("#maingrid").ligerGrid({
                 height: '99%',
+                checkbox:true,
                 columns: [
-                    { display: '用户编码', name: 'account', align: 'left' },
-                    { display: '用户名', name: 'nickname' },
-                    { display: '电话', name: 'last_login_time', minWidth: 140 },
-                    { display: '邮件', name: 'email' },
+                    { display: '部门名称', name: 'unit_name', align: 'left' },
+                    { display: '部门全名', name: 'unit_fullname' },
+                    { display: '类型', name: 'child_type', minWidth: 140 },
+                    { display: '创建时间', name: 'createon' },
                      { display: '备注', name: 'remark' }
                 ],
-                url: "../NB_JsonHttp.aspx?oprtype=getusers",
+                //data:grid_data.data,
+                url:"../NB_JsonHttp.aspx?oprtype=getunits",
                 pageSize: 30,
                 rownumbers: true,
-                toolbar: {
-                    items: [
-                    { text: '增加', click: itemclick, icon: 'add' },
-                    { line: true },
-                    { text: '修改', click: itemclick, icon: 'modify' },
-                    { line: true },
-                    { text: '删除', click: itemclick, img: '../assets/lib/ligerUI/skins/icons/delete.gif' }
-                    ]
+                toolbar:     {
+                    items: 
+                    <%= buttonJson %>   
                 },
                 //autoFilter: true
             });
-            
+             
+            window['f'] = $("#myform").ligerForm({
+                inputWidth: 170, labelWidth: 90, space: 60,
+                fields: [
+                    { name: "id", type: "hidden", options: {value:"0"} },
+                    { name: "unit_type", type: "hidden", options: {value:"1"} },
+                    { display: "部门名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort: true },
+                     { display: "部门全称", name: "unit_fullname", type: "text", newline: false },
+                    {
+                        display: "所属上级 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
+                            valueFieldID: "id",
+                            textField: "unit_name",
+                            data:unit_data.data
+                        }
+                    },
+                    {
+                        display: "部门性质 ", name: "child_type", newline: false, type: "select", comboboxName: "unit_type", options: {
+                            valueFieldID: "id",
+                            data: [
+                                {
+                                    id:"农电",
+                                    text: "农电"
+                                }, {
+                                    id: "长工",
+                                    text: "长工"
+                                }
+                            ]
+                        },                        
+                    },
+                ],
+                tab: {
+                    items: [
+                        {
+                            title: '形象及宗旨', fields: [
+                                   {
+                                       display: "形象及宗旨", name: "unit_figure", newline: true, type: "textarea", width: 625, 
+                                       validate: {}, hideLabel: true
+                                   }
+                            ]
+                        },
+                        {
+                            title: '部门职责', fields: [
+                                   {
+                                       display: "部门职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
+                                       validate: {}, hideLabel: true
+                                   }
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            $("#pageloading").hide();
         });
-        function itemclick() { }
+
+        //功能：删除部门
+        function deleteRow()
+        {
+            var rows = g.getSelectedRows();
+            if (rows.length ==0) {
+                myTips("请选择数据进行删除！");
+                return;
+            }
+            //服务端删除，合并id为ids
+            var ids = rows.map(function (data, index) { return data.id }).join(",");
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DeleteUnits", ids);
+
+            if (returnStr.result) {
+                g.deleteSelectedRow();
+                myTips(returnStr.msg);
+            } else {
+                myTips("删除失败，请联系管理员！");
+            }          
+        }
+       
+        //新增部门
+        function AddItem()
+        {
+            //初始化form
+            InitForm(null);
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 680, title: "新增部门",
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+
+        }
+
+        //编辑部门
+        function EditItem()
+        {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
+            }
+            
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUnitModel", rows[0].id);
+            //初始化form
+            InitForm(returnStr);
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 680, title: "编辑部门",
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+            
+        }
+
+        function setbiz_duty()
+        { }
+        function f_save() {
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "AddUnit", "", "", JSON.stringify(f.getData()));
+
+            if (returnStr.result) {
+                //TODO:tips延迟自动关闭
+                $.ligerDialog.tip({ title: '提示信息', content: '操作成功！' ,callback:function(t)
+                {
+                    //setTimeout(function ()
+                    //{
+                    //    $(t).remove(); //5秒延迟后关闭tip
+                    //}, 3000);
+                    //console.log(t);
+                }});
+                g_reflesh();
+            }
+            else{
+            }
+
+        }
+
+        function g_reflesh(){
+            g.reload();
+        }
+
+        function InitForm(data)
+        {
+            if (data == null) {
+                data = {
+                    id: "0000",
+                    unit_name: "",
+                    unit_fullname: "",
+                    pid: "",
+                    unit_type: "1",
+                    unit_duty: "",
+                    unit_figure: "",
+                    remark: "",
+                };
+            } else {
+                //f.set("readonly", true);
+            }
+            f.setData(data);
+        }
+
   </script> 
 </head>
-<body style="overflow-x:hidden; padding:5px; margin:0; padding-bottom:15px;">
-    <div id="layout1" class="l-layout" style="height:100%;" ligeruiid="layout1">
-        <div class="l-layout-left" style="left: 0px; width: 200px; top: 0px; height: 500px;">
-            <div class="l-layout-header">
-                <%--<input type="button" name="name" value="test" />--%>
-                <div class="l-layout-header-inner">组织结构</div>
-            </div>
-            <div position="left" class="l-layout-content">
-               <ul id="tree1"></ul>
-                <div class="l-tree-loading"></div>
-            </div></div>
-        <div class="l-layout-center" style="width: 975px; top: 0px; left: 205px; height: 500px;">
-            <div class="l-layout-header">用户列表</div>
-            <div position="center" title="" class="l-layout-content" style="height: auto;">
-            <div id="maingrid"></div>
-        </div></div> 
-      </div>
+<body style="overflow-x:hidden; padding:2px;">
+<div class="l-loading" style="display:block" id="pageloading"></div>
+ <a class="l-button" style="width:120px;float:left; margin-left:10px; display:none;" onclick="deleteRow()">删除选择的行</a>
+ <div class="l-clear"></div>
+    <div id="maingrid"></div>
+  <div style="display:none;">
+</div>
+     <div id="mytarget" style="width:99%; margin:3px; display:none;">
+         <div id="myform"></div>
+     </div> 
 </body>
 </html>

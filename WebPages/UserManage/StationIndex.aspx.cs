@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UserManage
 {
-    public partial class UserIndex : BasePage
+    public partial class StationIndex : BasePage
     {
         
         protected void Page_Load(object sender, EventArgs e)

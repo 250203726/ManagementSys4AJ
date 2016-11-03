@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages.UserManage {
+namespace WebPages.SystemManage {
     
     
-    public partial class index {
+    public partial class RoleIndex {
     }
 }

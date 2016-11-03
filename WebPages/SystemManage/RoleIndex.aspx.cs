@@ -5,14 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebPages.UserManage
+namespace WebPages.SystemManage
 {
-    public partial class UnitIndex_bak : BasePage
+    public partial class RoleIndex : BasePage
     {
-        
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
