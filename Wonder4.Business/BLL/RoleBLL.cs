@@ -6,7 +6,7 @@ using N_Bers.Business.Model;
 using Wonder4.Map.Extensions.DAL;
 namespace N_Bers.Business.BLL
 {
-    class RoleBLL : IBusinessBLL<RoleModel>
+    public class RoleBLL : IBusinessBLL<RoleModel>
     {
         
         public int Insert(RoleModel t)
@@ -27,12 +27,16 @@ namespace N_Bers.Business.BLL
         }
 
         public RoleModel GetModel(int id) {
-            return GetModel(id);
+            string str = " id=" + id;
+            List<RoleModel> list = Query(str);
+            if (list.Count > 0)
+                return list[0];
+            return null;
         }
 
         public List<RoleModel> Query(string strfilter)
         {
-            string queryStr = "select i* from nbers_role where 1=1";
+            string queryStr = "select * from nbers_role where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

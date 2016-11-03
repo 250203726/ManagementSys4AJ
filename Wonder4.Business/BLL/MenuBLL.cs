@@ -99,6 +99,15 @@ namespace N_Bers.Business.BLL
             buttonMenusString += "]";
             return buttonMenusString;
         }
+        /// <summary>
+        /// 通过角色Id得到menu列表
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public List<MenuModel> getByUserId(int userId) {
+            List<MenuModel> list = Query(" id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id="+userId+"))");
+            return list;
+        }
 
         #region 菜单加载 作废
         /// <summary>
