@@ -111,6 +111,10 @@ namespace N_Bers.Business.BLL
             List<MenuModel> list = Query(" id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id="+userId+"))");
             return list;
         }
+        public List<MenuModel> getByRoleId(int roleId) {
+            List<MenuModel> list = Query(" id in (select node_id from nbers_access where role_id="+roleId+")");
+            return list;
+        }
 
         #region 菜单加载 作废
         /// <summary>

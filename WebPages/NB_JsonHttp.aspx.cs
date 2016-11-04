@@ -83,8 +83,8 @@ namespace WebPages
                 case "GETROLES":
                     retJsonStr = getRoles();
                     break;
-                case "GETROLEBYID":
-                    retJsonStr = getRoleById(onlyPara);
+                case "GETROLEMENUBYROLEID":
+                    retJsonStr = getRoleMenuByRoleId(onlyPara);
                     break;
                 case "DELETEROLE":
                     retJsonStr = deleteRole(onlyPara);
@@ -441,10 +441,20 @@ namespace WebPages
             };
             return new MyHttpResult(true, grid).ToString();
         }
-        public string getRoleById(string id) {
+        public string getRoleMenuByRoleId(string id)
+        {
+            //1.获取角色实体
             RoleBLL rolebll = new RoleBLL();
             RoleModel model = rolebll.GetModel(int.Parse(id));
-            return (new MyHttpResult(true, model)).ToString();
+            //2.获取角色权限
+            MenuBLL menubll = new MenuBLL();
+            List<MenuModel> menuList = menubll.getByRoleId(int.Parse(id));
+            var data=new{
+                         Role=model,
+                         Auth = menuList
+                     };
+
+            return (new MyHttpResult(true, data)).ToString();//data由Role和Accesslist组成
         }
         public string deleteRole(string id) {
             if (String.Empty != id)
@@ -475,10 +485,28 @@ namespace WebPages
             //1.判断是新增角色还是编辑角色
             if (model.id == 0)//新增
             {
+                //1.新增角色
                 result = model.Insert();
+                //2.获得该实体的ID
+                model.id=(new RoleBLL()).getByMax().id;
             }
             else {//编辑
                 result = model.Update();
+            }
+            //2.删除该角色的所有权限
+            AccessBLL accessbll = new AccessBLL();
+            accessbll.deleteByRoleId(model.id.ToString());
+            //3.insert所有权限
+            if (!string.IsNullOrEmpty(auth)) {
+                foreach (string roleAuth in auth.Split(",".ToCharArray())) {
+                    if (roleAuth != "")
+                    {
+                        AccessModel accessModel = new AccessModel();
+                        accessModel.node_id = int.Parse(roleAuth);
+                        accessModel.role_id = model.id;
+                        result = accessModel.Insert();
+                    }
+                }
             }
             return new MyHttpResult(result > 0 ? true : false, "").ToString();
         }

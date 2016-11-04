@@ -33,9 +33,21 @@ namespace N_Bers.Business.BLL
         }
         public List<AccessModel> Query(string strfilter)
         {
-            throw new NotImplementedException();
+            string queryStr = "select * from nbers_access where 1=1";
+            if (!string.IsNullOrEmpty(strfilter))
+            {
+                queryStr = queryStr.Replace("1=1", strfilter);
+            }
+            return CPQuery.From(queryStr).ToList<AccessModel>();
         }
 
+        public int deleteByRoleId(string roleId)
+        {
+            string str = "delete from nbers_access where role_id=" + roleId;
+;
+            return CPQuery.From(str).ExecuteNonQuery();
+        }
+        
         public int DeleteByIDs(string ids)
         {
             throw new NotImplementedException();
