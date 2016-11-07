@@ -90,6 +90,8 @@ function escape(str)
 */
 function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
     if (sfile == "") { sfile = "NB_JsonHttp.aspx"; }
+    strkey = strkey || '';
+    strkey2 = strkey2 || '';
     var returnValue;
     var rdNum = Math.random();
     var url;
@@ -167,3 +169,15 @@ function myTips(scontent, stitle, fncallback) {
 
 //
 var company_name = "安质管理工程局";
+
+//json时间 转换 add by wonder4 2016年11月5日15:41:23
+function g_render4time(rowdata, index, colvalue) {
+    var milli = colvalue.replace(/\/Date\((-?\d+)\)\//, '$1');
+    var s = "";
+    var dt = new Date(parseInt(milli));
+    if (dt && (dt instanceof Date)) {
+        if (dt.getFullYear() != 1)
+            s = dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日";
+    }
+    return s;
+}

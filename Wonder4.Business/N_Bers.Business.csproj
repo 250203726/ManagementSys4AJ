@@ -57,6 +57,7 @@
     <Compile Include="Model\AccessModel.cs" />
     <Compile Include="Core\BaseConst.cs" />
     <Compile Include="Core\MyHttpResult.cs" />
+    <Compile Include="Model\AttachmentsModel.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
     <Compile Include="Model\RoleModel.cs" />
@@ -66,7 +67,9 @@
     <Compile Include="Model\NbersBaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="BLL\AttachmentsBLL.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -104,6 +104,9 @@ namespace WebPages
                 case "DELETEUSERS":
                     retJsonStr = DeleteUsers(onlyPara);
                     break;
+                case "GETFILES4GRID":
+                    retJsonStr = GetFiles4Grid(onlyPara);
+                    break;
                 default:
                     break;
             }
@@ -111,6 +114,21 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        /// <summary>
+        /// 根据文件分类来获取文件数据 by wonder4 2016年11月5日14:27:32
+        /// </summary>
+        /// <param name="onlyPara"></param>
+        /// <returns></returns>
+        private string GetFiles4Grid(string onlyPara)
+        {
+            var fileList = (new AttachmentsBLL()).Query(" DocType='"+onlyPara+"'");
+            var grid = new {
+                Rows= fileList,
+                Total=fileList.Count
+            };
+            return JsonExtensions.ToJson(grid);
         }
 
         private string DeleteUsers(string onlyPara)

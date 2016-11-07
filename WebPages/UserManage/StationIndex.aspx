@@ -43,7 +43,7 @@
                     { display: '岗位全名', name: 'unit_fullname' },
                     { display: '类型', name: 'child_type', minWidth: 140 },
                     { display: '所属部门', name: 'pid',render:f_render_pid },
-                    { display: '创建时间', name: 'createon' },
+                    { display: '创建时间', name: 'createon',render:g_render4time },
                      { display: '备注', name: 'remark' }
                 ],
                 url:"../NB_JsonHttp.aspx?oprtype=GetStationList4Grid",

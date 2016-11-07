@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="resources/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="Components/NBersFileServices/jquery.uploadify.js" type="text/javascript"></script>
+    <link href="Components/NBersFileServices/uploadify.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $("#file_upload").uploadify({
+                'formData': {
+                    'timestamp' : Math.random(),
+                    'token': "wonder4",
+                    'fileSize': "999",
+                    'fkGuid':"123456",
+                },
+                'auto': false,
+                'swf': 'resources/uploadify/uploadify.swf',
+                'uploader': 'Components/NBersFileServices/FileHandler.ashx',
+                'buttonText': '上传',
+                'removeCompleted': false,
+                'onCancel': function (file) {
+                    alert('The file ' + file.name + ' was cancelled.');
+                }
+            });
+
+            $(document).on("input.btn_upload", "click", function () {
+                $('#file_upload').uploadify('upload', '*')
+            });
+        });
+        function btn_click() {
+            $('#file_upload').uploadify('upload', '*')
+        }
+    </script>
+</head>
+<body>
+    <input type="file" name="file_upload" id="file_upload" />
+    <input class="btn_upload" type="button" name="btn_upfiles" value="上传"  onclick="btn_click()"/>
+</body>
+</html>

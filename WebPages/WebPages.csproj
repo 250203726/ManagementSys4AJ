@@ -535,7 +535,18 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
+    <Content Include="Components\NBersFileServices\img\ico-file-del.png" />
+    <Content Include="Components\NBersFileServices\img\ico-files.png" />
+    <Content Include="Components\NBersFileServices\button_image_url.png" />
+    <Content Include="Components\NBersFileServices\jquery.uploadify.js" />
+    <Content Include="Components\NBersFileServices\jquery.uploadify.min.js" />
+    <Content Include="Components\NBersFileServices\uploadify-cancel.png" />
+    <Content Include="Components\NBersFileServices\uploadify.css" />
+    <Content Include="Components\NBersFileServices\uploadify.swf" />
+    <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
+    <Content Include="test.html" />
+    <Content Include="UnitManage\PaperOfSuperior.aspx" />
     <Content Include="UserManage\StationIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\UserInfo.aspx" />
@@ -1031,6 +1042,9 @@
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Components\NBersFileServices\DownloadHandler.ashx.cs">
+      <DependentUpon>DownloadHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1053,6 +1067,16 @@
       <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Components\NBersFileServices\FileHandler.ashx.cs">
+      <DependentUpon>FileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemManage\MenuEdit.aspx.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\MenuEdit.aspx.designer.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1066,6 +1090,13 @@
     </Compile>
     <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\PaperOfSuperior.aspx.cs">
+      <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\PaperOfSuperior.aspx.designer.cs">
+      <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserManage\StationIndex.aspx.cs">
       <DependentUpon>StationIndex.aspx</DependentUpon>
@@ -1137,6 +1168,8 @@
     <Content Include="error\403.html" />
     <Content Include="error\404.html" />
     <Content Include="error\405.html" />
+    <Content Include="Components\NBersFileServices\FileHandler.ashx" />
+    <Content Include="Components\NBersFileServices\DownloadHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

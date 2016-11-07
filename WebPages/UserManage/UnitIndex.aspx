@@ -42,7 +42,7 @@
                     { display: '部门名称', name: 'unit_name', align: 'left' },
                     { display: '部门全名', name: 'unit_fullname' },
                     { display: '类型', name: 'child_type', minWidth: 140 },
-                    { display: '创建时间', name: 'createon' },
+                    { display: '创建时间', name: 'createon' ,render:g_render4time},
                      { display: '备注', name: 'remark' }
                 ],
                 //data:grid_data.data,
@@ -212,6 +212,7 @@
             f.setData(data);
         }
 
+       
   </script> 
 </head>
 <body style="overflow-x:hidden; padding:2px;">

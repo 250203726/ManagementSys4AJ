@@ -63,7 +63,8 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public List<MenuModel> getParentMenus(UserModel user)
         {
-            return Query("parentId=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
+            return Query("parentId=0 and group_id=0 ");
+          //  return Query("parentId=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
         }
         /// <summary>
         /// 获取用户的所有子菜单
