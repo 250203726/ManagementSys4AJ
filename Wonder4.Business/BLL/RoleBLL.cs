@@ -48,5 +48,10 @@ namespace N_Bers.Business.BLL
         {
             throw new NotImplementedException();
         }
+
+        public RoleModel getByMax() {
+            string queryStr = "select * from nbers_role where id =(select max(id) from nbers_role )";
+            return CPQuery.From(queryStr).ToList<RoleModel>()[0];
+        }
     }
 }

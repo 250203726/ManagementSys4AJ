@@ -35,7 +35,6 @@
                 toolbar:     { items:  <%= buttonJson %>    }
             });
             
-            
         });
         //新增
         function AddItem(){
@@ -52,6 +51,9 @@
             window['f']=$('#myform').ligerForm();
             if(state==1)//新增
             {
+                //初始化表格
+                var dataNull={name: "", status: 1, id: 0};
+                f.setData(dataNull);
                 var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
                 //菜单树加载
                 window['t'] = $("#authTree").ligerTree({
@@ -63,9 +65,7 @@
                     textFieldName: 'name',
                     onCheck:onCheck
                 });
-                //初始化表格
-                var dataNull={name: "", status: 1, id: 0};
-                f.setData(dataNull);
+                
                 //打开对话框
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 680, title: "新增",
@@ -74,18 +74,44 @@
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
-
             }
             else if(state==2)//编辑
             {
                 var node = g.getSelectedRow();//menuTree.getSelected();
-               
                 if(node){
                     //初始化表格
-                    var data = GetDataByAjax("../NB_JsonHttp.aspx", "getRoleById", node.id);
-                    //找到这个角色对应的所有权限
-                    var alist;
-                    f.setData(data.data);
+                    var data= GetDataByAjax("../NB_JsonHttp.aspx", "getRoleMenuByRoleId", node.id).data;
+                    //角色实体
+                    var Roledata =data.Role;
+                    f.setData(Roledata);
+                    //设置角色权限数据
+                    var Authdata=data.Auth;
+                    var menudata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus").data;
+                    var treejson="[";
+                    $.each(menudata,function(n,value){
+                        //var menu=this;
+                        //treejson+='{"id":'+menu.id+',"pid":'+menu.parentId+',"text":"'+menu.name+'",';
+                        $.each(Authdata,function(x,xvalue){
+                            if(value.id==xvalue.id)
+                                //treejson+='"ischecked":true,';
+                                value.ischecked=true;
+                        });
+
+                        //treejson+='},';
+                    });
+                   // treejson+="]";
+                    //var treedata= JSON.parse(treejson);
+                    //菜单树加载
+                    window['t'] = $("#authTree").ligerTree({
+                        data:menudata, 
+                        checkbox: true,
+                        dFieldName: 'id',
+                        textFieldName: 'name',
+                        isExpand: 2,
+                        parentIDFieldName :'parentId',
+                        onCheck:onCheck
+                    });
+
                     //打开对话框
                     $.ligerDialog.open({
                         target: $("#mytarget"), width: 680, title: "编辑",
@@ -134,7 +160,7 @@
         }
         //点击菜单树对应的操作
         function onCheck(note, checked){
-            var nodes=t.t.getChecked();
+            var nodes=t.getChecked();
             var v="";
             for(var i=0;i<nodes.length;i++){
                 v+=nodes[i].data.id + ",";
