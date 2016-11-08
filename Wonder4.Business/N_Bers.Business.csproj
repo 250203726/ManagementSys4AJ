@@ -17,9 +17,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\WebPages\bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\N_Bers.Business.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AccessBLL.cs" />
+    <Compile Include="BLL\ArticleBLL.cs" />
     <Compile Include="BLL\IBusinessBLL.cs" />
     <Compile Include="BLL\MenuBLL.cs" />
     <Compile Include="BLL\MyUnitBLL.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="Model\AccessModel.cs" />
     <Compile Include="Core\BaseConst.cs" />
     <Compile Include="Core\MyHttpResult.cs" />
+    <Compile Include="Model\ArticleModel.cs" />
     <Compile Include="Model\AttachmentsModel.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />

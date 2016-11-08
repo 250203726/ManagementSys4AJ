@@ -10,6 +10,6 @@
 namespace WebPages.SystemManage {
     
     
-    public partial class MenuIndex {
+    public partial class MenuIndex_bak {
     }
 }

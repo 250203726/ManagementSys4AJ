@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NB_JsonHttp.aspx.cs" Inherits="WebPages.NB_JsonHttp" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NB_JsonHttp.aspx.cs" Inherits="WebPages.NB_JsonHttp"  ValidateRequest="false"%>
 
 <!DOCTYPE html>
 

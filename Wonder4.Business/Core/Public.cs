@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 
 namespace N_Bers.Business.Core
@@ -29,9 +30,7 @@ namespace N_Bers.Business.Core
         /// <returns></returns>
         public static string GetBaseDirectory()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-
-            path = path.Replace(@"\bin\", @"\").Replace(@"\bin", @"\");
+            string path =HttpContext.Current.Server.MapPath("~");
 
             return path;
         }

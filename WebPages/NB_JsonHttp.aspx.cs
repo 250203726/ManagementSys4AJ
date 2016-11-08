@@ -107,6 +107,12 @@ namespace WebPages
                 case "GETFILES4GRID":
                     retJsonStr = GetFiles4Grid(onlyPara);
                     break;
+                case "SAVEARTICLE":
+                    retJsonStr = SaveArticle(getPostStr());
+                    break;
+                case "GETARTICLE4GRID":
+                    retJsonStr = GetArticle4Grid(onlyPara);
+                    break;
                 default:
                     break;
             }
@@ -114,6 +120,42 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        private string GetArticle4Grid(string onlyPara)
+        {
+            var fileList = (new ArticleBLL()).Query(" art_type='" + onlyPara + "'");
+            var grid = new
+            {
+                Rows = fileList,
+                Total = fileList.Count
+            };
+            return JsonExtensions.ToJson(grid);
+        }
+
+        private string SaveArticle(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return new MyHttpResult(false, "入参不符合要求").ToString();
+            }
+            
+            ArticleModel artM = JsonExtensions.FromJson<ArticleModel>(input);
+
+            MyHttpResult myRtn;
+            if (artM.id==0)
+            {
+                var user = (UserModel)Public.User_Info;
+                artM.createby = user.id;
+                artM.create_user = user.nickname;
+                artM.create_date = DateTime.Now;
+                myRtn = new MyHttpResult(artM.Insert() > 0 ? true : false, "");
+            }
+            else
+            {
+                myRtn = new MyHttpResult(artM.Update() > 0 ? true : false, "");
+            }
+            return myRtn.ToString();
         }
 
         /// <summary>

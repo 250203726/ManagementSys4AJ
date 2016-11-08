@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages.SystemManage {
+namespace WebPages.UnitManage {
     
     
-    public partial class MenuIndex {
+    public partial class WorkSummary {
     }
 }

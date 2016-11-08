@@ -90,6 +90,7 @@ function escape(str)
 */
 function GetDataByAjax(sfile, oprtype, strkey, strkey2, args) {
     if (sfile == "") { sfile = "NB_JsonHttp.aspx"; }
+    oprtype = oprtype || '';
     strkey = strkey || '';
     strkey2 = strkey2 || '';
     var returnValue;

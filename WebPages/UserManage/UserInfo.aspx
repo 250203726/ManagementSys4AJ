@@ -31,7 +31,7 @@
                      { display: "邮箱", name: "email", type: "text", labelAlign: "right" },
                       { display: "电话", name: "phone", type: "digits", labelAlign: "right", newline: false },
                      {
-                         display: "用户类型", name: "type_id", type: "select", labelAlign: "right", newline: true, options: {
+                         display: "用户类型", name: "type_id", type: "select", labelAlign: "right", comboboxName: "type_id",newline: true, options: {
                              valueFieldID: "text",
                              data: [
                                  {
@@ -52,7 +52,7 @@
                 ],
             });
 
-            f.setEnabled(["account"], false);
+            f.setEnabled(["account", "type_id"], false);
             f.setData(user_info.data);
 
             $("#pageloading").hide();

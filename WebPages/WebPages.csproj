@@ -42,7 +42,6 @@
     <Reference Include="N_Bers.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\N_Bers.Business.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -535,6 +534,208 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
+    <Content Include="Components\NBersEditor\EditorView.aspx" />
+    <Content Include="Components\NBersEditor\kindeditor-all-min.js" />
+    <Content Include="Components\NBersEditor\kindeditor-all.js" />
+    <Content Include="Components\NBersEditor\kindeditor-min.js" />
+    <Content Include="Components\NBersEditor\kindeditor.js" />
+    <Content Include="Components\NBersEditor\lang\ar.js" />
+    <Content Include="Components\NBersEditor\lang\en.js" />
+    <Content Include="Components\NBersEditor\lang\ko.js" />
+    <Content Include="Components\NBersEditor\lang\zh_CN.js" />
+    <Content Include="Components\NBersEditor\lang\zh_TW.js" />
+    <Content Include="Components\NBersEditor\plugins\anchor\anchor.js" />
+    <Content Include="Components\NBersEditor\plugins\autoheight\autoheight.js" />
+    <Content Include="Components\NBersEditor\plugins\baidumap\baidumap.js" />
+    <Content Include="Components\NBersEditor\plugins\baidumap\index.html" />
+    <Content Include="Components\NBersEditor\plugins\baidumap\map.html" />
+    <Content Include="Components\NBersEditor\plugins\clearhtml\clearhtml.js" />
+    <Content Include="Components\NBersEditor\plugins\code\code.js" />
+    <Content Include="Components\NBersEditor\plugins\code\prettify.css" />
+    <Content Include="Components\NBersEditor\plugins\code\prettify.js" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\emoticons.js" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\0.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\1.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\10.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\100.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\101.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\102.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\103.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\104.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\105.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\106.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\107.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\108.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\109.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\11.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\110.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\111.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\112.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\113.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\114.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\115.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\116.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\117.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\118.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\119.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\12.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\120.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\121.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\122.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\123.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\124.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\125.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\126.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\127.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\128.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\129.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\13.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\130.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\131.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\132.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\133.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\134.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\14.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\15.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\16.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\17.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\18.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\19.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\2.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\20.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\21.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\22.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\23.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\24.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\25.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\26.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\27.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\28.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\29.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\3.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\30.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\31.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\32.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\33.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\34.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\35.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\36.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\37.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\38.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\39.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\4.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\40.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\41.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\42.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\43.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\44.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\45.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\46.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\47.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\48.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\49.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\5.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\50.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\51.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\52.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\53.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\54.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\55.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\56.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\57.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\58.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\59.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\6.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\60.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\61.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\62.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\63.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\64.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\65.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\66.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\67.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\68.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\69.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\7.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\70.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\71.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\72.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\73.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\74.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\75.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\76.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\77.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\78.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\79.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\8.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\80.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\81.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\82.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\83.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\84.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\85.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\86.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\87.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\88.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\89.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\9.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\90.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\91.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\92.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\93.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\94.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\95.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\96.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\97.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\98.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\99.gif" />
+    <Content Include="Components\NBersEditor\plugins\emoticons\images\static.gif" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\filemanager.js" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\images\file-16.gif" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\images\file-64.gif" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\images\folder-16.gif" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\images\folder-64.gif" />
+    <Content Include="Components\NBersEditor\plugins\filemanager\images\go-up.gif" />
+    <Content Include="Components\NBersEditor\plugins\flash\flash.js" />
+    <Content Include="Components\NBersEditor\plugins\image\image.js" />
+    <Content Include="Components\NBersEditor\plugins\image\images\align_left.gif" />
+    <Content Include="Components\NBersEditor\plugins\image\images\align_right.gif" />
+    <Content Include="Components\NBersEditor\plugins\image\images\align_top.gif" />
+    <Content Include="Components\NBersEditor\plugins\image\images\refresh.png" />
+    <Content Include="Components\NBersEditor\plugins\insertfile\insertfile.js" />
+    <Content Include="Components\NBersEditor\plugins\lineheight\lineheight.js" />
+    <Content Include="Components\NBersEditor\plugins\link\link.js" />
+    <Content Include="Components\NBersEditor\plugins\map\map.html" />
+    <Content Include="Components\NBersEditor\plugins\map\map.js" />
+    <Content Include="Components\NBersEditor\plugins\media\media.js" />
+    <Content Include="Components\NBersEditor\plugins\multiimage\images\image.png" />
+    <Content Include="Components\NBersEditor\plugins\multiimage\images\select-files-en.png" />
+    <Content Include="Components\NBersEditor\plugins\multiimage\images\select-files-zh_CN.png" />
+    <Content Include="Components\NBersEditor\plugins\multiimage\images\swfupload.swf" />
+    <Content Include="Components\NBersEditor\plugins\multiimage\multiimage.js" />
+    <Content Include="Components\NBersEditor\plugins\pagebreak\pagebreak.js" />
+    <Content Include="Components\NBersEditor\plugins\plainpaste\plainpaste.js" />
+    <Content Include="Components\NBersEditor\plugins\preview\preview.js" />
+    <Content Include="Components\NBersEditor\plugins\quickformat\quickformat.js" />
+    <Content Include="Components\NBersEditor\plugins\table\table.js" />
+    <Content Include="Components\NBersEditor\plugins\template\html\1.html" />
+    <Content Include="Components\NBersEditor\plugins\template\html\2.html" />
+    <Content Include="Components\NBersEditor\plugins\template\html\3.html" />
+    <Content Include="Components\NBersEditor\plugins\template\template.js" />
+    <Content Include="Components\NBersEditor\plugins\wordpaste\wordpaste.js" />
+    <Content Include="Components\NBersEditor\RichTextEditor.html" />
+    <Content Include="Components\NBersEditor\themes\common\anchor.gif" />
+    <Content Include="Components\NBersEditor\themes\common\blank.gif" />
+    <Content Include="Components\NBersEditor\themes\common\flash.gif" />
+    <Content Include="Components\NBersEditor\themes\common\loading.gif" />
+    <Content Include="Components\NBersEditor\themes\common\media.gif" />
+    <Content Include="Components\NBersEditor\themes\common\rm.gif" />
+    <Content Include="Components\NBersEditor\themes\default\background.png" />
+    <Content Include="Components\NBersEditor\themes\default\default.css" />
+    <Content Include="Components\NBersEditor\themes\default\default.png" />
+    <Content Include="Components\NBersEditor\themes\qq\editor.gif" />
+    <Content Include="Components\NBersEditor\themes\qq\qq.css" />
+    <Content Include="Components\NBersEditor\themes\simple\simple.css" />
     <Content Include="Components\NBersFileServices\img\ico-file-del.png" />
     <Content Include="Components\NBersFileServices\img\ico-files.png" />
     <Content Include="Components\NBersFileServices\button_image_url.png" />
@@ -544,9 +745,11 @@
     <Content Include="Components\NBersFileServices\uploadify.css" />
     <Content Include="Components\NBersFileServices\uploadify.swf" />
     <Content Include="SystemManage\MenuEdit.aspx" />
+    <Content Include="SystemManage\MenuIndex_bak.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
     <Content Include="UnitManage\PaperOfSuperior.aspx" />
+    <Content Include="UnitManage\WorkSummary.aspx" />
     <Content Include="UserManage\StationIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\UserInfo.aspx" />
@@ -1042,6 +1245,19 @@
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Components\NBersEditor\EditorView.aspx.cs">
+      <DependentUpon>EditorView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\NBersEditor\EditorView.aspx.designer.cs">
+      <DependentUpon>EditorView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\NBersEditor\KindeHandler.ashx.cs">
+      <DependentUpon>KindeHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\NBersFileServices\DeleteFileHandle.ashx.cs">
+      <DependentUpon>DeleteFileHandle.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Components\NBersFileServices\DownloadHandler.ashx.cs">
       <DependentUpon>DownloadHandler.ashx</DependentUpon>
     </Compile>
@@ -1077,6 +1293,13 @@
     <Compile Include="SystemManage\MenuEdit.aspx.designer.cs">
       <DependentUpon>MenuEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SystemManage\MenuIndex_bak.aspx.cs">
+      <DependentUpon>MenuIndex_bak.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\MenuIndex_bak.aspx.designer.cs">
+      <DependentUpon>MenuIndex_bak.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1097,6 +1320,13 @@
     </Compile>
     <Compile Include="UnitManage\PaperOfSuperior.aspx.designer.cs">
       <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\WorkSummary.aspx.cs">
+      <DependentUpon>WorkSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\WorkSummary.aspx.designer.cs">
+      <DependentUpon>WorkSummary.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserManage\StationIndex.aspx.cs">
       <DependentUpon>StationIndex.aspx</DependentUpon>
@@ -1170,6 +1400,8 @@
     <Content Include="error\405.html" />
     <Content Include="Components\NBersFileServices\FileHandler.ashx" />
     <Content Include="Components\NBersFileServices\DownloadHandler.ashx" />
+    <Content Include="Components\NBersFileServices\DeleteFileHandle.ashx" />
+    <Content Include="Components\NBersEditor\KindeHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

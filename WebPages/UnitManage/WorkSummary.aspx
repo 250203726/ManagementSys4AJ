@@ -1,12 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PaperOfSuperior.aspx.cs" Inherits="WebPages.UnitManage.PaperOfSuperior" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WorkSummary.aspx.cs" Inherits="WebPages.UnitManage.WorkSummary" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>上级来文</title>
-     <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <title>工作总结</title>
+         <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
@@ -23,13 +23,13 @@
                 height: '99%',
                 checkbox:true,
                 columns: [
-                    { display: '文件名称', name: 'DocName', minWidth: 460, align: 'left', render: g_render4name },
-                    { display: '上传用户', name: 'CreateUser', width: 150 },
-                    { display: '文件大小', name: 'Filesize', width: 120, render: g_render4filesize },
-                    { display: '上传时间', name: 'CreateOn', width:120,render: g_render4time }
+                    { display: '文章标题', name: 'title', minWidth: 460, align: 'left', render: g_render4name },
+                    { display: '摘要', name: 'description', width: 150 },
+                    { display: '作者', name: 'create_user', width: 120, },
+                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                 ],
                 //data:grid_data.data,
-                url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=上级来文",
+                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=岗位职责",
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
@@ -48,19 +48,6 @@
                 //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
             });
 
-            //upfiles
-             $("#file_upload").uploadify({
-                 'formData': {
-                     'timestamp': Math.random(),
-                     'token': "wonder4",
-                     'fkGuid': "123456",
-                     'docType': '上级来文',
-                 },
-                 'swf': '../Components/NBersFileServices/uploadify.swf',
-                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
-                 'buttonText': '上传',
-                 'removeCompleted': false,
-             });
 
             $("#pageloading").hide();
         });
@@ -100,30 +87,15 @@
             }
         }
 
-        //文件大小转换 add by wonder4 2016年11月5日15:41:23
-        function g_render4filesize(rowdata, index, colvalue) {
-            var fileSize = Math.round(colvalue / 1024);
-            var suffix = 'KB';
-            if (fileSize > 1000) {
-                fileSize = Math.round(fileSize / 1000);
-                suffix = 'MB';
-            }
-            var fileSizeParts = fileSize.toString().split('.');
-            fileSize = fileSizeParts[0];
-            if (fileSizeParts.length > 1) {
-                fileSize += '.' + fileSizeParts[1].substr(0, 2);
-            }
-            fileSize += suffix;
-            return fileSize;
-        }
+       
 
         
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) +"...": colvalue;
-            return "<a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            return "<a href='../Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
         }
-    </script>
+       </script>
 </head>
 <body style="overflow-x:hidden; padding:2px;">
 <div class="l-loading" style="display:block" id="pageloading"></div>

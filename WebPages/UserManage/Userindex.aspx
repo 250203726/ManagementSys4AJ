@@ -7,8 +7,10 @@
     <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
+
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
+
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <style type="text/css">
         #layout1{  width:100%;margin:0; padding:0;  }
@@ -31,7 +33,7 @@
         var station_list;
         $(function () {
             var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
-            $("#layout1").ligerLayout({ leftWidth: 250, height: '100%', rightWidth :0});
+            $("#layout1").ligerLayout({ leftWidth: 210, height: '100%', rightWidth :0});
 
             var tree_data = GetDataByAjax('../NB_JsonHttp.aspx', "GetUnits4Tree", "");
             var myaccount = '../assets/lib/ligerUI/skins/icons/department.png';
@@ -66,12 +68,11 @@
                 checkbox: false,
                 onClick: onClick,
             });
- 
-            //var user_grid = GetDataByAjax('../NB_JsonHttp.aspx', "getusers", "");
+
 
             window['g'] =
             $("#maingrid").ligerGrid({
-                height: '99.5%',
+                height: '99.8%',
                 width:"100%",
                 columns: [
                     { display: '用户编码', name: 'account', align: 'left' },
@@ -243,20 +244,11 @@
         }
   </script> 
 </head>
-<body style="overflow-x:hidden; padding:5px; margin:0; padding-bottom:15px;">
+<body style="overflow-x:hidden; padding:5px; margin:0;">
     <div id="layout1">
         <div  position="left" title="组织结构">
              <ul id="tree1"></ul>
         </div>
-<%--        <div class="l-layout-left" style="left: 0px; width:19.6%; top: 0px; height: 100%">
-            <div class="l-layout-header">
-                <div class="l-layout-header-toggle"></div>
-                <div class="l-layout-header-inner">组织结构</div>
-            </div>
-            <div position="left" class="l-layout-content">
-               <ul id="tree1"></ul>
-                <div class="l-tree-loading"></div>
-            </div></div>--%>
         <div position="center" title="用户列表">
             <div id="maingrid"></div>
       </div>

@@ -21,6 +21,7 @@ namespace WebPages.Components.NBersFileServices
 
             string fileName = DateTime.Now.ToFileTime() + Path.GetExtension(docName);
             string fkGuid = context.Request.Form["fkGuid"];//文档所属的业务主键标识
+            string docType = context.Request.Form["docType"];//文档类型
             string relativePath=string.Empty;
 
             string sFileName = GenerateFileName(fileName);
@@ -39,6 +40,7 @@ namespace WebPages.Components.NBersFileServices
             attModel.DocName = docName;
             attModel.FileName = sFileName;
             attModel.FkGUID =Convert.ToInt32( fkGuid);
+            attModel.DocType = docType;
 
             attModel.Location = relativePath;
             attModel.Filesize = hpf.ContentLength.ToString();

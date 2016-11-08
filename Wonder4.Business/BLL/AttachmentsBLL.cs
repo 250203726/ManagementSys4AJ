@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Wonder4.Map.Extensions.DAL;
@@ -21,8 +22,22 @@ namespace N_Bers.Business.BLL
             {
                 return 0;
             }
-            string sqlStr = "DELETE FROM dbo.nbers_Attachments WHERE id IN({0})";
-            return CPQuery.From(string.Format(sqlStr, ids)).ExecuteNonQuery();
+            List<AttachmentsModel> attList = Query(string.Format("id in ({0})",ids));
+            try
+            {
+                foreach (AttachmentsModel item in attList)
+                {
+                    File.Delete(Path.Combine(Core.Public.GetBaseDirectory(),item.Location+item.FileName));
+                    item.Delete();
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+
+            return 0;
         }
 
         public AttachmentsModel GetModel(int id)

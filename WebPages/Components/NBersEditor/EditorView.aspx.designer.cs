@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages.SystemManage {
+namespace WebPages.Components.NBersEditor {
     
     
-    public partial class MenuIndex {
+    public partial class EditorView {
     }
 }

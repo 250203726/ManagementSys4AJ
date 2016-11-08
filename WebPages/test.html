@@ -13,17 +13,13 @@
                 'formData': {
                     'timestamp' : Math.random(),
                     'token': "wonder4",
-                    'fileSize': "999",
-                    'fkGuid':"123456",
+                    'fkGuid': "123456",
+                    'docType':'上级来文',
                 },
-                'auto': false,
                 'swf': 'resources/uploadify/uploadify.swf',
                 'uploader': 'Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
                 'removeCompleted': false,
-                'onCancel': function (file) {
-                    alert('The file ' + file.name + ' was cancelled.');
-                }
             });
 
             $(document).on("input.btn_upload", "click", function () {
@@ -37,6 +33,8 @@
 </head>
 <body>
     <input type="file" name="file_upload" id="file_upload" />
-    <input class="btn_upload" type="button" name="btn_upfiles" value="上传"  onclick="btn_click()"/>
+    <!--<input class="btn_upload" type="button" name="btn_upfiles" value="上传"  onclick="btn_click()"/>-->
+
+
 </body>
 </html>

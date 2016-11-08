@@ -1,0 +1,632 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>N_Bers.Business</name>
+    </assembly>
+    <members>
+        <member name="T:N_Bers.Business.BLL.AccessBLL">
+            <summary>
+            管理角色的菜单权限
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.BLL.IBusinessBLL`1">
+            <summary>
+            业务层接口，所有业务接口都要实现
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.Insert(`0)">
+            <summary>
+            新增
+            </summary>
+            <param name="t"></param>
+        </member>
+        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.Update(`0)">
+            <summary>
+            修改
+            </summary>
+            <param name="t"></param>
+        </member>
+        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.Delete(`0)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.Query(System.String)">
+            <summary>
+            查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.CheckPageMenu(N_Bers.Business.Model.UserModel,N_Bers.Business.Model.MenuModel)">
+            <summary>
+            验证页面权限
+            </summary>
+            <param name="user"></param>
+            <param name="menu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.getParentMenus(N_Bers.Business.Model.UserModel)">
+            <summary>
+            获取用户的一级菜单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.getSubMenus(N_Bers.Business.Model.UserModel)">
+            <summary>
+            获取用户的所有子菜单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.getButtonMenus(N_Bers.Business.Model.UserModel,N_Bers.Business.Model.MenuModel)">
+            <summary>
+            获取用户的某个页面的按钮权限json字符串
+            </summary>
+            <param name="user"></param>
+            <param name="parentNodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.getByUserId(System.Int32)">
+            <summary>
+            通过角色Id得到menu列表
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:N_Bers.Business.BLL.MenuBLL.menu">
+            <summary>
+            菜单根目录内部类
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.BLL.MenuBLL.menuChildren">
+            <summary>
+             菜单二级目录内部类
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.BLL.MenuBLL.getMenu(N_Bers.Business.Model.UserModel)">
+            <summary>
+            根据用户id获得菜单的json
+            </summary>
+            <param name="userid">用户Id</param>
+            <returns>二级菜单indexdata的json数据</returns>
+        </member>
+        <member name="T:N_Bers.Business.BLL.RoleUserBLL">
+            <summary>
+            管理用户的角色
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.BLL.RoleUserBLL.assignRole2User(N_Bers.Business.Model.RoleModel,N_Bers.Business.Model.UserModel)">
+            <summary>
+            给用户分配角色
+            </summary>
+            <param name="role">分配的角色</param>
+            <param name="user">指定的用户</param>
+            <returns></returns>
+        </member>
+        <member name="T:N_Bers.Business.BLL.ValidAccessBLL">
+            <summary>
+            验证权限的业务
+            
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.BLL.ValidAccessBLL.validPage(System.String,System.String)">
+            <summary>
+            验证页面权限
+            </summary>
+            <param name="userId"></param>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.BLL.ValidAccessBLL.getButton(N_Bers.Business.Model.UserModel,System.String)">
+            <summary>
+            获取按钮json
+            </summary>
+            <param name="user"></param>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:N_Bers.Business.Core.CryptoHelper">
+            <summary>
+            “对称加密算法”的封装工具类
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.CryptoHelper.Encrypt(System.String,System.Security.Cryptography.SymmetricAlgorithm)">
+            <summary>
+            加密字符串
+            </summary>
+            <param name="text">等待加密的文本</param>
+            <param name="sa">“对称加密算法”实例，要求已设置过KEY和IV</param>
+            <returns>返回Base64编码的结果</returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.CryptoHelper.Encrypt(System.Byte[],System.Security.Cryptography.SymmetricAlgorithm)">
+            <summary>
+            加密字节数组
+            </summary>
+            <param name="input"></param>
+            <param name="sa">“对称加密算法”实例，要求已设置过KEY和IV</param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.CryptoHelper.Decrypt(System.String,System.Security.Cryptography.SymmetricAlgorithm)">
+            <summary>
+            解密一个以Base64编码的加密字符串
+            </summary>
+            <param name="base64">等待解密的BASE64文本</param>
+            <param name="sa">“对称加密算法”实例，要求已设置过KEY和IV</param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.CryptoHelper.Decrypt(System.Byte[],System.Security.Cryptography.SymmetricAlgorithm)">
+            <summary>
+            解密字节数组
+            </summary>
+            <param name="input"></param>
+            <param name="sa">“对称加密算法”实例，要求已设置过KEY和IV</param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.CryptoHelper.SetKeyIV(System.Security.Cryptography.SymmetricAlgorithm,System.String)">
+            <summary>
+            根据指定的密码，设置“加密算法”的KEY和IV
+            </summary>
+            <param name="sa">“对称加密算法”实例</param>
+            <param name="password">加密或解密的密码</param>
+        </member>
+        <member name="T:N_Bers.Business.Core.TripleDESHelper">
+            <summary>
+            对TripleDES封装的工具类
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.TripleDESHelper.Encrypt(System.String,System.String)">
+            <summary>
+            使用TripleDES加密字符串
+            </summary>
+            <param name="text"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.TripleDESHelper.Encrypt(System.Byte[],System.String)">
+            <summary>
+            使用TripleDES加密字节数组
+            </summary>
+            <param name="input"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.TripleDESHelper.Decrypt(System.String,System.String)">
+            <summary>
+            使用TripleDES解密一个以Base64编码的加密字符串
+            </summary>
+            <param name="base64"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.TripleDESHelper.Decrypt(System.Byte[],System.String)">
+            <summary>
+            使用TripleDES解密字节数组
+            </summary>
+            <param name="input"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.AesHelper.MD5Encrypt(System.String)">
+              <summary>
+              给一个字符串进行MD5加密
+              </summary>
+              <param   name="strText">待加密字符串</param>
+              <returns>加密后的字符串</returns>
+        </member>
+        <member name="T:N_Bers.Business.Core.Public">
+            <summary>
+            功能：公共基础 
+            1、处理 Session相关
+            2、超级管理员判断
+            by wonder4 2016年10月31日12:24:46
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Core.Public.SessionType">
+            <summary>
+            session字段名称，用枚举值来规范
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.Public.GetBaseDirectory">
+            <summary>
+            获取网站的物理文件目录 by wonder4 2016年10月31日12:24:46
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.Public.IsAdmin">
+            <summary>
+            判断当前用户是不是超级管理员，需要优化，通过其他属性来判断，不能通过code来界定。
+            by wonder4 2016年10月31日12:24:46
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:N_Bers.Business.Core.Public.GetSessionValue(N_Bers.Business.Core.Public.SessionType)">
+            <summary>
+            获取context的session对象 by wonder4 2016年10月31日12:24:46
+            </summary>
+            <param name="sessionType"></param>
+            <returns></returns>
+        </member>
+        <member name="P:N_Bers.Business.Core.Public.User_Info">
+            <summary>
+            获取session中的用户信息 by wonder4 2016年10月31日12:24:46
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.Public.Logout">
+            <summary>
+            注销系统
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Core.BaseConst">
+            <summary>
+            全局常量，用作系统参数
+            </summary>
+        </member>
+        <member name="F:N_Bers.Business.Core.BaseConst.USERSESSION">
+            <summary>
+            用户session值
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Core.MyHttpResult.result">
+            <summary>
+            result 表示请求是否处理成功，ture表示成功，false表示失败
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Core.MyHttpResult.msg">
+            <summary>
+            msg 服务器返回消息，当业务逻辑中需要返回的信息。
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Core.MyHttpResult.data">
+            <summary>
+            data 请求需要返回的数据，比如菜单异步请求的菜单数据，都在data中。
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.MyHttpResult.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:N_Bers.Business.Core.MyHttpResult.#ctor(System.Boolean,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="res"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:N_Bers.Business.Core.MyHttpResult.#ctor(System.Boolean,System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="res"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:N_Bers.Business.Core.MyHttpResult.#ctor(System.Boolean,System.Object,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="res"></param>
+            <param name="data"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="T:N_Bers.Business.Model.AccessModel">
+            <summary>
+            AccessModel实体类
+            </summary>
+        </member>
+        <member name="F:N_Bers.Business.Model.AccessModel._role_id">
+            <summary>
+            role_id
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AccessModel._node_id">
+            <summary>
+            node_id
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AccessModel._level">
+            <summary>
+            level
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AccessModel._pid">
+            <summary>
+            pid
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AccessModel._module">
+            <summary>
+            module
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._title">
+            <summary>
+            title
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._art_type">
+            <summary>
+            art_type
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._fkguid">
+            <summary>
+            art_type
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._content">
+            <summary>
+            content
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._istop">
+            <summary>
+            istop
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._status">
+            <summary>
+            status
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._create_date">
+            <summary>
+            create_date
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._createby">
+            <summary>
+            createby
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._create_user">
+            <summary>
+            create_user
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._ispublish">
+            <summary>
+            ispublish
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._remark">
+            <summary>
+            remark
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.ArticleModel._description">
+            <summary>
+            description
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._docname">
+            <summary>
+            DocName
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._fkguid">
+            <summary>
+            FkGUID
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._createby">
+            <summary>
+            CreateBy
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._createuser">
+            <summary>
+            CreateUser
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._createon">
+            <summary>
+            CreateOn
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._filename">
+            <summary>
+            FileName
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._location">
+            <summary>
+            Location
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._filesize">
+            <summary>
+            Filesize
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._url">
+            <summary>
+            URL
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._doctype">
+            <summary>
+            DocType
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.AttachmentsModel._remarks">
+            <summary>
+            Remarks
+            </summary>		
+        </member>
+        <member name="T:N_Bers.Business.Model.BusinessUnitModel">
+            <summary>
+            MyBusinessUnit:实体类(属性说明自动提取数据库字段的描述信息)
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.unit_name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.unit_fullname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.pid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.createby">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.createon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.unit_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.child_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.unit_duty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.unit_figure">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.BusinessUnitModel.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Model.MenuModel">
+            <summary>
+            MyMemu:实体类(属性说明自动提取数据库字段的描述信息)
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Model.RoleModel">
+            <summary>
+            role:实体类(属性说明自动提取数据库字段的描述信息)
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Model.RoleUserModel">
+            <summary>
+            role_user实体类
+            </summary>
+        </member>
+        <member name="F:N_Bers.Business.Model.RoleUserModel._role_id">
+            <summary>
+            role_id
+            </summary>		
+        </member>
+        <member name="F:N_Bers.Business.Model.RoleUserModel._user_id">
+            <summary>
+            user_id
+            </summary>		
+        </member>
+        <member name="T:N_Bers.Business.Model.UserInfo">
+            <summary>
+            UserInfo:实体类(属性说明自动提取数据库字段的描述信息)
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Model.UserModel">
+            <summary>
+            MyUser:实体类(属性说明自动提取数据库字段的描述信息)
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.account">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.bind_account">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.last_login_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.last_login_ip">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.login_count">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.verify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.create_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.update_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.type_id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:N_Bers.Business.Model.UserModel.phone">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:N_Bers.Business.Model.NbersBaseModel">
+            <summary>
+            支持orm实体类的insert update delete
+            </summary>
+        </member>
+    </members>
+</doc>
