@@ -1,34 +1,33 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MenuIndex.aspx.cs" Inherits="WebPages.SystemManage.MenuIndex" %>
 
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>菜单列表</title>
     <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
-    <link href="../resources/css/myform.css" rel="stylesheet" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
 
-    <script src="../assets/lib/ligerUI/js/plugins/ligerForm.js"></script>
-    <script src="../assets/lib/ligerUI/js/plugins/ligerComboBox.js"></script>
-    <script src="../assets/lib/ligerUI/js/plugins/ligerCheckBoxList.js"></script>
-    <script src="../assets/lib/ligerUI/js/plugins/ligerRadioList.js"></script>
-    <script src="../assets/lib/ligerUI/js/plugins/ligerListBox.js"></script>
     <style type="text/css">
         /*.height200 {
             height:200px;
         }*/
+        input[name=enable], input[name=group_id], input[name=levels] {
+        display:none;
+        }
     </style>
     <script type="text/javascript">
         var menuTree = null;
         var menuBar=null;
         $(function () {
             //初始化tree
+            var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
             var data = [];
             var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
             //菜单树加载
@@ -47,14 +46,65 @@
             menuBar = $("#menuBar").ligerToolBar({
                 items: <%= buttonJson %>
             });
-            f=$('#myform').ligerForm();
+            window['f'] = $("#myform").ligerForm({
+                inputWidth: 170, labelWidth: 90, space: 60,
+                fields: [
+                    { name: "id", type: "hidden", options: {value:"0"} },
+                    { display: "菜单名称", name: "name", type: "text", newline: false },
+                     { display: "父级菜单", name: "parentId", type: "text", newline: false },
+                       { display: "菜单简码", name: "code", type: "text", newline: false },
+                       { display: "模块简码", name: "moduleId", type: "text", newline: false },
+                       { display: "请求路径", name: "url", type: "text", newline: false },
+                       { display: "图标路径", name: "icon", type: "text", newline: false },
+                       { display: "层&nbsp;&nbsp;&nbsp;&nbsp;级", name: "levels", type: "select", newline: false, comboboxName: "levels",
+                           options: {
+                               data: [
+                                        {
+                                            id:"1",
+                                            text: "1层"
+                                        }, {
+                                            id: "2",
+                                            text: "2层"
+                                        }, {
+                                            id: "3",
+                                            text: "3层"
+                                        }
+                               ]},
+                       },
+                       { display: "显示顺序", name: "sortCode", type: "text", newline: false },
+                       { display: "是否启用", name: "enable", type: "select", newline: false, comboboxName: "enable",
+                           options: {
+                               data: [
+                                        {
+                                            id:"1",
+                                            text: "启用"
+                                        }, {
+                                            id: "0",
+                                            text: "停用"
+                                        }
+                               ]},
+                       },
+                    {
+                        display: "菜单类型 ", name: "group_id", type: "select", newline: false, comboboxName: "group_id",      options: {
+                            data: [
+                                {
+                                    id:"1",
+                                    text: "按钮"
+                                }, {
+                                    id: "0",
+                                    text: "菜单"
+                                }
+                            ]
+                        },
+                    }],           
+            });
         });
     
-        //初始化表格
-        function InitForm(data)
-        {
-            f.setData(data);
-        }
+    //初始化表格
+    function InitForm(data)
+    {
+        f.setData(data);
+    }
 
     //新增
     function AddItem(){
@@ -82,12 +132,12 @@
                     url:"",
                     paramss:"",
                     icon:"",
-                    levels:0,
-                    sortCode:0,
+                    levels:"1",
+                    sortCode:"0",
                     moduleId:"",
-                    enable:1,
-                    group_id:1,
-                    id:0
+                    enable:"1",
+                    group_id:"1",
+                    id:"0"
                 };
                 InitForm(dataNull);
                 //打开对话框
@@ -163,62 +213,6 @@
     <div id="menuTree"></div>
     <div id="mytarget" style="width: 99%; margin: 3px; display: none">
         <div id="myform">
-            <table class="op_tb">
-                <caption style="text-align: center;">
-                    <input type="hidden" name="id"  />
-                </caption>
-                <tbody>
-                    <tr>
-                        <td class="label">菜单名称：</td>
-                        <td>
-                            <input type="text" id="name" name="name" /></td>
-                        <td class="label">父级菜单：</td>
-                        <td><input type="text" name="parentId"  /></td>
-                    </tr>
-                    <tr>
-                        <td class="label">菜单简码：</td>
-                        <td>
-                            <input type="text" name="code" /></td>
-                        <td class="label">模块简码：</td>
-                        <td>
-                            <input type="text" name="moduleId" /></td>
-                    </tr>
-                    <tr>
-                        <td class="label">请求路径：</td>
-                        <td colspan="3">
-                            <input type="text" name="url" /></td>
-                    </tr>
-                    <tr>
-                        <td class="label">图标路径：</td>
-                        <td colspan="3">
-                            <input type="text" name="icon" /></td>
-                    </tr>
-                    <tr>
-                        <td class="label">层&nbsp;&nbsp;&nbsp;&nbsp;级：</td>
-                        <td>
-                            <input type="text" name="levels" /></td>
-                        <td class="label">显示顺序：</td>
-                        <td>
-                            <input type="text" name="sortCode" /></td>
-                    </tr>
-                    <tr>
-                        <td class="label">是否启用</td>
-                        <td >
-                            <select name="enable" validate="{required:true}">
-                                <option value="1" selected="selected">启用</option>
-                                <option value="0">停用</option>
-                            </select>
-                        </td>
-                        <td class="label">菜单类型</td>
-                        <td>
-                            <select name="group_id">
-                                <option value="1">按钮</option>
-                                <option value="0" selected="selected">菜单</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </body>

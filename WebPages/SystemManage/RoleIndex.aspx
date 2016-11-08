@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="robots" content="none" />
     <title>角色列表</title>
-   <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
+    <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
@@ -25,9 +25,9 @@
             window['g'] = $("#maingrid").ligerGrid({
                 height: '99%',
                 columns: [
-                    { display: '角色编号', name: 'id', align: 'left' },
-                    { display: '角色名', name: 'name' },
-                    { display: '状态', name: 'status' }
+                    { display: '角色编号', name: 'id', align: 'left',width :80, },
+                    { display: '角色名', name: 'name' ,width :150,},
+                    //{ display: '状态', name: 'status' }
                 ],
                 data: grid_data.data,
                 pageSize: 30,
@@ -52,7 +52,7 @@
             if(state==1)//新增
             {
                 //初始化表格
-                var dataNull={name: "", status: 1, id: 0};
+                var dataNull={name:' ',status: 1, id: 0};
                 f.setData(dataNull);
                 var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
                 //菜单树加载
@@ -63,12 +63,11 @@
                     isExpand:2,
                     parentIDFieldName: 'parentId',
                     textFieldName: 'name',
-                    onCheck:onCheck
+                    onCheck:onCheck,
                 });
-                
                 //打开对话框
                 $.ligerDialog.open({
-                    target: $("#mytarget"), width: 680, title: "新增",
+                    target: $("#mytarget"), width: 450, title: "新增",
                     buttons: [
                         { text: '确定', onclick: function (item, dialog) { f_save(dialog);  } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -114,7 +113,7 @@
 
                     //打开对话框
                     $.ligerDialog.open({
-                        target: $("#mytarget"), width: 680, title: "编辑",
+                        target: $("#mytarget"), width: 450, title: "编辑",
                         buttons: [
                             { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
                             { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -184,17 +183,17 @@
                         <td>
                             <input type="text" id="name" name="name" />
                         </td>
-                        <td class="label">状态：</td>
+                        <%--<td class="label">状态：</td>
                         <td>
-                            <input type="text" name="status" />
-                        </td>
+                            <input type="text" id="status" name="status" />
+                        </td>--%>
                     </tr>
                     <tr>
 	                    <td class="label" colspan="1">
 	                     	用户权限
 	                    </td>
 	                    <td colspan="3">
-	                    	<div style="height:400px;overflow: scroll;">
+	                    	<div style="height:300px;overflow: scroll;">
 								<div id="authTree" ></div>
 							</div>
 							<input type="hidden" name="auth" id="auth" value="<%= aList%>">
