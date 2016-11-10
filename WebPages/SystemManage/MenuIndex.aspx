@@ -85,15 +85,16 @@
                                ]},
                        },
                     {
-                        display: "菜单类型 ", name: "group_id", type: "select", newline: false, comboboxName: "group_id",      options: {
+                        display: "菜单类型 ", name: "group_id", type: "select", newline: false, comboboxName: "group_id",
+                        options: {
                             data: [
-                                {
-                                    id:"1",
-                                    text: "按钮"
-                                }, {
-                                    id: "0",
+                                 {
+                                    id:"0",
                                     text: "菜单"
-                                }
+                                 },{
+                                     id:"1",
+                                     text: "按钮"
+                                 }
                             ]
                         },
                     }],           
