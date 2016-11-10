@@ -152,6 +152,11 @@
             }
             else if(state==2)//编辑
             {
+                if(node.data.id==0)
+                {
+                    myTips("不能选择根节点！");
+                    return ;
+                }
                 //myTips("点击修改"+node.data.id);
                 //初始化表格
                 var data = GetDataByAjax("../NB_JsonHttp.aspx", "getMenuById", node.data.id);

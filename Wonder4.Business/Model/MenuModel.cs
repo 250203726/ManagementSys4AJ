@@ -24,16 +24,16 @@ namespace N_Bers.Business.Model
         private int _sortcode;
         private string _moduleid;
         private string _enable;
-        private int _group_id;
+        private string _group_id;
 
 		[DataColumn(Alias = "version",IsNullable=true)]
         public long version
         {
             get{ return _version; }
             set{ _version = value; }
-        }        
-	
-		[DataColumn(Alias = "parentId",IsNullable=false)]
+        }
+
+        [DataColumn(Alias = "parentId", IsNullable = false,DefaultValue="0")]
         public int parentId
         {
             get{ return _parentid; }
@@ -99,7 +99,7 @@ namespace N_Bers.Business.Model
         }        
 	
 		[DataColumn(Alias = "group_id",DefaultValue="0",IsNullable=true)]
-        public int group_id
+        public string group_id
         {
             get{ return _group_id; }
             set{ _group_id = value; }

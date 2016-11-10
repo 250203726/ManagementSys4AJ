@@ -446,7 +446,15 @@ namespace WebPages
         /// <returns></returns>
         public string getAllMenus()
         {
-            return new MyHttpResult(true, (new MenuBLL()).DoQuery("")).ToString();
+            List<MenuModel> menulist= new MenuBLL().DoQuery("");
+            MenuModel root=new MenuModel();
+            root.parentId=-1;
+            root.id=0;
+            root.name="根节点";
+            root.enable="1";
+            root.group_id="0";
+            menulist.Add(root);
+            return new MyHttpResult(true, menulist).ToString();
         }
 
         /// <summary>

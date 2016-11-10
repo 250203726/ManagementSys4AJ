@@ -863,6 +863,7 @@
     <Content Include="Components\NBersFileServices\uploadify-cancel.png" />
     <Content Include="Components\NBersFileServices\uploadify.css" />
     <Content Include="Components\NBersFileServices\uploadify.swf" />
+    <Content Include="QM\ThreeTiX.aspx" />
     <Content Include="resources\css\archiveDetail.html" />
     <Content Include="resources\css\base.css" />
     <Content Include="resources\css\common.css" />
@@ -1411,6 +1412,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\NBersFileServices\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="QM\ThreeTiX.aspx.cs">
+      <DependentUpon>ThreeTiX.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QM\ThreeTiX.aspx.designer.cs">
+      <DependentUpon>ThreeTiX.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemManage\MenuEdit.aspx.cs">
       <DependentUpon>MenuEdit.aspx</DependentUpon>
