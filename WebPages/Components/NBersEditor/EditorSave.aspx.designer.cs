@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages {
+namespace WebPages.Components.NBersEditor {
     
     
-    public partial class index {
+    public partial class EditorSave {
     }
 }

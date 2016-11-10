@@ -32,7 +32,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.Query(System.String)">
+        <member name="M:N_Bers.Business.BLL.IBusinessBLL`1.DoQuery(System.String)">
             <summary>
             查询
             </summary>

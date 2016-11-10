@@ -30,7 +30,7 @@ namespace WebPages
             }
             else
             {
-                Response.Redirect("../login.aspx");
+                Response.Redirect("~/login.aspx");
             }
         }
     }

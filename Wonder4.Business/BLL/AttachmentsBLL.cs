@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Wonder4.Map.Extensions.DAL;
 
 namespace N_Bers.Business.BLL
@@ -22,12 +23,17 @@ namespace N_Bers.Business.BLL
             {
                 return 0;
             }
-            List<AttachmentsModel> attList = Query(string.Format("id in ({0})",ids));
+            string filePath;
+            List<AttachmentsModel> attList = DoQuery(string.Format("id in ({0})",ids));
             try
             {
                 foreach (AttachmentsModel item in attList)
                 {
-                    File.Delete(Path.Combine(Core.Public.GetBaseDirectory(),item.Location+item.FileName));
+                    filePath = HttpContext.Current.Server.MapPath("~" + item.Location + item.FileName);
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
                     item.Delete();
                 }
                 return 1;
@@ -42,7 +48,7 @@ namespace N_Bers.Business.BLL
 
         public AttachmentsModel GetModel(int id)
         {
-            List<AttachmentsModel> buList = Query("id =" + id);
+            List<AttachmentsModel> buList = DoQuery("id =" + id);
             return buList.Count > 0 ? buList[0] : null;
         }
 
@@ -51,8 +57,8 @@ namespace N_Bers.Business.BLL
             return t.Insert();
         }
 
-        public List<AttachmentsModel> Query(string strfilter)
-        {
+        public List<AttachmentsModel> DoQuery(string strfilter)
+        {            
             string queryStr = "select * from nbers_Attachments where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {

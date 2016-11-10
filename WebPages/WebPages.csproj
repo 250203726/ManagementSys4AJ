@@ -39,11 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="N_Bers.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\N_Bers.Business.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -657,6 +652,7 @@
     <Content Include="bin\Wonder4.Map.Extensions.dll" />
     <Content Include="bin\Wonder4.Map.Extensions.pdb" />
     <Content Include="bin\Wonder4.Map.Extensions.xml" />
+    <Content Include="Components\NBersEditor\EditorSave.aspx" />
     <Content Include="Components\NBersEditor\EditorView.aspx" />
     <Content Include="Components\NBersEditor\kindeditor-all-min.js" />
     <Content Include="Components\NBersEditor\kindeditor-all.js" />
@@ -1368,6 +1364,13 @@
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Components\NBersEditor\EditorSave.aspx.cs">
+      <DependentUpon>EditorSave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\NBersEditor\EditorSave.aspx.designer.cs">
+      <DependentUpon>EditorSave.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Components\NBersEditor\EditorView.aspx.cs">
       <DependentUpon>EditorView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1377,6 +1380,9 @@
     </Compile>
     <Compile Include="Components\NBersEditor\KindeHandler.ashx.cs">
       <DependentUpon>KindeHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\NBersFileServices\DeleteFileHandle.ashx.cs">
+      <DependentUpon>DeleteFileHandle.ashx</DependentUpon>
     </Compile>
     <Compile Include="Components\NBersFileServices\DownloadHandler.ashx.cs">
       <DependentUpon>DownloadHandler.ashx</DependentUpon>
@@ -1513,6 +1519,7 @@
     <Content Include="Components\NBersFileServices\FileHandler.ashx" />
     <Content Include="Components\NBersFileServices\DownloadHandler.ashx" />
     <Content Include="Components\NBersEditor\KindeHandler.ashx" />
+    <Content Include="Components\NBersFileServices\DeleteFileHandle.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1523,6 +1530,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\kindeditor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wonder4.Business\N_Bers.Business.csproj">
+      <Project>{2f486268-99d1-4eb4-8617-f608bdbb28a9}</Project>
+      <Name>N_Bers.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

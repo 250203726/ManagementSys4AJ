@@ -31,7 +31,7 @@ namespace N_Bers.Business.BLL
         {
             return GetModel(id);
         }
-        public List<AccessModel> Query(string strfilter)
+        public List<AccessModel> DoQuery(string strfilter)
         {
             string queryStr = "select * from nbers_access where 1=1";
             if (!string.IsNullOrEmpty(strfilter))

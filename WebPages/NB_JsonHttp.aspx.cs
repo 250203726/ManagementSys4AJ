@@ -113,6 +113,9 @@ namespace WebPages
                 case "GETARTICLE4GRID":
                     retJsonStr = GetArticle4Grid(onlyPara);
                     break;
+                case "DELETEARTICLES":
+                    retJsonStr = DeleteArticles(onlyPara);
+                    break;
                 default:
                     break;
             }
@@ -122,9 +125,24 @@ namespace WebPages
             Response.End();
         }
 
+        private string DeleteArticles(string ids)
+        {
+            var result = (new ArticleBLL()).DeleteByIDs(ids);
+            if (result>0)
+            {
+                return (new MyHttpResult(true, "删除成功，共删除"+result+"条数据！")).ToString();
+            }
+            else
+            {
+                return (new MyHttpResult(false, "删除失败，请联系管理员！")).ToString();
+            }
+            
+            
+        }
+
         private string GetArticle4Grid(string onlyPara)
         {
-            var fileList = (new ArticleBLL()).Query(" art_type='" + onlyPara + "'");
+            var fileList = (new ArticleBLL()).DoQuery(" art_type='" + onlyPara + "'");
             var grid = new
             {
                 Rows = fileList,
@@ -165,7 +183,7 @@ namespace WebPages
         /// <returns></returns>
         private string GetFiles4Grid(string onlyPara)
         {
-            var fileList = (new AttachmentsBLL()).Query(" DocType='"+onlyPara+"'");
+            var fileList = (new AttachmentsBLL()).DoQuery(" DocType='"+onlyPara+"'");
             var grid = new {
                 Rows= fileList,
                 Total=fileList.Count
@@ -185,7 +203,7 @@ namespace WebPages
         private string GetStationList4Grid(string filter)
         {
             filter = "unit_type=2";
-            var list = (new MyUnitBLL()).Query(filter);
+            var list = (new MyUnitBLL()).DoQuery(filter);
             var grid =new  {
                 Rows=list,
                 Total=list.Count()
@@ -195,7 +213,7 @@ namespace WebPages
 
         private string GetRole()
         {
-            return new MyHttpResult(true, (new MenuBLL()).Query("")).ToString();
+            return new MyHttpResult(true, (new MenuBLL()).DoQuery("")).ToString();
         }
 
         /// <summary>
@@ -206,7 +224,7 @@ namespace WebPages
         private string GetStationList(string filter)
         {
            filter = "unit_type=2";
-            var data = (new MyUnitBLL()).Query(filter);
+            var data = (new MyUnitBLL()).DoQuery(filter);
             return (new MyHttpResult(true, data)).ToString();
         }
 
@@ -297,7 +315,7 @@ namespace WebPages
         private string GetFirstLevelUnit(string spid)
         {
             spid = string.IsNullOrEmpty(spid) ? "0" : spid;
-            List<BusinessUnitModel> buList = (new MyUnitBLL()).Query(" ISNULL(unit_type,0) in("+ spid+")");
+            List<BusinessUnitModel> buList = (new MyUnitBLL()).DoQuery(" ISNULL(unit_type,0) in("+ spid+")");
             return (new MyHttpResult(true,buList)).ToString();
         }
 
@@ -350,7 +368,7 @@ namespace WebPages
 
         private string GetUnits(string filter)
         {
-            List<BusinessUnitModel> list = (new MyUnitBLL()).Query("unit_type=1");
+            List<BusinessUnitModel> list = (new MyUnitBLL()).DoQuery("unit_type=1");
             var grid = new
             {
                 Rows = list,
@@ -361,7 +379,7 @@ namespace WebPages
 
         private string GetUnits4Tree(string filter)
         {
-            List<BusinessUnitModel> list = (new MyUnitBLL()).Query(filter);
+            List<BusinessUnitModel> list = (new MyUnitBLL()).DoQuery(filter);
             return (new MyHttpResult(true, list)).ToString();
         }
 
@@ -371,7 +389,7 @@ namespace WebPages
             {
                 filter = "";
             }
-            List<UserModel> list = (new MyUserBLL()).Query(filter);
+            List<UserModel> list = (new MyUserBLL()).DoQuery(filter);
             var grid = new
             {
                 Rows = list,
@@ -382,7 +400,7 @@ namespace WebPages
 
         private string GetMenu()
         {
-            List<MenuModel> list = (new MenuBLL()).Query("");
+            List<MenuModel> list = (new MenuBLL()).DoQuery("");
             var grid = new
             {
                 Rows = list,
@@ -428,7 +446,7 @@ namespace WebPages
         /// <returns></returns>
         public string getAllMenus()
         {
-            return new MyHttpResult(true, (new MenuBLL()).Query("")).ToString();
+            return new MyHttpResult(true, (new MenuBLL()).DoQuery("")).ToString();
         }
 
         /// <summary>
@@ -496,8 +514,8 @@ namespace WebPages
         public string getRoles()
         {
             var grid = new {
-                Rows = new RoleBLL().Query(""),
-                Total = new RoleBLL().Query("").Count
+                Rows = new RoleBLL().DoQuery(""),
+                Total = new RoleBLL().DoQuery("").Count
             };
             return new MyHttpResult(true, grid).ToString();
         }

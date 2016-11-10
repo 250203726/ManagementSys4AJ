@@ -27,7 +27,7 @@ namespace N_Bers.Business.BLL
             return t.Delete();
         }
 
-        public List<RoleUserModel> Query(string strfilter)
+        public List<RoleUserModel> DoQuery(string strfilter)
         {
             throw new NotImplementedException();
         }

@@ -28,13 +28,13 @@ namespace N_Bers.Business.BLL
 
         public RoleModel GetModel(int id) {
             string str = " id=" + id;
-            List<RoleModel> list = Query(str);
+            List<RoleModel> list = DoQuery(str);
             if (list.Count > 0)
                 return list[0];
             return null;
         }
 
-        public List<RoleModel> Query(string strfilter)
+        public List<RoleModel> DoQuery(string strfilter)
         {
             string queryStr = "select * from nbers_role where 1=1";
             if (!string.IsNullOrEmpty(strfilter))

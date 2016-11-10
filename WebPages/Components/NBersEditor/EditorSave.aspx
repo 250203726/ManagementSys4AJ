@@ -1,6 +1,9 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditorSave.aspx.cs" Inherits="WebPages.Components.NBersEditor.EditorSave" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>富文本编辑器</title>
 	<meta charset="utf-8" />

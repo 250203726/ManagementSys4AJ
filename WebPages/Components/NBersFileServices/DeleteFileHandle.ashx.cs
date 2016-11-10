@@ -20,22 +20,10 @@ namespace WebPages.Components.NBersFileServices
             context.Response.ContentType = "text/plain";
             string fileGuidList = context.Request.Form["fileids"];
 
-
-            List<AttachmentsModel> attList = (new AttachmentsBLL()).Query(string.Format("id in ({0})", fileGuidList));
-
-            foreach (AttachmentsModel item in attList)
-            {
-                var rootPath = N_Bers.Business.Core.Public.GetBaseDirectory();
-                var filePath = Path.Combine( item.Location , item.FileName);
-                var fullPath = Path.Combine(rootPath,filePath);
-                File.Delete(fullPath);
-                item.Delete();
-            }
-
             bool delSucessed = (new AttachmentsBLL()).DeleteByIDs(fileGuidList) > 0 ? true : false;
             if (delSucessed)
             {
-                var result = new MyHttpResult(true, "");
+                var result = new MyHttpResult(true, "删除成功！");
                 context.Response.Write(result.ToString());
             }
             else

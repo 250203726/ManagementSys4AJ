@@ -72,9 +72,9 @@ StringBuilder.prototype.toString = function () {
     return this._S.join("");
 }
 
-function escape(str)
+function myEscape(str)
 {
-    return str;
+    return escape(str);
 }
 
 /*

@@ -26,10 +26,10 @@
                     { display: '文章标题', name: 'title', minWidth: 460, align: 'left', render: g_render4name },
                     { display: '摘要', name: 'description', width: 150 },
                     { display: '作者', name: 'create_user', width: 120, },
-                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
+                    { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
                 ],
                 //data:grid_data.data,
-                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=岗位职责",
+                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + myEscape('岗位职责'),
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
@@ -37,7 +37,7 @@
                     [
 
                           { line: true },
-                        { text: "上传", click: OnUpfiles, icon: "upfiles" },
+                        { text: "新增工作总结", click: OnUpfiles, icon: "add" },
                           { line: true },
                         { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
                           { line: true },
@@ -48,6 +48,27 @@
                 //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
             });
 
+            //给工作工作总结名称绑定事件
+             $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a", function (e) {
+                 e.stopPropagation();
+                 e.preventDefault();
+
+                 var top_tab = window.top.tab;
+                 var oid = $(e.target).attr("oid");
+                 var url = $(e.target).attr("rel");
+                 var author = $(e.target).attr("author");
+
+                 if (top_tab.isTabItemExist("WorkSummary")) {
+                     top_tab.setHeader("WorkSummary", author + "-工作总结");
+                     top_tab.setTabItemSrc("WorkSummary", url);
+                     top_tab.reload("WorkSummary");
+                     top_tab.selectTabItem("WorkSummary");
+                     return;
+                 }
+
+                 window.top.f_addTab("WorkSummary", author + "-工作总结", url);
+
+             });
 
             $("#pageloading").hide();
         });
@@ -57,15 +78,9 @@
             
         }
 
-        //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
+        //点击新增按钮事件
         function OnUpfiles() {
-            //TODO：清理上传列表
-            $.ligerDialog.open({
-                target: $("#mytarget"), width: 500,minHeight:300, title: "上传文件",
-                buttons: [
-                    { text: '取消', onclick: function (item, dialog) { g.reload(); dialog.hidden(); } }
-                ]
-            });
+            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/Components/NBersEditor/EditorSave.aspx");
         }
          
         //删除数据 add wonder4 2016年11月7日22:54:21
@@ -93,7 +108,7 @@
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) +"...": colvalue;
-            return "<a href='../Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            return "<a href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
         }
        </script>
 </head>

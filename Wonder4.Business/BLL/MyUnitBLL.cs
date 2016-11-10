@@ -29,7 +29,7 @@ namespace N_Bers.Business.BLL
 
         public BusinessUnitModel GetModel(int id)
         {
-            List<BusinessUnitModel> buList = Query("id =" + id);
+            List<BusinessUnitModel> buList = DoQuery("id =" + id);
             return buList.Count > 0 ? buList[0] : null;
         }
 
@@ -39,7 +39,7 @@ namespace N_Bers.Business.BLL
             //return model.Insert();  
         }
 
-        public List<BusinessUnitModel> Query(string strfilter)
+        public List<BusinessUnitModel> DoQuery(string strfilter)
         {
             string queryStr = "select * from nbers_businessunit where 1=1";
             if (!string.IsNullOrEmpty(strfilter))

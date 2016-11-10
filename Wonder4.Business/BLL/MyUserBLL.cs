@@ -22,7 +22,7 @@ namespace N_Bers.Business.BLL
            return t.Update();
         }
 
-        public List<UserModel> Query(string strfilter)
+        public List<UserModel> DoQuery(string strfilter)
         {
             string queryStr = "select * from nbers_user where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
@@ -39,7 +39,7 @@ namespace N_Bers.Business.BLL
 
         public UserModel GetModel(int id)
         {
-            List<UserModel> userList = Query("id =" + id);
+            List<UserModel> userList = DoQuery("id =" + id);
             return userList.Count > 0 ? userList[0] : null;
         }
 

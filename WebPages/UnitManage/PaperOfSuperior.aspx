@@ -48,7 +48,7 @@
                 //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
             });
 
-            //upfiles
+            //upfiles 渲染上传控件
              $("#file_upload").uploadify({
                  'formData': {
                      'timestamp': Math.random(),

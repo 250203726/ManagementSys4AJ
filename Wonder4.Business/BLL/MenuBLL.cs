@@ -15,7 +15,7 @@ namespace N_Bers.Business.BLL
 
         public MenuModel GetModel(int id)
         {
-            List<MenuModel> list = Query(" id = " + id);
+            List<MenuModel> list = DoQuery(" id = " + id);
             return list.Count > 0 ? list[0] : null;
         }
 
@@ -24,7 +24,7 @@ namespace N_Bers.Business.BLL
             return t.Insert();
         }
 
-        public List<MenuModel> Query(string strfilter)
+        public List<MenuModel> DoQuery(string strfilter)
         {
             string queryStr = "select * from nbers_node where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
@@ -47,7 +47,7 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public bool CheckPageMenu(UserModel user, MenuModel menu)
         {
-            List<MenuModel> list = Query("id in (select node_id from nbers_access where node_id="+menu.id+" and role_id in(select id from nbers_role where id in (select role_id from nbers_role_user where user_id="+user.id+")) )");
+            List<MenuModel> list = DoQuery("id in (select node_id from nbers_access where node_id="+menu.id+" and role_id in(select id from nbers_role where id in (select role_id from nbers_role_user where user_id="+user.id+")) )");
             if (list.Count > 0)
             {
                 return true;
@@ -63,7 +63,7 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public List<MenuModel> getParentMenus(UserModel user)
         {
-            return Query("parentId=0 and group_id=0 ");
+            return DoQuery("parentId=0 and group_id=0 ");
           //  return Query("parentId=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public List<MenuModel> getSubMenus(UserModel user)
         {
-            return Query("parentId!=0 and group_id=0 ");
+            return DoQuery("parentId!=0 and group_id=0 ");
             //return Query("parentId!=0 and group_id=0 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "') )");
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace N_Bers.Business.BLL
         public String getButtonMenus(UserModel user,MenuModel node)
         {
             String buttonMenusString="[{ line: true },";
-            List<MenuModel> list = Query("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
+            List<MenuModel> list = DoQuery("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
             //当前用户是否管理员 管理员直接显示所有菜单
             bool isAdmin = Core.Public.IsAdmin();
             
@@ -109,11 +109,11 @@ namespace N_Bers.Business.BLL
         /// <param name="roleId"></param>
         /// <returns></returns>
         public List<MenuModel> getByUserId(int userId) {
-            List<MenuModel> list = Query(" id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id="+userId+"))");
+            List<MenuModel> list = DoQuery(" id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id="+userId+"))");
             return list;
         }
         public List<MenuModel> getByRoleId(int roleId) {
-            List<MenuModel> list = Query(" id in (select node_id from nbers_access where role_id="+roleId+")");
+            List<MenuModel> list = DoQuery(" id in (select node_id from nbers_access where role_id="+roleId+")");
             return list;
         }
 

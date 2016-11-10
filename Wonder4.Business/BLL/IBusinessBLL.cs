@@ -29,7 +29,7 @@ namespace N_Bers.Business.BLL
         /// 查询
         /// </summary>
         /// <returns></returns>
-        List<T> Query(string strfilter);
+        List<T> DoQuery(string strfilter);
 
         //根据id获取model
         T GetModel(int id);

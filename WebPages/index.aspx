@@ -13,7 +13,7 @@
     <link href="resources/css/index.css" rel="stylesheet" type="text/css">
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
     <script src="resources/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="resources/ligerUI/js/ligerui.all.js"></script>
+    <script src="assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="resources/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="resources/js/config.js" type="text/javascript"></script>
     <script src="assets/js/Util.js" type="text/javascript"></script>
