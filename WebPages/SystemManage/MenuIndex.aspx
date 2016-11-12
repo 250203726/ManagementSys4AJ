@@ -100,6 +100,8 @@
                     }],           
             });
         });
+        //$("#sortCode").ligerSpinner({ height: 28, type: 'int' });//只允许输入整数
+
     
     //初始化表格
     function InitForm(data)
