@@ -1,8 +1,0 @@
-D:\99CodeBitch\01DotNet\Management4AJ\WebPages\bin\Wonder4.Business.dll
-D:\99CodeBitch\01DotNet\Management4AJ\WebPages\bin\Wonder4.Business.pdb
-D:\99CodeBitch\01DotNet\Management4AJ\Wonder4.Business\obj\Debug\Wonder4.Business.dll
-D:\99CodeBitch\01DotNet\Management4AJ\Wonder4.Business\obj\Debug\Wonder4.Business.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\Wonder4.Business.dll
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\Wonder4.Business.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\Wonder4.Business\obj\Debug\Wonder4.Business.dll
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\Wonder4.Business\obj\Debug\Wonder4.Business.pdb

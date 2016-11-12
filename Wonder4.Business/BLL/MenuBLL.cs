@@ -84,7 +84,6 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public String getButtonMenus(UserModel user,MenuModel node)
         {
-<<<<<<< HEAD
             //String buttonMenusString="[{ line: true },";
             //StringBuilder buttonMenusString = new StringBuilder("[{ line: true },");
             //List<MenuModel> list = DoQuery("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
@@ -98,12 +97,10 @@ namespace N_Bers.Business.BLL
 
             //buttonMenusString.Append("]");
             //return buttonMenusString.ToString() ;
-            String buttonMenusString = "[{ line: true },";
-            List<MenuModel> list = DoQuery("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
-=======
+ 
             String buttonMenusString="[{ line: true },";
             List<MenuModel> list = DoQuery("and parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
->>>>>>> origin/master
+
             //当前用户是否管理员 管理员直接显示所有菜单
             bool isAdmin = Core.Public.IsAdmin();
 
