@@ -454,7 +454,7 @@ namespace WebPages
         /// <returns></returns>
         public string getAllMenus()
         {
-            List<MenuModel> menulist= new MenuBLL().DoQuery("");
+            List<MenuModel> menulist= new MenuBLL().DoQuery("order by sortCode asc");
             MenuModel root=new MenuModel();
             root.parentId=-1;
             root.id=0;
