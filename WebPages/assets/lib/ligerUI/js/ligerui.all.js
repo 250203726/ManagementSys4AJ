@@ -1757,7 +1757,7 @@
             var g = this, p = this.options;
             g.accordion.height(height);
             height -= g.headerHoldHeight;
-            $("> .l-accordion-content", g.accordion).height(height);
+            $("> .l-accordion-content", g.accordion).height(height-18);
         }
     });
 

@@ -55,7 +55,7 @@
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    console.log("新增成功。");
+                    myTips("新增成功！");
                 }
             });
 
@@ -143,8 +143,8 @@
                 <td><label for="art_type">所属类别</label></td>
                 <td>
                     <select name="art_type" validate="{required:true}" >
-                        <option value="分类一" selected="selected">分类一</option>
-                        <option value="分类一">分类二</option>
+                        <option value="岗位职责" selected="selected">岗位职责</option>
+                        <option value="工作总结">工作总结</option>
                     </select>
                 </td>
             </tr>
@@ -155,7 +155,7 @@
             <tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>
-                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:300px;visibility:hidden;"></textarea>
+                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:250px;visibility:hidden;"></textarea>
                 </td>
             </tr>
         </table>

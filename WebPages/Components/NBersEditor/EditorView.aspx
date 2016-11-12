@@ -14,16 +14,15 @@
     <script charset="utf-8" src="plugins/code/prettify.js"></script>
     <style type="text/css">
         body {
-            margin:10px auto;
-            width:95%;
+            margin:20px auto;
+            width:90%;
         }
         .post_content_main h1 {
-            font: bold 30px/1 "Microsoft Yahei";
+            font: bold 20px/1 "Microsoft Yahei";
             color: #404040;
         }
         .post_time_source {
             margin-top: 20px;
-            font: 10px/1 Arial, "Sim sun";
             color: #888;
         }
     </style>

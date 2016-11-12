@@ -182,3 +182,15 @@ function g_render4time(rowdata, index, colvalue) {
     }
     return s;
 }
+
+//获取 Url 参数值
+function getQueryString(name) {
+    var nowUrl = document.location.search.slice(1), qArray = nowUrl.split('&');
+    for (var i = 0; i < qArray.length; i++) {
+        var vArray = qArray[i].split('=');
+        if (vArray[0] == name) {
+            return vArray[1];
+        }
+    }
+    return false;
+}

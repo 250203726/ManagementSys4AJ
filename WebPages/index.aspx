@@ -4,18 +4,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>首页</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon">
-    <link href="resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" type="text/css">
-    <link href="resources/css/index.css" rel="stylesheet" type="text/css">
+    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon"/>
+    <link href="resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/index.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
-    <script src="resources/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+
+    <script src="assets/lib/jquery/jquery-1.9.0.min.js"></script>
     <script src="assets/lib/ligerUI/js/ligerui.all.js"></script>
-    <script src="resources/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery.cookie.js" type="text/javascript"></script>
     <script src="resources/js/config.js" type="text/javascript"></script>
+    <script src="assets/lib/json2.js"></script>
     <script src="assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">
         var tab = null;
@@ -35,7 +36,7 @@
             $("#accordion1").html(tempHtml);
 
             //布局
-            $("#layout1").ligerLayout({ leftWidth: 190, height: '100%', heightDiff: -34, space: 0, onHeightChanged: f_heightChanged });
+            $("#layout1").ligerLayout({ leftWidth: 190, height: '100%', heightDiff: -32, space: 0, onHeightChanged: f_heightChanged });
 
             var height = $(".l-layout-center").height();
 
@@ -46,14 +47,14 @@
                 showSwitch: true,
                 onAfterAddTabItem: function (tabdata) {
                     tabItems.push(tabdata);
-                    //saveTabStatus();
+                    saveTabStatus();
                 },
                 onAfterRemoveTabItem: function (tabid) {
                     for (var i = 0; i < tabItems.length; i++) {
                         var o = tabItems[i];
                         if (o.tabid == tabid) {
                             tabItems.splice(i, 1);
-                            //saveTabStatus();
+                            saveTabStatus();
                             break;
                         }
                     }
@@ -65,7 +66,8 @@
 
             //面板
             $("#accordion1").ligerAccordion({
-                height: height - 32, speed: null
+                height: height - 32,
+                speed: null
             });
 
             $(".l-link").hover(function () {
@@ -108,11 +110,14 @@
 
             tab = liger.get("framecenter");
             accordion = liger.get("accordion1");
+
+
             tree = liger.get("tree1");
             $("#pageloading").hide();
 
+
             //页签初始化
-            //pages_init();			
+            pages_init();			
         });
 
         //高度适应
@@ -148,17 +153,7 @@
             $.cookie('liger-home-tab', JSON2.stringify(tabItems));
         }
 
-        //获取 Url 参数值
-        function getQueryString(name) {
-            var nowUrl = document.location.search.slice(1), qArray = nowUrl.split('&');
-            for (var i = 0; i < qArray.length; i++) {
-                var vArray = qArray[i].split('=');
-                if (vArray[0] == name) {
-                    return vArray[1];
-                }
-            }
-            return false;
-        }
+
 
         //附加 <link> 资源
         function attachLinkToFrame(iframeId, filename) {
@@ -273,19 +268,19 @@
                		</li>
                 </ul>
             </div>
-            <div class="l-topmenu-welcome">
+<%--            <div class="l-topmenu-welcome">
                 <span class="wel_links">
                     <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1003535092&amp;site=qq&amp;menu=yes" class="icn_help" title="点击求助： @N_bers" target="_blank">在线求助
                     </a>
                 </span>
-            </div>
+            </div>--%>
         </div>
     </div>
     <div id="layout1" style="width: 100%; margin: 0 auto;">
         <div position="left" title="系统功能菜单" id="accordion1" style="overflow-y: auto;">
         </div>
         <div position="center" id="framecenter">
-            <div tabid="home" title="<span class='icn_home'>我的主页</sapn>" style="height: 300px">
+            <div tabid="home" title="<span class='icn_home'>我的主页</sapn>" style="height: 290px">
                 <iframe frameborder="0" name="home" id="home" src="main.html"></iframe>
             </div>
         </div>

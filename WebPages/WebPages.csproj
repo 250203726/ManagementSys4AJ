@@ -94,9 +94,6 @@
     <Content Include="assets\lib\jquery-validation\messages_cn.js" />
     <Content Include="assets\lib\jquery-validation\version.txt" />
     <Content Include="assets\lib\jquery.cookie.js" />
-    <Content Include="assets\lib\jquery\jquery-1.3.2.min.js" />
-    <Content Include="assets\lib\jquery\jquery-1.4.4.min.js" />
-    <Content Include="assets\lib\jquery\jquery-1.5.2.min.js" />
     <Content Include="assets\lib\jquery\jquery-1.9.0.min.js" />
     <Content Include="assets\lib\json2.js" />
     <Content Include="assets\lib\ligerUI\js\core\base.js" />
@@ -855,6 +852,7 @@
     <Content Include="Components\NBersEditor\themes\qq\editor.gif" />
     <Content Include="Components\NBersEditor\themes\qq\qq.css" />
     <Content Include="Components\NBersEditor\themes\simple\simple.css" />
+    <Content Include="Components\NBersFileServices\file-icon.css" />
     <Content Include="Components\NBersFileServices\img\ico-file-del.png" />
     <Content Include="Components\NBersFileServices\img\ico-files.png" />
     <Content Include="Components\NBersFileServices\button_image_url.png" />

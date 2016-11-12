@@ -417,7 +417,7 @@ body {
 }
 
 .extra-wrap .list {
-	height: 395px;
+	height: 380px;
 	border: 1px solid #d4d4d4;
 	border-top: none;
 	background: #FFF;
@@ -442,7 +442,7 @@ body {
 
 /*个人信息*/
 .l-topmenu-welcome.fix_profile {
-	right: 121px;
+	/*right: 121px;*/
 	height: 149px;
 }
 

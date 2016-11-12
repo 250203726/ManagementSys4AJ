@@ -116,13 +116,21 @@ namespace WebPages
                 case "DELETEARTICLES":
                     retJsonStr = DeleteArticles(onlyPara);
                     break;
-                default:
+                case "TEST":
+                    retJsonStr = test();
+                    break;
+                default:                
                     break;
             }
             Response.ContentType = "text/HTML";
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        private string test()
+        {
+            return (new MyHttpResult(true, new MenuModel())).ToString();
         }
 
         private string DeleteArticles(string ids)
