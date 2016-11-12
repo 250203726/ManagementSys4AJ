@@ -24,7 +24,7 @@ namespace N_Bers.Business.BLL
 
         public List<UserModel> DoQuery(string strfilter)
         {
-            string queryStr = "select * from nbers_user where 1=1";
+            string queryStr = "SELECT * FROM (select ROW_NUMBER() OVER(ORDER BY id) rid,* from nbers_user) tb where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

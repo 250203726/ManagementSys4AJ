@@ -3,6 +3,7 @@ using Wonder4.Map.Extensions;
 using Wonder4.Map.Extensions.DAL;
 using N_Bers.Business.Model;
 using System.Collections.Generic;
+using System.Text;
 
 namespace N_Bers.Business.BLL
 {
@@ -83,11 +84,24 @@ namespace N_Bers.Business.BLL
         /// <returns></returns>
         public String getButtonMenus(UserModel user,MenuModel node)
         {
-            String buttonMenusString="[{ line: true },";
+            //String buttonMenusString="[{ line: true },";
+            //StringBuilder buttonMenusString = new StringBuilder("[{ line: true },");
+            //List<MenuModel> list = DoQuery("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
+            ////当前用户是否管理员 管理员直接显示所有菜单
+            //bool isAdmin = Core.Public.IsAdmin();
+
+            //foreach (MenuModel menu in list)
+            //{
+            //    buttonMenusString.Append(string.Concat("{ text: '",menu.name,"', click: ItemClick, icon: '",menu.icon,"' },{ line: true },"));              
+            //}
+
+            //buttonMenusString.Append("]");
+            //return buttonMenusString.ToString() ;
+            String buttonMenusString = "[{ line: true },";
             List<MenuModel> list = DoQuery("parentId=" + node.id + " and group_id=1 and id in (select node_id from nbers_access where role_id in (select role_id from nbers_role_user where user_id='" + user.id + "')) order by sortCode asc");
             //当前用户是否管理员 管理员直接显示所有菜单
             bool isAdmin = Core.Public.IsAdmin();
-            
+
             //foreach (MenuModel menu in list)
             //{
             //    if (menu.name.Equals("新增") && isAdmin)

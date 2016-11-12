@@ -13,6 +13,7 @@
 
     <script src="../Components/NBersFileServices/jquery.uploadify.js" type="text/javascript"></script>
     <link href="../Components/NBersFileServices/uploadify.css" rel="stylesheet" />
+    <link href="../Components/NBersFileServices/file-icon.css" rel="stylesheet" />
 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
@@ -120,8 +121,13 @@
         
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
-            var docname = colvalue.length > 50 ? colvalue.substr(0, 50) +"...": colvalue;
-            return "<a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            var docname = colvalue.length > 50 ? colvalue.substr(0, 50) + "..." : colvalue;
+            var fileExt = (/[.]/.exec(colvalue)) ? /[^.]+$/.exec(colvalue.toLowerCase()) : '';
+            var cls_icon = "ico-file-ico";
+            if (fileExt.length > 0) {
+                cls_icon = "ico-file-" + fileExt[0];
+            }
+            return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
         }
     </script>
 </head>

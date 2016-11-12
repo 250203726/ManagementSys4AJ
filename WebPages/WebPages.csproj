@@ -83,6 +83,7 @@
     <Content Include="assets\js\jquery.backstretch.js" />
     <Content Include="assets\js\jquery.backstretch.min.js" />
     <Content Include="assets\js\login.js" />
+    <Content Include="assets\js\params.js" />
     <Content Include="assets\js\placeholder.js" />
     <Content Include="assets\js\Util.js" />
     <Content Include="assets\lib\images\loading.gif" />
@@ -94,6 +95,7 @@
     <Content Include="assets\lib\jquery-validation\messages_cn.js" />
     <Content Include="assets\lib\jquery-validation\version.txt" />
     <Content Include="assets\lib\jquery.cookie.js" />
+    <Content Include="assets\lib\jquery.PrintArea.js" />
     <Content Include="assets\lib\jquery\jquery-1.9.0.min.js" />
     <Content Include="assets\lib\json2.js" />
     <Content Include="assets\lib\ligerUI\js\core\base.js" />
@@ -1345,6 +1347,7 @@
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
     <Content Include="UnitManage\PaperOfSuperior.aspx" />
+    <Content Include="UnitManage\SaveWorkSummary.aspx" />
     <Content Include="UnitManage\WorkSummary.aspx" />
     <Content Include="UserManage\StationIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
@@ -1445,6 +1448,13 @@
     </Compile>
     <Compile Include="UnitManage\PaperOfSuperior.aspx.designer.cs">
       <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\SaveWorkSummary.aspx.cs">
+      <DependentUpon>SaveWorkSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\SaveWorkSummary.aspx.designer.cs">
+      <DependentUpon>SaveWorkSummary.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\WorkSummary.aspx.cs">
       <DependentUpon>WorkSummary.aspx</DependentUpon>

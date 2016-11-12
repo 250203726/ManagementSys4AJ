@@ -29,7 +29,7 @@
                     { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
                 ],
                 //data:grid_data.data,
-                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + myEscape('岗位职责'),
+                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + myEscape('工作总结'),
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
@@ -80,7 +80,7 @@
 
         //点击新增按钮事件
         function OnUpfiles() {
-            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/Components/NBersEditor/EditorSave.aspx");
+            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/UnitManage/SaveWorkSummary.aspx?v="+Math.random);
         }
          
         //删除数据 add wonder4 2016年11月7日22:54:21
@@ -92,7 +92,7 @@
             }
             //服务端删除，合并id为ids
             var ids = rows.map(function (data, index) { return data.id }).join(",");
-            var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", {fileids:ids});
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);
 
             if (returnStr.result) {
                 g.deleteSelectedRow();

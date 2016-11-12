@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -393,11 +394,36 @@ namespace WebPages
 
         private string GetUsers(string filter)
         {
-            if (filter.IndexOf("unit_id")<0)
+            string unit_id = Request.Form["unit_id"];
+            string page = Request.Form["page"];
+            string pagesize = Request.Form["pagesize"];
+            string sortname = Request.Form["sortname"];
+            string sortorder = Request.Form["sortorder"];
+            string txt_filter = Request.Form["txt_filter"];
+
+            StringBuilder strWhere = new StringBuilder("1=1");
+            if (!string.IsNullOrEmpty(unit_id) && !unit_id.Equals("1"))//工程局的id是1 点击其他部门、岗位时需要先找到当前的孩子
             {
-                filter = "";
+                strWhere.Append(string.Format(@" and unit_id in(SELECT bu2.id FROM dbo.nbers_businessunit bu1 JOIN dbo.nbers_businessunit 
+                bu2 ON bu1.id=bu2.pid WHERE bu1.id={0} UNION SELECT id FROM dbo.nbers_businessunit WHERE id={0})", unit_id));
             }
-            List<UserModel> list = (new MyUserBLL()).DoQuery(filter);
+            if (!string.IsNullOrEmpty(page))
+            {
+                int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
+                int endid = Convert.ToInt32(page)* (Convert.ToInt32(pagesize));
+                strWhere.Append(string.Format(" and rid BETWEEN {0} AND {1}", startid,endid));
+            }
+            if (!string.IsNullOrEmpty(sortname))
+            {
+                strWhere.Append(string.Format("order by {0} {1}",sortname,sortorder));
+            }
+            if (!string.IsNullOrEmpty(txt_filter))
+            {
+                strWhere.Append(string.Format("and nickname LIKE '%{0}%' OR account LIKE '%{0}%'", txt_filter));
+            }
+
+
+            List<UserModel> list = (new MyUserBLL()).DoQuery(strWhere.ToString());
             var grid = new
             {
                 Rows = list,

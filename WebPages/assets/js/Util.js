@@ -159,7 +159,7 @@ function GetDataByAjaxSync(sfile, oprtype, strkey, strkey2, args,callback) {
 function myTips(scontent, stitle, fncallback) {
     stitle = stitle == "" ? "提示信息" : stitle;
     scontent = scontent == "" ? "提示内容" : scontent;
-    $.ligerDialog.tip({
+    window['mytips']=$.ligerDialog.tip({
         title: stitle, content: scontent, callback: function (data) {
             if (typeof (callback)=="function") {
                 fncallback(data);
@@ -167,9 +167,6 @@ function myTips(scontent, stitle, fncallback) {
         }
     });
 }
-
-//
-var company_name = "安质管理工程局";
 
 //json时间 转换 add by wonder4 2016年11月5日15:41:23
 function g_render4time(rowdata, index, colvalue) {

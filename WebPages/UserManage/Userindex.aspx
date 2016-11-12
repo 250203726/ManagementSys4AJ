@@ -10,6 +10,7 @@
 
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
+    <script src="../assets/js/placeholder.js"></script>
 
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <style type="text/css">
@@ -17,6 +18,20 @@
           input[name=unit_id],input[name=type_id] {        
         display:none;
         }
+        .filter {
+        }
+            .filter input[type=text] {
+                margin-left:8px;
+                width:180px;
+                color:#000000;
+                  font-weight:normal;
+            }
+            .filter input[type=button] {
+                width: 52px;
+                margin-left: 9px;
+                font-weight:normal;
+               cursor:pointer;
+            }
     </style>
     <script type="text/javascript">
         var g;
@@ -76,7 +91,7 @@
                 width:"100%",
                 columns: [
                     { display: '用户编码', name: 'account', align: 'left' },
-                    { display: '用户名', name: 'nickname' },
+                    { display: '用户名称', name: 'nickname' },
                     { display: '电话', name: 'last_login_time', minWidth: 140 },
                     { display: '类型', name: 'type_id',render:f_render_type },
                     { display: '岗位', name: 'unit_id', render: f_render_unit },
@@ -96,8 +111,6 @@
                     { text: '删除', click: itemclick, img: '../assets/lib/ligerUI/skins/icons/delete.gif' }
                     ]
                 },
-                //autoFilter: true
-               // where: f_getWhere()
             });
 
             //获取组织架构树
@@ -242,6 +255,17 @@
             });
             return a.join("");
         }
+
+        //绑定查询按钮点击事件 add by wonder4 2016年11月12日18:54:42
+        $(document).on("click", ".filter input[name=btn_submit]", function () {
+            var filter = $("#txt_filter").val();
+            if (filter.length==0) {//没有输入过滤条件，则直接刷新列表
+                g.reload();
+                return;
+            }
+            //post请求服务器
+            g.loadServerData({ txt_filter: filter }, function () { });
+        });
   </script> 
 </head>
 <body style="overflow-x:hidden; padding:5px; margin:0;">
@@ -249,7 +273,7 @@
         <div  position="left" title="组织结构">
              <ul id="tree1"></ul>
         </div>
-        <div position="center" title="用户列表">
+        <div position="center" title="<div class='filter'><span>用户列表</span><input id='txt_filter'  name='txt_filter' type='text' class='ui-textbox'  placeholder='输入用户名、用户编码'/><input type='button' name='btn_submit' value='查询'/></div>">
             <div id="maingrid"></div>
       </div>
     <div id="mytarget" style="width:100%; display:none">
