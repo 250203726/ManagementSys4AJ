@@ -232,15 +232,21 @@
                 }
                 //查询数据库，在复选框中绑定用户角色信息。并弹出对话框
                 //1.绑定数据 一个是用户名称 一个是角色列表
-                $("#username").html('用户“'+rows[0].nickname+'”的角色有：');
+                $("#username").html('用户“' + rows[0].nickname + '”的角色有：');
                 $("#userid").val(rows[0].id);
-                //绑定角色列表
+                //选中已有角色列表
+                var userrole = GetDataByAjax("../NB_JsonHttp.aspx", "getUserRoles", rows[0].id);
+                if (userrole.result) {
+                    liger.get("checkboxlist1").setValue(userrole.data);
+                } else {
+                    myTips("选中已有角色列表时失败！");
+                }
 
                 //2.弹出对话框
                 $.ligerDialog.open({
                     target: $("#roledialog"), width: 600, title: btn.text,
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                        { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
@@ -297,30 +303,31 @@
             g.loadServerData({ txt_filter: filter }, function () { });
         });
 
+        //角色列表的绑定
         $(function () {
-            var dataGrid = [
-                { id: 1, name: '管理员'},
-                { id: 2, name: '工作人员'},
-                { id: 3, name: '领导'},
-                { id: 4, name: '基层员工'},
-            ];
+            //角色列表
+            var roleData = GetDataByAjax("../NB_JsonHttp.aspx", "GETROLES", "", "", "");
             $("#checkboxlist1").ligerCheckBoxList({
-                data: dataGrid,
+                data: roleData.data.Rows,
                 textField: 'name',
             });
+
         });
-        function getValue() {
-            var value = liger.get("checkboxlist1").getValue();
-            alert(value);
-        }
-        function setValue() {
-            liger.get("checkboxlist1").setValue("2;4");
-        }
-        function setDisabled() {
-            liger.get("checkboxlist1").set('disabled', true);
-        }
-        function setEnabled() {
-            liger.get("checkboxlist1").set('disabled', false);
+
+        //分配角色按钮
+        function saveRole() {
+            var roleids = liger.get("checkboxlist1").getValue();
+            var userid = $("#userid").val();
+            //把角色编号列表和用户编号传给后台去处理，返回成功或失败
+            if (true) {
+                //为真表示已经保存了角色编号和用户编号，则弹出提示信息，并关闭对话框
+                GetDataByAjax("../NB_JsonHttp.aspx", "ADDUSERROLE", userid, roleids);
+                myTips("保存成功！");
+            }
+            else {
+                //为假，表示保存失败。弹出提示信息，不关闭对话框。
+                myTips("保存失败！");
+            }
         }
 
     </script>
@@ -340,23 +347,14 @@
         </div>
 
         <!-- 分配角色对话框 -->
-        <div id="roledialog" style="display: none">
-            <label id="username" style="font-size:25px"></label>
-            
-            <input type="hidden" id="userid" />
-            <br />
-            <br />
-            <!-- 里面放用户角色列表 -->
-            <div id="roletree"></div>
-            <input type="hidden" name="role" id="role" value="<%= rlist %>" />
+            <div id="roledialog" style="display: none;margin:10px">
+                <label id="username" style="font-size: 17px"></label>
 
-            <!-- 测试复选框 -->
-            <div id="checkboxlist1"></div>
-            <br />
-            <div class="liger-button" data-click="getValue" style="margin-top: 9px;">获取值</div>
-            <div class="liger-button" data-click="setValue" style="margin-top: 4px;">设置值(2;4)</div>
-            <div class="liger-button" data-click="setDisabled" style="margin-top: 4px;">设置不可用</div>
-            <div class="liger-button" data-click="setEnabled" style="margin-top: 4px;">设置可用</div>
-        </div>
+                <input type="hidden" id="userid" />
+                <br /><br />
+                <!-- 里面放用户角色列表 -->
+                <div id="checkboxlist1"></div>
+                <br />
+            </div>
 </body>
 </html>
