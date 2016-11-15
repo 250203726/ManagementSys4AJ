@@ -24,9 +24,10 @@ namespace WebPages
                 Response.Write((new MyHttpResult(false,"登陆超时，请重新登陆！")).ToString());
                 Response.End();
             }
-            string oprType, onlyPara,retJsonStr=string.Empty;
+            string oprType, onlyPara,onlyPara2,retJsonStr=string.Empty;
             oprType = Request.QueryString["oprtype"];
             onlyPara = Request.QueryString["strkey"];
+            onlyPara2 = Request.QueryString["strkey2"];
             switch (oprType.ToUpper())
             {
                 case "GETMENU":
@@ -127,6 +128,12 @@ namespace WebPages
                     break;
                 case "TEST":
                     retJsonStr = test();
+                    break;
+                case "GETUSERROLES":
+                    retJsonStr=getUserRoles(onlyPara);
+                    break;
+                case "ADDUSERROLE":
+                    retJsonStr = addUserRole(onlyPara, onlyPara2);
                     break;
                 default:                
                     break;
@@ -693,6 +700,43 @@ namespace WebPages
                         accessModel.role_id = model.id;
                         result = accessModel.Insert();
                     }
+                }
+            }
+            return new MyHttpResult(result > 0 ? true : false, "").ToString();
+        }
+        /// <summary>
+        /// 根据用户编号获得角色列表字符串
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public string getUserRoles(string userid) {
+            RoleUserBLL roleuserbll = new RoleUserBLL();
+            List<RoleModel> roleList = roleuserbll.getRoleByUser(userid);
+            string rolestr="";
+            for(int i=0;i<roleList.Count;i++){
+                if(i==roleList.Count-1){
+                    rolestr+=roleList[i].id;
+                }else{
+                    rolestr+=roleList[i].id+";";
+                }
+            }
+            return new MyHttpResult(true, rolestr,"").ToString();
+        }
+
+        public string addUserRole(string userid, string roleids) {
+            RoleUserBLL roleuserbll=new RoleUserBLL();
+            int result = 0;
+            //1.delete all roles by userid 
+            result=roleuserbll.deleteRolesByUserid(userid);
+            //2.add all roles according to params ‘roleids’
+            foreach (string roleid in roleids.Split(";".ToCharArray()))
+            {
+                if (roleid != "")
+                {
+                    RoleUserModel roleuser = new RoleUserModel();
+                    roleuser.role_id = int.Parse(roleid);
+                    roleuser.user_id = int.Parse(userid);
+                    result=roleuser.Insert();
                 }
             }
             return new MyHttpResult(result > 0 ? true : false, "").ToString();

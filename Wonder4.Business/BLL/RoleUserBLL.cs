@@ -51,16 +51,27 @@ namespace N_Bers.Business.BLL
         //修改用户的角色
         
         //查询用户的角色
-        public RoleModel getRoleByUser(UserModel user)
+        public List<RoleModel> getRoleByUser(string  userid)
         {
-            string queryStr = "select * from nbers_role where id in (select role_id from nbers_role_user where user_id="+user.id+")";
+            string queryStr = "select * from nbers_role where id in (select role_id from nbers_role_user where user_id="+userid+")";
             List<RoleModel> roles=CPQuery.From(queryStr).ToList<RoleModel>();
-            return roles[0];
+            return roles;
         }
         
         public int DeleteByIDs(string ids)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 删除某用户的所有角色
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int deleteRolesByUserid(string userid)
+        {
+            string deletestr = "delete from nbers_role_user where user_id="+userid;
+            return CPQuery.From(deletestr).ExecuteNonQuery();
         }
     }
 }

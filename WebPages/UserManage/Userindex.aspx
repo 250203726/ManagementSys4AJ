@@ -232,15 +232,21 @@
                 }
                 //查询数据库，在复选框中绑定用户角色信息。并弹出对话框
                 //1.绑定数据 一个是用户名称 一个是角色列表
-                $("#username").html(rows[0].nickname);
+                $("#username").html('用户“' + rows[0].nickname + '”的角色有：');
                 $("#userid").val(rows[0].id);
-                //绑定角色列表
+                //选中已有角色列表
+                var userrole = GetDataByAjax("../NB_JsonHttp.aspx", "getUserRoles", rows[0].id);
+                if (userrole.result) {
+                    liger.get("checkboxlist1").setValue(userrole.data);
+                } else {
+                    myTips("选中已有角色列表时失败！");
+                }
 
                 //2.弹出对话框
                 $.ligerDialog.open({
                     target: $("#roledialog"), width: 600, title: btn.text,
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                        { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
