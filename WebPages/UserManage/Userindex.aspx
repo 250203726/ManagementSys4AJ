@@ -315,19 +315,7 @@
                 textField: 'name'
             });
         });
-        function getValue() {
-            var value = liger.get("checkboxlist1").getValue();
-            alert(value);
-        }
-        function setValue() {
-            liger.get("checkboxlist1").setValue("2;4");
-        }
-        function setDisabled() {
-            liger.get("checkboxlist1").set('disabled', true);
-        }
-        function setEnabled() {
-            liger.get("checkboxlist1").set('disabled', false);
-        }
+       
 
     </script>
 </head>
@@ -356,11 +344,7 @@
 
             <!-- 测试复选框 -->
             <div id="checkboxlist1"></div>
-            <br />
-            <div class="liger-button" onclick="getValue()" style="margin-top: 9px;">获取值</div>
-            <div class="liger-button" data-click="setValue" style="margin-top: 4px;">设置值(2;4)</div>
-            <div class="liger-button" data-click="setDisabled" style="margin-top: 4px;">设置不可用</div>
-            <div class="liger-button" data-click="setEnabled" style="margin-top: 4px;">设置可用</div>
+           
         </div>
 </body>
 </html>
