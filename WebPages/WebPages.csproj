@@ -77,6 +77,9 @@
     <Content Include="assets\ico\favicon.png" />
     <Content Include="assets\img\backgrounds\1%402x.jpg" />
     <Content Include="assets\img\backgrounds\1.jpg" />
+    <Content Include="assets\img\echarts-logo.png" />
+    <Content Include="assets\img\echarts-logo2.png" />
+    <Content Include="assets\img\fork.png" />
     <Content Include="assets\js\index.js" />
     <Content Include="assets\js\jquery-1.11.1.js" />
     <Content Include="assets\js\jquery-1.11.1.min.js" />
@@ -97,6 +100,7 @@
     <Content Include="assets\lib\jquery.cookie.js" />
     <Content Include="assets\lib\jquery.PrintArea.js" />
     <Content Include="assets\lib\jquery\jquery-1.9.0.min.js" />
+    <Content Include="assets\lib\jquery\jquery.min.js" />
     <Content Include="assets\lib\json2.js" />
     <Content Include="assets\lib\ligerUI\js\core\base.js" />
     <Content Include="assets\lib\ligerUI\js\core\inject.js" />
@@ -1346,7 +1350,9 @@
     <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
+    <Content Include="UnitManage\NetworkMap.aspx" />
     <Content Include="UnitManage\PaperOfSuperior.aspx" />
+    <Content Include="UnitManage\SaveNetworkMap.aspx" />
     <Content Include="UnitManage\SaveWorkSummary.aspx" />
     <Content Include="UnitManage\WorkSummary.aspx" />
     <Content Include="UserManage\StationIndex.aspx" />
@@ -1442,12 +1448,26 @@
     <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UnitManage\NetworkMap.aspx.cs">
+      <DependentUpon>NetworkMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\NetworkMap.aspx.designer.cs">
+      <DependentUpon>NetworkMap.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UnitManage\PaperOfSuperior.aspx.cs">
       <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UnitManage\PaperOfSuperior.aspx.designer.cs">
       <DependentUpon>PaperOfSuperior.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\SaveNetworkMap.aspx.cs">
+      <DependentUpon>SaveNetworkMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\SaveNetworkMap.aspx.designer.cs">
+      <DependentUpon>SaveNetworkMap.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\SaveWorkSummary.aspx.cs">
       <DependentUpon>SaveWorkSummary.aspx</DependentUpon>
@@ -1470,6 +1490,9 @@
     <Compile Include="UserManage\UnitIndex.aspx.cs">
       <DependentUpon>UnitIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManage\Userindex.aspx.designer.cs">
+      <DependentUpon>UserIndex.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserManage\UserInfo.aspx.cs">
       <DependentUpon>UserInfo.aspx</DependentUpon>
@@ -1545,6 +1568,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="assets\echarts\chart\" />
+    <Folder Include="assets\echarts\theme\" />
+    <Folder Include="assets\echarts\www\" />
     <Folder Include="assets\kindeditor\" />
   </ItemGroup>
   <ItemGroup>

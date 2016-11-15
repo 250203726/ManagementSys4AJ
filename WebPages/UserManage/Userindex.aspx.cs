@@ -9,7 +9,8 @@ namespace WebPages.UserManage
 {
     public partial class UserIndex : BasePage
     {
-        
+
+        public string rlist = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             

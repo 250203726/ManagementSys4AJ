@@ -53,6 +53,7 @@
     <Compile Include="BLL\MenuBLL.cs" />
     <Compile Include="BLL\MyUnitBLL.cs" />
     <Compile Include="BLL\MyUserBLL.cs" />
+    <Compile Include="BLL\NetMapBLL.cs" />
     <Compile Include="BLL\RoleBLL.cs" />
     <Compile Include="BLL\RoleUserBLL.cs" />
     <Compile Include="BLL\ValidAccessBLL.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Model\AttachmentsModel.cs" />
     <Compile Include="Model\BusinessUnitModel.cs" />
     <Compile Include="Model\MenuModel.cs" />
+    <Compile Include="Model\NetMapInfo.cs" />
+    <Compile Include="Model\NetMapModel.cs" />
     <Compile Include="Model\RoleModel.cs" />
     <Compile Include="Model\RoleUserModel.cs" />
     <Compile Include="Model\UserInfo.cs" />

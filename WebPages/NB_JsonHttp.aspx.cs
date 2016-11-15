@@ -38,9 +38,11 @@ namespace WebPages
                 case "GETUNITS":
                     retJsonStr = GetUnits(onlyPara);
                     break;
-                //GetUnits4Tree
                 case "GETUNITS4TREE":
                     retJsonStr = GetUnits4Tree(onlyPara);
+                    break;
+                case "GETUNITS4NETMAP":
+                    retJsonStr = GetUnits4NetMap(onlyPara);
                     break;
                 case "ADDUNIT":
                     retJsonStr = AddUnit(getPostStr());
@@ -81,6 +83,9 @@ namespace WebPages
                 case "UPDATEUSER":
                     retJsonStr = UpdateUser(getPostStr());
                     break;
+                case "SAVENODE":
+                    retJsonStr = SaveNode(getPostStr());
+                    break;
                 case "GETROLES":
                     retJsonStr = getRoles();
                     break;
@@ -117,6 +122,9 @@ namespace WebPages
                 case "DELETEARTICLES":
                     retJsonStr = DeleteArticles(onlyPara);
                     break;
+                case "GETNETMAPNODE":
+                    retJsonStr = GetNetMapNode(onlyPara);
+                    break;
                 case "TEST":
                     retJsonStr = test();
                     break;
@@ -129,9 +137,68 @@ namespace WebPages
             Response.End();
         }
 
+        private string GetNetMapNode(string onlyPara)
+        {
+            return new MyHttpResult(true, (new NetMapBLL()).GetModelByGuid(new Guid(onlyPara))).ToString();
+        }
+
+        private string SaveNode(string node_json)
+        {
+            if (string.IsNullOrEmpty(node_json))
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = false,
+                    msg = "提交数据错误！"
+                });
+            }
+            NetMapModel new_model = JsonExtensions.FromJson<NetMapModel>(node_json);
+            NetMapModel old_model = (new NetMapBLL()).GetModelByGuid(new_model.node_guid);
+            if (null == old_model)
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = new_model.Insert() > 0 ? true : false,
+                    msg = "新增节点成功！"
+                });
+            }
+
+            old_model.name = new_model.name;
+            old_model.auditor = new_model.auditor;
+            old_model.sort_order = new_model.sort_order;
+
+            return JsonExtensions.ToJson(new MyHttpResult
+            {
+                result = old_model.Update() > 0 ? true : false,
+                msg = "修改节点成功！"
+            });
+        }
+
+        private string GetUnits4NetMap(string onlyPara)
+        {
+            List<NetMapModel> list = (new NetMapBLL()).DoQuery("");
+            return JsonExtensions.ToJson(list);
+        }
+
         private string test()
         {
-            return (new MyHttpResult(true, new MenuModel())).ToString();
+            //3594D3FA - 7C87 - 43C3 - 90DD - 820A2E8052AE
+            //07193C51 - 5530 - 4F3F - 9208 - 6E59746962CC
+            //90B4FE32 - 708B - 4405 - ABC6 - FC01D98D4B7A
+            string[] parentid = {
+                "3594D3FA-7C87-43C3-90DD-820A2E8052AE",
+                "07193C51-5530-4F3F-9208-6E59746962CC",
+                "90B4FE32-708B-4405-ABC6-FC01D98D4B7A" };
+            NetMapModel nmm = new NetMapModel();
+            for (int i = 0; i < 3; i++)
+            {
+                nmm.node_guid = Guid.NewGuid();
+                nmm.parentguid = new Guid(parentid[i]);
+                nmm.name = "岗位——" + i.ToString();
+                nmm.auditor = "dengxy";
+                nmm.Insert();
+            }
+            return (new MyHttpResult(true, "")).ToString();
         }
 
         private string DeleteArticles(string ids)
