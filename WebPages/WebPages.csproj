@@ -867,6 +867,11 @@
     <Content Include="Components\NBersFileServices\uploadify-cancel.png" />
     <Content Include="Components\NBersFileServices\uploadify.css" />
     <Content Include="Components\NBersFileServices\uploadify.swf" />
+    <Content Include="OtherCompany\CheckReport.aspx" />
+    <Content Include="OtherCompany\KaoHeDuiXian.aspx" />
+    <Content Include="OtherCompany\PersonalInformation.aspx" />
+    <Content Include="OtherCompany\ToolsEvaluate.aspx" />
+    <Content Include="OtherCompany\ToolsStandard.aspx" />
     <Content Include="QM\ThreeTiX.aspx" />
     <Content Include="resources\css\archiveDetail.html" />
     <Content Include="resources\css\base.css" />
@@ -1347,6 +1352,11 @@
     <Content Include="resources\uploadify\uploadify-cancel.png" />
     <Content Include="resources\uploadify\uploadify.css" />
     <Content Include="resources\uploadify\uploadify.swf" />
+    <Content Include="Safety\EducationTraing.aspx" />
+    <Content Include="Safety\Examination.aspx" />
+    <Content Include="Safety\Qualification.aspx" />
+    <Content Include="Safety\SafetyCheck.aspx" />
+    <Content Include="Safety\Traffic.aspx" />
     <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
@@ -1416,6 +1426,41 @@
     <Compile Include="NB_JsonHttp.aspx.designer.cs">
       <DependentUpon>NB_JsonHttp.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OtherCompany\CheckReport.aspx.cs">
+      <DependentUpon>CheckReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OtherCompany\CheckReport.aspx.designer.cs">
+      <DependentUpon>CheckReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OtherCompany\KaoHeDuiXian.aspx.cs">
+      <DependentUpon>KaoHeDuiXian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OtherCompany\KaoHeDuiXian.aspx.designer.cs">
+      <DependentUpon>KaoHeDuiXian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OtherCompany\PersonalInformation.aspx.cs">
+      <DependentUpon>PersonalInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OtherCompany\PersonalInformation.aspx.designer.cs">
+      <DependentUpon>PersonalInformation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OtherCompany\ToolsEvaluate.aspx.cs">
+      <DependentUpon>ToolsEvaluate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OtherCompany\ToolsEvaluate.aspx.designer.cs">
+      <DependentUpon>ToolsEvaluate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OtherCompany\ToolsStandard.aspx.cs">
+      <DependentUpon>ToolsStandard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OtherCompany\ToolsStandard.aspx.designer.cs">
+      <DependentUpon>ToolsStandard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\NBersFileServices\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
@@ -1426,6 +1471,41 @@
     </Compile>
     <Compile Include="QM\ThreeTiX.aspx.designer.cs">
       <DependentUpon>ThreeTiX.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\EducationTraing.aspx.cs">
+      <DependentUpon>EducationTraing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\EducationTraing.aspx.designer.cs">
+      <DependentUpon>EducationTraing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\Examination.aspx.cs">
+      <DependentUpon>Examination.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\Examination.aspx.designer.cs">
+      <DependentUpon>Examination.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\Qualification.aspx.cs">
+      <DependentUpon>Qualification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\Qualification.aspx.designer.cs">
+      <DependentUpon>Qualification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\SafetyCheck.aspx.cs">
+      <DependentUpon>SafetyCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SafetyCheck.aspx.designer.cs">
+      <DependentUpon>SafetyCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\Traffic.aspx.cs">
+      <DependentUpon>Traffic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\Traffic.aspx.designer.cs">
+      <DependentUpon>Traffic.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemManage\MenuEdit.aspx.cs">
       <DependentUpon>MenuEdit.aspx</DependentUpon>

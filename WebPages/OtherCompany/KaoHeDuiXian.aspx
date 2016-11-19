@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ThreeTiX.aspx.cs" Inherits="WebPages.QM.ThreeTiX" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="KaoHeDuiXian.aspx.cs" Inherits="WebPages.OtherCompany.KaoHeDuiXian" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>上级来文</title>
+    <title>分公司考核兑现</title>
      <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@
                    { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=三体系",
+               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=分公司考核兑现",
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -55,7 +55,7 @@
                     'timestamp': Math.random(),
                     'token': "wonder4",
                     'fkGuid': "123456",
-                    'docType': '三体系',
+                    'docType': '分公司考核兑现',
                 },
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
