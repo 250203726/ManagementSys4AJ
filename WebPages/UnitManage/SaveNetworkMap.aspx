@@ -6,14 +6,12 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+   <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
-
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
-    <script src="../assets/js/placeholder.js"></script>
-    <script src="../assets/js/Util.js" type="text/javascript"></script>
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
+    <script src="../assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             window["t"] = $("#tree1").ligerTree({
@@ -56,6 +54,8 @@
                 ]
             });
 
+            //
+            $("#toptoolbar").css("height", "31px");
         });
        
         function itemclick(btn) {
@@ -80,7 +80,13 @@
                 Rtn.data.parentname = parent_name
                 f.setData(Rtn.data);
                 f.setEnabled(["parentname"], false);
-            }
+            } else if (btn.text == "删除") {
+                var guid = selected_node.data.node_guid;
+                var Rtn = GetDataByAjax('../NB_JsonHttp.aspx', "DeleteMapNode", guid);
+                myTips(Rtn.msg);
+                t.reload();
+                return;
+            } 
             //2.弹出对话框
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 600, title: "节点处理",
@@ -108,7 +114,7 @@
 </head>
 <body style=""overflow-x: hidden; padding: 5px; margin: 0;">
       <div id="toptoolbar"></div> 
-   <ul id="tree1"></ul>
+   <ul id="tree1" ></ul>
     <div id="mytarget" style="width: 100%; display: none">
             <div id="myform"></div>
         </div>

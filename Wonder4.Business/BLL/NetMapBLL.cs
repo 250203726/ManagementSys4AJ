@@ -75,6 +75,7 @@ namespace N_Bers.Business.BLL
                 tep = new NetMapInfo();
                 tep.guid = item.node_guid;
                 tep.name = item.name;
+                tep.value = item.auditor;
 
                 tep.children = GetChilds(list, tep.guid);
 
@@ -97,6 +98,7 @@ namespace N_Bers.Business.BLL
 
             tree_data.name = rootNode.name;
             tree_data.guid = rootNode.node_guid;
+            tree_data.value = rootNode.auditor;
             tree_data.children = GetChilds(allList, tree_data.guid);
 
             return tree_data;

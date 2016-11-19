@@ -89,14 +89,6 @@
                 tab: {
                     items: [
                         {
-                            title: '形象及宗旨', fields: [
-                                   {
-                                       display: "形象及宗旨", name: "unit_figure", newline: true, type: "textarea", width: 625, 
-                                       validate: {}, hideLabel: true
-                                   }
-                            ]
-                        },
-                        {
                             title: '岗位职责', fields: [
                                    {
                                        display: "岗位职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
@@ -204,7 +196,6 @@
                     pid: "",
                     unit_type: "2",
                     unit_duty: "",
-                    unit_figure: "",
                     remark: "",
                 };
             } else {

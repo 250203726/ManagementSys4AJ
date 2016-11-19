@@ -13,7 +13,7 @@
 <body>
     <!--Step:1 Prepare a dom for ECharts which (must) has size (width & hight)-->
     <!--Step:1 为ECharts准备一个具备大小（宽高）的Dom-->
-    <div id="main" style="height:1500px;width:2800px;border:1px solid #ccc;padding:10px;overflow-y:auto;"></div>
+    <div id="main" style="height:1500px;width:2800px;border:1px solid #ccc;padding:10px;overflow:auto;"></div>
     
     <!--Step:2 Import echarts.js-->
     <!--Step:2 引入echarts.js-->
@@ -34,7 +34,7 @@
         },
         tooltip: {
             trigger: 'item',
-            formatter: "{b}: {c}"
+            formatter: "{b}-责任人：{c}"
         },
         toolbox: {
             show: true,
@@ -51,32 +51,39 @@
             {
                 name: '树图',
                 type: 'tree',
-                orient: 'vertical',  // vertical horizontal
-                rootLocation: { x: 'center', y: 50 }, // 根节点位置  {x: 'center',y: 10}
-                layerPadding:100,
-                nodePadding: 5,
-                symbol: 'curve',//curve rectangle
-                symbolSize: [150,35],
+                orient: 'horizontal',  // vertical horizontal
+                rootLocation: { y: 'center', x:80 }, // 根节点位置  {x: 'center',y: 10}
+                layerPadding:180,
+                nodePadding: 100,
+                //symbol: 'curve',//curve rectangle
+                symbolSize: 6,//[150,35]
+                roam: true,
                 itemStyle: {
                     normal: {
+                        color: '#4883b4',
                         label: {
                             show: true,
-                            position: 'inside',
+                            formatter:"{b}",
+                            position: 'top',
                             textStyle: {
-                                color: '#111',
-                                fontSize: 10,
-                                fontWeight: 'bolder'
+                                color: '#000',
+                                fontSize: 12,
+                                align:"center",
+                                fontWeight: 'bold',
                             }
                         },
                         lineStyle: {
-                            color: '#000',
-                            width: 1,
-                            type: 'broken' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
+                            color: '#ccc',
+                            type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
                         }
                     },
                     emphasis: {
                         label: {
-                            show: true
+                            show: true,
+                            textStyle: {
+                                fontSize: 11,
+                                fontWeight: 'bolder',
+                            }
                         }
                     }
                 },

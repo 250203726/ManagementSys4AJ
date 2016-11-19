@@ -117,7 +117,7 @@
 
 
             //页签初始化
-            pages_init();			
+           // pages_init();			
         });
 
         //高度适应
@@ -150,7 +150,7 @@
 
         //保存页签状态
         function saveTabStatus() {
-            $.cookie('liger-home-tab', JSON2.stringify(tabItems));
+           // $.cookie('liger-home-tab', JSON2.stringify(tabItems));
         }
 
 

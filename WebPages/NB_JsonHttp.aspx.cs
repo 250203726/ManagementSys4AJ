@@ -135,6 +135,9 @@ namespace WebPages
                 case "ADDUSERROLE":
                     retJsonStr = addUserRole(onlyPara, onlyPara2);
                     break;
+                case "DELETEMAPNODE":
+                    retJsonStr = DeleteMapNode(onlyPara);
+                    break;
                 default:                
                     break;
             }
@@ -142,6 +145,26 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+
+        private string DeleteMapNode(string onlyPara)
+        {
+            if (string.IsNullOrEmpty(onlyPara))
+            {
+                return JsonExtensions.ToJson(new MyHttpResult
+                {
+                    result = false,
+                    msg = "提交数据错误！"
+                });
+            }
+            Guid nodeguid = new Guid(onlyPara);
+            NetMapModel nmm = (new NetMapBLL()).GetModelByGuid(nodeguid);
+            return JsonExtensions.ToJson(new MyHttpResult
+            {
+                result = nmm.Delete() > 0 ? true : false,
+                msg = "删除节点成功！"
+            });
+            
         }
 
         private string GetNetMapNode(string onlyPara)
