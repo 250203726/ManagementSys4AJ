@@ -25,14 +25,7 @@ namespace WebPages
             {
                 serverCode += s;
             }
-            Session["serverCode"] = serverCode;
-
-            var myKey=N_Bers.Business.Core.AesHelper.Encrypt("rand=0.15946032321499137", "sa");
-
-            var md5key = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile("rand=0.15946032321499137", "MD5");
-
-            var de_mykey = N_Bers.Business.Core.AesHelper.Decrypt("EzoHjfvf1/bEAaqIsCmafQ==", "sa");
-
+            Session[N_Bers.Business.Core.BaseConst.SERVERCODE] = serverCode;
         }
 
         private void CreateCheckCodeImage(string[] checkCode)

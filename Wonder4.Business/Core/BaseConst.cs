@@ -15,7 +15,12 @@ namespace N_Bers.Business.Core
         /// </summary>
         public static string USERSESSION = "user_info";
 
-        
+        /// <summary>
+        /// 验证码信息
+        /// </summary>
+        public static string SERVERCODE = "server_code";
+
+
 
     }
 }

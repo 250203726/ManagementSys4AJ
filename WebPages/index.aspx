@@ -15,7 +15,6 @@
     <script src="assets/lib/jquery/jquery-1.9.0.min.js"></script>
     <script src="assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="assets/lib/jquery.cookie.js" type="text/javascript"></script>
-    <script src="resources/js/config.js" type="text/javascript"></script>
     <script src="assets/lib/json2.js"></script>
     <script src="assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">

@@ -12,9 +12,14 @@
     <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon"/>
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
     <script src="resources/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="resources/js/config.js" type="text/javascript"></script>
     <script src="resources/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="assets/lib/ligerUI/js/ligerui.all.js"></script>
+    
+    
+   
+    <script src="assets/js/Util.js"></script>
     <script type="text/javascript">
 
         //误删，避免frameset中的登陆界面session过期在子框架加载的问题
@@ -22,32 +27,41 @@
             top.location = self.location;
         }
 
-        /*function check(){
-	    	var username = $("#txtUsername").val();
-            var password = $("#txtPassword").val();
+        function check() {
+            var username = $("#wscrm_Username").val();
+            var password = $("#wscrm_Password").val();
             var authCode = $("#authCode").val();
-            if (username == "")            {
-                Public.tips({type: 1, content : '账号不能为空!'});
-                $("#txtUsername").focus();
+            if (username == "") {
+                $("#wscrm_Username").focus();
+                myAlerts("请输入用户名！", "提示", "warn");
                 return false;
             }
-            if (password == "")            {
-                Public.tips({type: 1, content : '密码不能为空!'});
-                $("#txtPassword").focus();
+            if (password == "") {
+                $("#wscrm_Password").focus();
+                myAlerts("请输入密码！", "提示", "warn");
                 return false;
             }
-            if(authCode==""){
-            	Public.tips({type: 1, content : '验证码不能为空!'});
+            if (authCode == "") {
                 $("#authCode").focus();
+                myAlerts("请输入验证码！", "提示", "warn");
                 return false;
             }
             return true;
-	    }*/
+        }
 
         function showImage(node) {
-            var imageHtml = '<img src="Validate.aspx?rand=' + Math.random() + '" onclick="showImage(this);" width="100" height="26"/>';
-            $(node).replaceWith(imageHtml);
+            $(node).attr("src", "Validate.aspx?rand=" + Math.random());
         }
+        
+        $(function () {
+            $(document).on("click", "input[type=submit]", function (e) {
+                if (!check()) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            });
+        });
+
     </script>
 </head>
 <body>

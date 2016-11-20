@@ -867,6 +867,9 @@
     <Content Include="Components\NBersFileServices\uploadify-cancel.png" />
     <Content Include="Components\NBersFileServices\uploadify.css" />
     <Content Include="Components\NBersFileServices\uploadify.swf" />
+    <Content Include="Home\index.aspx" />
+    <Content Include="Home\news_list.aspx" />
+    <Content Include="Home\news_view.aspx" />
     <Content Include="OtherCompany\CheckReport.aspx" />
     <Content Include="OtherCompany\KaoHeDuiXian.aspx" />
     <Content Include="OtherCompany\PersonalInformation.aspx" />
@@ -1365,6 +1368,7 @@
     <Content Include="UnitManage\SaveNetworkMap.aspx" />
     <Content Include="UnitManage\SaveWorkSummary.aspx" />
     <Content Include="UnitManage\WorkSummary.aspx" />
+    <Content Include="upfiles\201611\img\logo.jpg" />
     <Content Include="UserManage\StationIndex.aspx" />
     <Content Include="UserManage\UnitIndex.aspx" />
     <Content Include="UserManage\UserInfo.aspx" />
@@ -1404,6 +1408,27 @@
     </Compile>
     <Compile Include="Components\NBersFileServices\DownloadHandler.ashx.cs">
       <DependentUpon>DownloadHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\news_list.aspx.cs">
+      <DependentUpon>news_list.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home\news_list.aspx.designer.cs">
+      <DependentUpon>news_list.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\news_view.aspx.cs">
+      <DependentUpon>news_view.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home\news_view.aspx.designer.cs">
+      <DependentUpon>news_view.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>

@@ -168,6 +168,68 @@ function myTips(scontent, stitle, fncallback) {
     });
 }
 
+//重写tip插件,方便后期优化
+function myAlerts(scontent, stitle, type, fncallback) {
+    stitle = stitle == "" ? "提示信息" : stitle;
+    scontent = scontent == "" ? "提示内容" : scontent;
+    switch (type) {
+        case "success":
+            $.ligerDialog.success(scontent, stitle);
+            break;
+        case "warn":
+            $.ligerDialog.warn(scontent, stitle);
+            break;
+        case "question":
+            $.ligerDialog.question(scontent, stitle);
+            break;
+        case "error":
+            $.ligerDialog.error(scontent, stitle);
+            break;
+        case "confirm":
+            $.ligerDialog.confirm('提示内容', function (yes) {
+                alert(yes);
+            });
+            break;
+        case "warning":
+            $.ligerDialog.warning('提示内容', function (type) {
+                alert(type);
+            });
+            break;
+        case "prompt":
+            $.ligerDialog.prompt('提示内容', function (yes, value) {
+                if (yes) alert(value);
+            });
+            break;
+        case "prompt2":
+            $.ligerDialog.prompt('提示内容', '初始化值', function (yes, value) {
+                if (yes) alert(value);
+            });
+            break;
+        case "prompt3":
+            $.ligerDialog.prompt('提示内容', true, function (yes, value) {
+                if (yes) alert(value);
+            });
+            break;
+        case "prompt4":
+            $.ligerDialog.prompt('提示内容', '初始化多选框值', true, function (yes, value) {
+                if (yes) alert(value);
+            });
+            break;
+        case "waitting":
+            $.ligerDialog.waitting('正在保存中,请稍候...');
+            setTimeout(function () {
+                $.ligerDialog.closeWaitting();
+            }, 2000);
+            break;
+        case "waitting2":
+            var manager = $.ligerDialog.waitting('正在保存中2,请稍候...');
+            setTimeout(function () {
+                manager.close();
+            }, 1000);
+            break;
+    }
+}
+
 //json时间 转换 add by wonder4 2016年11月5日15:41:23
 function g_render4time(rowdata, index, colvalue) {
     var milli = colvalue.replace(/\/Date\((-?\d+)\)\//, '$1');
