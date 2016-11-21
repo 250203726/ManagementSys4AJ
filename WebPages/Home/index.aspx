@@ -191,7 +191,7 @@
                     <div class="panel-heading" style="font-weight: bold">安 · 全 · 网 · 络 · 图</div>
                     <div class="panel-body">
                         <div>
-                            <a href="#" class="thumbnail">
+                            <a href="/UnitManage/NetworkMap.aspx" class="thumbnail">
                                 <img data-src="holder.js/100%x250" alt="..." src="../upfiles/201611/img/netmap.jpg">
                             </a>
                         </div>

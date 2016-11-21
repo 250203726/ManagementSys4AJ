@@ -355,6 +355,7 @@ namespace WebPages
             UserModel old_model = (new MyUserBLL()).GetModel(new_model.id);
             if (null== old_model)
             {
+                new_model.password = string.IsNullOrEmpty(new_model.password) ? "123456" : new_model.password;
                 new_model.password = AesHelper.MD5Encrypt(new_model.password);
                 return JsonExtensions.ToJson(new MyHttpResult
                 {

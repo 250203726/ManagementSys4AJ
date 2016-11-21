@@ -61,6 +61,9 @@
         //点击保存按钮方法 add by wonder4 2016年10月31日22:57:22
         function submitform() {
             var user = f.getData();
+            if (user.nickname.length==0) {
+                myTips("用户名不能为空！");
+            }
             var ret = GetDataByAjax("../NB_JsonHttp.aspx", "UpdateUser", "", "", JSON.stringify(user));
             if (ret.result) {
                 myTips(ret.msg);

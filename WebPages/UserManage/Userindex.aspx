@@ -140,20 +140,20 @@
                      {
                          display: "用户名称", name: "nickname", type: "text", labelAlign: "right", newline: false,
                          validate: { required: true }
-                     },
-                     { display: "邮箱", name: "email", type: "text", labelAlign: "right" },
-                      { display: "电话", name: "phone", type: "digits", labelAlign: "right", newline: false },
+                     },                     
                      {
                          display: "用户类型", name: "type_id", type: "select", labelAlign: "right", comboboxName: "type_id", newline: true, options: {
                              data: user_type
-                         }
+                         }, validate: { required: true }
                      },
                      {
                          display: "所属岗位", name: "unit_id", type: "select", labelAlign: "right", comboboxName: "unit_id", newline: false, options: {
                              textField: "unit_name",
                              data: station_list.data
-                         }
+                         }, validate: { required: true }
                      },
+                     { display: "邮箱", name: "email", type: "text", labelAlign: "right" },
+                      { display: "电话", name: "phone", type: "digits", labelAlign: "right", newline: false },
                     { display: "备注", name: "info", type: "textarea", labelAlign: "right", width: 450 },
                 ]
             });
@@ -187,7 +187,7 @@
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 600, title: btn.text + "用户",
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                        { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
@@ -204,7 +204,7 @@
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 600, title: btn.text + "用户",
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                        { text: '确定', onclick: function (item, dialog) { f_save(dialog);} },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
@@ -265,14 +265,32 @@
         }
 
         //用户form保存事件
-        function f_save() {
+        function f_save(dialog) {
             //TODO:必填校验
             var user_post = f.getData();
+            if (user_post.account.length == 0) {
+                myTips("用户编码不能为空");
+                return false;
+            }
+            if (user_post.nickname.length == 0) {
+                myTips("用户名称不能为空");
+                return;
+            }
+            if (user_post.type_id.length == 0) {
+                myTips("用户类型不能为空");
+                return;
+            }
+            if (user_post.unit_id.length == 0) {
+                myTips("所属岗位不能为空");
+                return;
+            }
+
             var ret = GetDataByAjax("../NB_JsonHttp.aspx", "UpdateUser", "", "", JSON.stringify(user_post));
             if (ret.result) {
                 myTips(ret.msg);
                 g.reload();
             } else { }
+            dialog.hidden();
         }
 
         function f_render_type(rowdata, index, colvalue) {
@@ -316,7 +334,21 @@
             });
         });
        
-
+        //分配角色按钮
+        function saveRole() {
+            var roleids = liger.get("checkboxlist1").getValue();
+            var userid = $("#userid").val();
+            //把角色编号列表和用户编号传给后台去处理，返回成功或失败
+            if (true) {
+                //为真表示已经保存了角色编号和用户编号，则弹出提示信息，并关闭对话框
+                GetDataByAjax("../NB_JsonHttp.aspx", "ADDUSERROLE", userid, roleids);
+                myTips("保存成功！");
+            }
+            else {
+                //为假，表示保存失败。弹出提示信息，不关闭对话框。
+                myTips("保存失败！");
+            }
+        }
     </script>
 </head>
 <body style="overflow-x: hidden; padding: 5px; margin: 0;">

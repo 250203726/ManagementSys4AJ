@@ -238,7 +238,7 @@
                     <span class="h2">管理系统</span>
                 </div>
             </div>
-            <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown">
+            <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown" style="min-width: 120px;">
                 <label id="wel_label" class="wel_label">
                     欢迎您：
                 	<a>
@@ -304,9 +304,9 @@
             });
             $("#changePwd").click(function (e) {
                 $.ligerDialog.open({
-                    target: $("#form_changepwd"), width: 360, title: "修改密码",
+                    target: $("#form_changepwd"), width: 380, title: "修改密码",
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_changepwd(); dialog.hidden(); } },
+                        { text: '确定', onclick: function (item, dialog) { f_changepwd(dialog) } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                     ]
                 });
@@ -315,8 +315,8 @@
             window['f'] = $("#myform_changepwd").ligerForm({
                 inputWidth: 170, labelWidth: 90, space: 60,
                 fields: [
-                     { display: "新密码", name: "new_pwd", type: "password",labelAlign:"right" },
-                     { display: "确认密码", name: "re_pwd", type: "password", labelAlign: "right"},
+                     { display: "新密码", name: "new_pwd", type: "password", labelAlign: "right", validate: { required: true } },
+                     { display: "确认密码", name: "re_pwd", type: "password", labelAlign: "right", validate: { required: true } },
                 ]
             });
         });
@@ -325,6 +325,14 @@
         function f_changepwd()
         {
             var changeData = f.getData();
+            if (changeData.new_pwd.length==0) {
+                myTips("请输入新密码");
+                return;
+            }
+            if (changeData.re_pwd.length == 0) {
+                myTips("请输入确认密码");
+                return;
+            }
             if (changeData.new_pwd != changeData.re_pwd) {
                 $.ligerDialog.error('两次密码输入不一样!');
                 return;
@@ -333,6 +341,7 @@
             if (returnJson.result) {
                 myTips(returnJson.msg);
             }
+             dialog.hidden();
         }
     </script>
     <div id ="form_changepwd" class="form_changepwd" style="width:99%; margin:3px; display:none;">

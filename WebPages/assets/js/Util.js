@@ -159,13 +159,26 @@ function GetDataByAjaxSync(sfile, oprtype, strkey, strkey2, args,callback) {
 function myTips(scontent, stitle, fncallback) {
     stitle = stitle == "" ? "提示信息" : stitle;
     scontent = scontent == "" ? "提示内容" : scontent;
-    window['mytips']=$.ligerDialog.tip({
-        title: stitle, content: scontent, callback: function (data) {
-            if (typeof (callback)=="function") {
-                fncallback(data);
+    //全局只有一个实例
+    if (typeof (mytips) == "undefined") {
+        window['mytips'] = $.ligerDialog.tip({
+            title: stitle, content: scontent, callback: function (data) {
+                if (typeof (callback) == "function") {
+                    fncallback(data);
+                }
             }
-        }
-    });
+        });
+    }
+    else {
+        var visabled = mytips.get('visible');
+        if (!visabled) mytips.show();
+        mytips.set('content', scontent);
+        mytips.set('title', stitle);
+    }
+    //5秒自动关闭
+    setTimeout(function () {
+        mytips.hidden();
+    }, 5000);
 }
 
 //重写tip插件,方便后期优化

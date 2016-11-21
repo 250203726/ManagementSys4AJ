@@ -58,18 +58,22 @@
             });
              
             window['f'] = $("#myform").ligerForm({
-                inputWidth: 170, labelWidth: 90, space: 60,
+                inputWidth: 170, labelWidth: 90, space: 60,validate:true,
                 fields: [
                     { name: "id", type: "hidden", options: {value:"0"} },
                     { name: "unit_type", type: "hidden", options: {value:"2"} },
-                    { display: "岗位名称", name: "unit_name", type: "text", newline: true, group: "基础信息", groupicon: groupicon, isSort: true },
-                     { display: "岗位全称", name: "unit_fullname", type: "text", newline: false },
+                    { display: "岗位名称", name: "unit_name", type: "text", newline: true, 
+                    group: "基础信息", groupicon: groupicon, isSort: true,
+                    validate:{required:true}
+                    },
+                     { display: "岗位全称", name: "unit_fullname", type: "text", newline: false ,validate:{required:true }},
                     {
                         display: "所属上级 ", name: "pid", type: "select", newline: true, comboboxName: "pid_name", options: {
                             valueFieldID: "id",
                             textField: "unit_name",
                             data:unit_data.data
-                        }
+                        },
+                        validate:{required:true}
                     },
                     {
                         display: "岗位性质 ", name: "child_type", newline: false, type: "select", comboboxName: "unit_type", options: {
@@ -83,7 +87,8 @@
                                     text: "长工"
                                 }
                             ]
-                        },                        
+                        },      
+                        validate:{required:true}
                     },
                 ],
                 tab: {
@@ -92,7 +97,7 @@
                             title: '岗位职责', fields: [
                                    {
                                        display: "岗位职责", name: "unit_duty", newline: true, type: "textarea", width: 625,
-                                       validate: {}, hideLabel: true
+                                       hideLabel: true
                                    }
                             ]
                         }
@@ -131,7 +136,7 @@
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 680, title: "新增岗位",
                 buttons: [
-                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '确定', onclick: function (item, dialog) { f_save(dialog);} },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                 ]
             });
@@ -153,7 +158,7 @@
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 680, title: "编辑岗位",
                 buttons: [
-                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                 ]
             });
@@ -162,24 +167,35 @@
 
         function setbiz_duty()
         { }
-        function f_save() {
-            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "AddUnit", "", "", JSON.stringify(f.getData()));
+        function f_save(dialog) {
+            //必填校验
+            var post_data=f.getData();
+            if (post_data.unit_name.length==0) {
+                myTips("岗位名称不能为空");
+                return false;
+            }
+            if (post_data.unit_fullname.length==0) {
+                myTips("岗位全称不能为空");
+                return;
+            }
+            if (post_data.child_type.length==0) {
+                myTips("岗位性质不能为空");
+                return;
+            }
+            if (post_data.unit_type.length==0) {
+                myTips("所属上级不能为空");
+                return;
+            }
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "AddUnit", "", "", JSON.stringify(post_data));
 
             if (returnStr.result) {
                 //TODO:tips延迟自动关闭
-                $.ligerDialog.tip({ title: '提示信息', content: '操作成功！' ,callback:function(t)
-                {
-                    //setTimeout(function ()
-                    //{
-                    //    $(t).remove(); //5秒延迟后关闭tip
-                    //}, 3000);
-                    //console.log(t);
-                }});
+                myTips("操作成功！");
                 g_reflesh();
             }
             else{
             }
-
+            dialog.hidden();
         }
 
         function g_reflesh(){

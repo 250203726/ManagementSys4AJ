@@ -74,7 +74,7 @@
                                     }
                                ]},
                        },
-                       { display: "显示顺序", name: "sortCode", type: "text", newline: false },
+                       { display: "显示顺序", name: "sortCode", type: "digits", newline: false },
                        { display: "是否启用", name: "enable", type: "select", newline: false, comboboxName: "enable",
                            options: {
                                data: [
