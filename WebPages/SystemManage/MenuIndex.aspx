@@ -30,6 +30,7 @@
             var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
             var data = [];
             var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
+            //var nodeid=GetDataByAjax('../NB_JsonHttp.aspx', "getAllParent");//父级菜单项的数据
             //菜单树加载
             menuTree = $("#menuTree").ligerTree({
                 data: JSONdata.data,
@@ -46,29 +47,31 @@
             menuBar = $("#menuBar").ligerToolBar({
                 items: <%= buttonJson %>
             });
+           
             window['f'] = $("#myform").ligerForm({
                 inputWidth: 170, labelWidth: 90, space: 60,
                 fields: [
                     { name: "id", type: "hidden", options: {value:"0"} },
                     { display: "菜单名称", name: "name", type: "text", newline: false },
-                     { display: "父级菜单", name: "parentId", type: "text", newline: false },
-                       { display: "菜单简码", name: "code", type: "text", newline: false },
-                       { display: "模块简码", name: "moduleId", type: "text", newline: false },
-                       { display: "请求路径", name: "url", type: "text", newline: false },
-                       { display: "图标路径", name: "icon", type: "text", newline: false },
-                       { display: "层&nbsp;&nbsp;&nbsp;&nbsp;级", name: "levels", type: "select", newline: false, comboboxName: "levels",
-                           options: {
-                               data: [
-                                        {
-                                            id:"1",
-                                            text: "1层"
-                                        }, {
-                                            id: "2",
-                                            text: "2层"
-                                        }, {
-                                            id: "3",
-                                            text: "3层"
-                                        }
+                    { display: "父级菜单", name: "parentName", type: "text", newline: false },
+                    { type: "hidden", name: "parentId", value: "" },
+                    { display: "菜单简码", name: "code", type: "text", newline: false },
+                    { display: "模块简码", name: "moduleId", type: "text", newline: false },
+                    { display: "请求路径", name: "url", type: "text", newline: false },
+                    //{ display: "图标路径", name: "icon", type: "text", newline: false },
+                    { display: "层&nbsp;&nbsp;&nbsp;&nbsp;级", name: "levels", type: "select", newline: false, comboboxName: "levels",
+                        options: {
+                            data: [
+                                {
+                                    id:"1",
+                                    text: "1层"
+                                    }, {
+                                    id: "2",
+                                    text: "2层"
+                                    }, {
+                                    id: "3",
+                                    text: "3层"
+                                    }
                                ]},
                        },
                        { display: "显示顺序", name: "sortCode", type: "text", newline: false },
@@ -99,6 +102,8 @@
                         },
                     }],           
             });
+            liger.get('parentName').setDisabled();
+
         });
         //$("#sortCode").ligerSpinner({ height: 28, type: 'int' });//只允许输入整数
 
@@ -131,6 +136,7 @@
                 dataNull={
                     version:1,
                     parentId:node.data.id,
+                    parentName:node.data.name,
                     name:"",
                     url:"",
                     paramss:"",
@@ -162,6 +168,7 @@
                 //myTips("点击修改"+node.data.id);
                 //初始化表格
                 var data = GetDataByAjax("../NB_JsonHttp.aspx", "getMenuById", node.data.id);
+                data.parentName=node.data.name;
                 InitForm(data.data);
                 //打开对话框
                 $.ligerDialog.open({
@@ -179,9 +186,21 @@
     
     //保存按钮操作
     function f_save(dialog) {
+        var myTipsStr="";
         var postData=f.getData();
         if (!postData.id) {
             postData.id=0;
+        }
+        //验证提示
+        if(postData.name==""||postData==null||postData.name==" "){
+            myTipsStr+="菜单名称不可为空！";
+        }
+        if(isNaN(Number(postData.sortCode))){  //当输入不是数字的时候，Number后返回的值是NaN;然后用isNaN判断。
+            myTipsStr+="显示顺序一列请输入数字！";
+        }
+        if(myTipsStr!=""){
+            myTips(myTipsStr);
+            return;
         }
         var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "addMenu", "", "", JSON.stringify(postData));
         if (returnStr.result) {

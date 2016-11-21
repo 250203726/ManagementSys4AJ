@@ -138,6 +138,9 @@ namespace WebPages
                 case "DELETEMAPNODE":
                     retJsonStr = DeleteMapNode(onlyPara);
                     break;
+                case "GETALLPARENT":
+                    retJsonStr = getAllParent();
+                    break;
                 default:                
                     break;
             }
@@ -763,6 +766,18 @@ namespace WebPages
                 }
             }
             return new MyHttpResult(result > 0 ? true : false, "").ToString();
+        }
+
+        public string getAllParent() {
+            List<MenuModel> list = new MenuBLL().getAllParent();
+            var nodes="[";
+            foreach (MenuModel model in list) {
+                string node = "{id :" + model.id + ",text :'" + model.name + "'},";
+                nodes += node;
+            }
+            nodes += "]";
+            return new MyHttpResult(true, nodes, "").ToString();
+            
         }
     }
 }

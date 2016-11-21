@@ -132,6 +132,14 @@ namespace N_Bers.Business.BLL
             List<MenuModel> list = DoQuery("and id in (select node_id from nbers_access where role_id=" + roleId + ") order by sortCode asc");
             return list;
         }
+        /// <summary>
+        /// 获得所有节点
+        /// </summary>
+        /// <returns></returns>
+        public List<MenuModel> getAllParent() {
+            List<MenuModel> list = DoQuery("");
+            return list;
+        }
 
         #region 菜单加载 作废
         /// <summary>

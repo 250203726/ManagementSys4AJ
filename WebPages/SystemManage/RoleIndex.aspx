@@ -130,6 +130,10 @@
             if (!postData.id) {
                 postData.id=0;
             }
+            if(postData.name==""||postData==null||postData.name==" "){
+                myTips("角色名不可为空！");
+                return;
+            }
             var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "addRole",$("#auth").val(), "", JSON.stringify(postData));
             if (returnStr.result) {
                 myTips("操作成功！");
