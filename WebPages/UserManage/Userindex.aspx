@@ -40,6 +40,50 @@
                 font-weight: normal;
                 cursor: pointer;
             }
+        /*.checkbox {
+            width: 280px;
+	        height: 10px;
+	        
+	        margin: 20px 80px;
+	        position: relative;
+	        border-radius: 3px;
+        }*/
+        .checkbox td{width:100px;font-size:20px} 
+        .checkbox label{display:inline-block;width:80px;color:blue}
+        /****复选框按钮样式****/
+        .chk_1 label {
+	        background-color: #FFF;
+	        border: 1px solid #C1CACA;
+	        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+	        padding: 9px;
+	        border-radius: 5px;
+	        display: inline-block;
+	        position: relative;
+	        margin-right: 30px;
+        }
+        .chk_1 label:active {
+	        box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chk_1:checked label {
+	        background-color: #ECF2F7;
+	        border: 1px solid #92A1AC;
+	        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+	        color: #243441;
+        }
+
+        .chk_1:checked label:after {
+	        content: '\2714';
+	        position: absolute;
+	        top: 0px;
+	        left: 0px;
+	        color: #758794;
+	        width: 100%;
+	        text-align: center;
+	        font-size: 1.4em;
+	        padding: 1px 0 0 0;
+	        vertical-align: text-top;
+        }
     </style>
     <script type="text/javascript">
         var g;
@@ -244,7 +288,7 @@
 
                 //2.弹出对话框
                 $.ligerDialog.open({
-                    target: $("#roledialog"), width: 600, title: btn.text,
+                    target: $("#roledialog"), width: 600,height:300, title: btn.text,
                     buttons: [
                         { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
                         { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -330,7 +374,8 @@
             ];
             $("#checkboxlist1").ligerCheckBoxList({
                 data: dataGrid,
-                textField: 'name'
+                textField: 'name',
+                css: 'chk_1',
             });
         });
        
@@ -368,14 +413,14 @@
         <!-- 分配角色对话框 -->
         <div id="roledialog" style="display: none">
             <label id="username"></label>
-            <span>的角色有：</span>
+            <%--<span>的角色有：</span>--%>
             <input type="hidden" id="userid" />
             <!-- 里面放用户角色列表 -->
             <div id="roletree"></div>
             <input type="hidden" name="role" id="role" value="<%= rlist %>" />
 
             <!-- 测试复选框 -->
-            <div id="checkboxlist1"></div>
+            <div id="checkboxlist1" ></div>
            
         </div>
 </body>
