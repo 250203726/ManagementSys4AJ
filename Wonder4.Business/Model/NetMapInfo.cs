@@ -9,7 +9,7 @@ namespace N_Bers.Business.Model
     {
         public Guid guid { get; set; }
         public string name { get; set; }
-
+        public string prefix { get; set; }
         public string value { get; set; }
         public List<NetMapInfo> children { get; set; }
     }

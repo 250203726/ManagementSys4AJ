@@ -30,11 +30,12 @@
 
     var netMapOp = {
         title: {
-            text: '湖北荆力工程总承包有限责任公司安全网络图'
+            text: '湖北荆力工程总承包有限责任公司安全网络图',
+            align:"center"
         },
         tooltip: {
             trigger: 'item',
-            formatter: "{b}-责任人：{c}"
+            formatter: "{b}"
         },
         toolbox: {
             show: true,
@@ -51,24 +52,24 @@
             {
                 name: '树图',
                 type: 'tree',
-                orient: 'horizontal',  // vertical horizontal
-                rootLocation: { y: 'center', x:80 }, // 根节点位置  {x: 'center',y: 10}
-                layerPadding:180,
-                nodePadding: 100,
-                //symbol: 'curve',//curve rectangle
-                symbolSize: 6,//[150,35]
+                orient: 'vertical',  // vertical horizontal
+                rootLocation: { x: 'center', y:80 }, // 根节点位置  {x: 'center',y: 10}
+                layerPadding:80,
+                //nodePadding: 170,
+                symbol: 'rectangle',//curve rectangle
+                symbolSize:[170,35],
                 roam: true,
                 itemStyle: {
                     normal: {
                         color: '#4883b4',
                         label: {
                             show: true,
-                            formatter:"{b}",
-                            position: 'top',
+                            formatter:"{b}-{c}",
+                            position: 'inside',
                             textStyle: {
-                                color: '#000',
+                                color: '#fff',
                                 fontSize: 12,
-                                align:"center",
+                                align:"justify",
                                 fontWeight: 'bold',
                             }
                         },

@@ -36,6 +36,16 @@ namespace N_Bers.Business.Model
             set { _node_name = value; }
         }
         /// <summary>
+        /// node_name
+        /// </summary>		
+        private string _station_name;
+        [DataColumn(Alias = "station_name")]
+        public string station_name
+        {
+            get { return _station_name; }
+            set { _station_name = value; }
+        }
+        /// <summary>
         /// auditor
         /// </summary>		
         private string _auditor;

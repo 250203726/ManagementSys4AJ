@@ -9,10 +9,12 @@
    <link href="../resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
-    <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="../assets/js/jquery-1.11.1.min.js"></script>
+    <%--<script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>--%>
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var selected_node;
         $(function () {
             window["t"] = $("#tree1").ligerTree({
                 url: "../NB_JsonHttp.aspx?oprtype=GetUnits4NetMap",
@@ -20,14 +22,20 @@
                 textFieldName: 'name',
                 parentIDFieldName: 'parentguid',
                 checkbox: false,
-                nodeWidth:200,
-                render:t_render
+                nodeWidth: 200,
+                render: t_render,
+                onContextmenu: function (node, e) {
+                    selected_node = node;
+                    menu.show({ top: e.pageY, left: e.pageX });
+                    return false;
+                }
+
             });
 
             $("#toptoolbar").ligerToolBar({
                 items: [
                         {
-                            text: '增加', click: itemclick, icon: 'add'
+                            text: '新增', click: itemclick, icon: 'add'
                         },
                         { line: true },
                         { text: '修改', click: itemclick },
@@ -44,38 +52,56 @@
                          display: "节点名称", name: "name", type: "text", labelAlign: "right",
                          validate: { required: true }
                      },
+                     { display: "父级节点", name: "parentname", type: "text", labelAlign: "right", newline: false },
                      {
-                         display: "责任人名称", name: "auditor", type: "text", labelAlign: "right", newline: false,
+                         display: "责任人名称", name: "auditor", type: "text", labelAlign: "right",
                          validate: { required: true }
                      },
-                     { display: "父级节点", name: "parentname", type: "text", labelAlign: "right" },
+                     { display: "兼职岗位", name: "station_name", type: "text", newline: false, labelAlign: "right" },
+
                     { type: "hidden", name: "parentguid", value: "" },
-                      { display: "排序", name: "sort_order", type: "digits", labelAlign: "right", value:"0",newline: false },
+                      { display: "排序", name: "sort_order", type: "digits", labelAlign: "right", value: "0", newline: false },
+                ]
+            });
+            window["menu"] = $.ligerMenu({
+                top: 100, left: 100, width: 140, items:
+                [
+              { text: '新增下一级节点', click: itemclick, icon: 'add' },
+              { line: true },
+                { text: '修改', click: itemclick, icon: 'edit' },
+
+                { text: '查看', click: itemclick, icon: "view" },
+                { text: '删除', click: itemclick, icon: "delete" },
                 ]
             });
 
             //
             $("#toptoolbar").css("height", "31px");
         });
-       
+
         function itemclick(btn) {
-            var selected_node = t.getSelected();
             if (!selected_node) {
                 myTips("请先选择一个节点");
                 return;
             }
-            if (btn.text=="增加") {                
+            if (btn.text == "新增下一级节点") {
                 f.setData({
                     "node_guid": "00000000-0000-0000-0000-000000000000",
-                    "auditor":"",
-                    "name": "", "parentname": selected_node.data.name,
+                    "auditor": "",
+                    "name": "工程部",
+                    "parentname": selected_node.data.name,
+                    "station_name": "兼职安全员",
                     "parentguid": selected_node.data.node_guid,
-                    "sort_order":"0"
+                    "sort_order": "0"
                 });
                 f.setEnabled(["parentname"], false);
             } else if (btn.text == "修改") {
                 var guid = selected_node.data.node_guid;
-                var parent_name=t.getParent(selected_node).name;
+                var parent_node = t.getParent(selected_node);
+                if (parent_node == null) {
+                    return;
+                }
+                var parent_name = parent_node.name;
                 var Rtn = GetDataByAjax('../NB_JsonHttp.aspx', "GetNetMapNode", guid);
                 Rtn.data.parentname = parent_name
                 f.setData(Rtn.data);
@@ -86,10 +112,10 @@
                 myTips(Rtn.msg);
                 t.reload();
                 return;
-            } 
+            }
             //2.弹出对话框
             $.ligerDialog.open({
-                target: $("#mytarget"), width: 600, title: "节点处理",
+                target: $("#mytarget"), width: 600, title: btn.text + "节点",
                 buttons: [
                     { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
@@ -99,16 +125,32 @@
         function f_save() {
             //TODO:必填校验
             var user_post = f.getData();
+            //var newnodedata = selected_node.data;
+            //newnodedata.treedataindex = 0;
+            //newnodedata.auditor = user_post.auditor;
+            //newnodedata.name = user_post.name;
+            //newnodedata.node_guid = user_post.node_guid;
+            //newnodedata.parentguid = user_post.parentguid;
+            //newnodedata.sort_order = user_post.sort_order;
+            //newnodedata.station_name = user_post.station_name;
+            //newnodedata.remark = "";
+
+
             var ret = GetDataByAjax("../NB_JsonHttp.aspx", "SaveNode", "", "", JSON.stringify(user_post));
             if (ret.result) {
                 myTips(ret.msg);
+                //if (user_post.node_guid == "00000000-0000-0000-0000-000000000000") {
+                //    t.append(t.getParent(selected_node), user_post);
+                //} else {
+                //    t.update(selected_node, newnodedata);
+                //}
                 t.reload();
             } else { }
         }
-        function t_render(data,item) {
+        function t_render(data, item) {
             var auditor = data.auditor || "";
-            
-            return auditor != "" ? item + "(负责人：" + auditor + ")" : item;
+            var station_name = data.station_name || "负责人";
+            return auditor != "" ? item + "(" + station_name + "：" + auditor + ")" : item;
         }
     </script>
 </head>

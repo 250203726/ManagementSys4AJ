@@ -198,6 +198,7 @@ namespace WebPages
 
             old_model.name = new_model.name;
             old_model.auditor = new_model.auditor;
+            old_model.station_name = new_model.station_name;
             old_model.sort_order = new_model.sort_order;
 
             return JsonExtensions.ToJson(new MyHttpResult
@@ -209,7 +210,7 @@ namespace WebPages
 
         private string GetUnits4NetMap(string onlyPara)
         {
-            List<NetMapModel> list = (new NetMapBLL()).DoQuery("");
+            List<NetMapModel> list = (new NetMapBLL()).DoQuery("1=1 ORDER BY parentguid,sort_order");
             return JsonExtensions.ToJson(list);
         }
 

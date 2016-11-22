@@ -74,8 +74,9 @@ namespace N_Bers.Business.BLL
             {
                 tep = new NetMapInfo();
                 tep.guid = item.node_guid;
-                tep.name = item.name;
+                tep.name = string.Concat(item.name,item.station_name, string.IsNullOrEmpty(item.auditor) ? "" : ":" + item.auditor);
                 tep.value = item.auditor;
+                tep.prefix = item.station_name;
 
                 tep.children = GetChilds(list, tep.guid);
 
@@ -88,7 +89,7 @@ namespace N_Bers.Business.BLL
 
         public NetMapInfo GenerateTree()
         {
-            List<NetMapModel> allList = DoQuery("");
+            List<NetMapModel> allList = DoQuery("1=1 ORDER BY parentguid,sort_order");
             var rootNode =
                (from item in allList 
                 where item.parentguid ==Guid.Empty
@@ -96,9 +97,10 @@ namespace N_Bers.Business.BLL
 
             NetMapInfo tree_data = new NetMapInfo();
 
-            tree_data.name = rootNode.name;
+            tree_data.name = string.Concat(rootNode.name,  rootNode.station_name, string.IsNullOrEmpty(rootNode.auditor) ? "" : ":" + rootNode.auditor); ;
             tree_data.guid = rootNode.node_guid;
             tree_data.value = rootNode.auditor;
+            tree_data.prefix = rootNode.station_name;
             tree_data.children = GetChilds(allList, tree_data.guid);
 
             return tree_data;
