@@ -54,13 +54,13 @@
                 //初始化表格
                 var dataNull={name:' ',status: 1, id: 0};
                 f.setData(dataNull);
-                var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
+                var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus","role");
                 //菜单树加载
                 window['t'] = $("#authTree").ligerTree({
                     data: JSONdata.data,
                     checkbox: true,
                     idFieldName: 'id',
-                    isExpand:2,
+                    isExpand: 1 ,
                     parentIDFieldName: 'parentId',
                     textFieldName: 'name',
                     onCheck:onCheck,
@@ -106,7 +106,7 @@
                         checkbox: true,
                         dFieldName: 'id',
                         textFieldName: 'name',
-                        isExpand: 2,
+                        isExpand: 1,
                         parentIDFieldName :'parentId',
                         onCheck:onCheck
                     });

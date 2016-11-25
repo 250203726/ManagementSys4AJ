@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UnitManage
 {
-    public partial class SaveWorkSummary : BasePage
+    public partial class RuleManagement : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

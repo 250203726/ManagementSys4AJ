@@ -29,7 +29,7 @@
             //初始化tree
             var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
             var data = [];
-            var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus");
+            var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus","menu");
             //var nodeid=GetDataByAjax('../NB_JsonHttp.aspx', "getAllParent");//父级菜单项的数据
             //菜单树加载
             menuTree = $("#menuTree").ligerTree({

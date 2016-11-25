@@ -64,7 +64,7 @@ namespace WebPages
                     retJsonStr = getSubMenusByJson();
                     break;
                 case "GETALLMENUS":
-                    retJsonStr = getAllMenus();
+                    retJsonStr = getAllMenus(onlyPara);
                     break;
                 case "DELETEMENU":
                     retJsonStr = deleteMenu(onlyPara);
@@ -252,7 +252,7 @@ namespace WebPages
 
         private string GetArticle4Grid(string onlyPara)
         {
-            var fileList = (new ArticleBLL()).DoQuery(" art_type='" + onlyPara + "'");
+            var fileList = (new ArticleBLL()).DoQuery(" art_type like '%" + onlyPara + "%'");
             var grid = new
             {
                 Rows = fileList,
@@ -559,8 +559,9 @@ namespace WebPages
         /// <returns></returns>
         private string getParentMenusByJson()
         {
-            UserModel user = new UserModel();
-            user.id = 1;//后面替换成参数
+            //UserModel user = new UserModel();
+            //user.id = 1;//后面替换成参数
+            UserModel user = (UserModel)Session[Public.SessionType.User_Info.ToString()];
             return (new MyHttpResult(true, (new MenuBLL()).getParentMenus(user))).ToString();
         }
 
@@ -571,25 +572,30 @@ namespace WebPages
         /// <returns></returns>
         private string getSubMenusByJson()
         {
-            UserModel user = new UserModel();
-            user.id = 1;
+            //UserModel user = new UserModel();
+            //user.id = 1;
+            UserModel user = (UserModel)Session[Public.SessionType.User_Info.ToString()];
             return (new MyHttpResult(true, (new MenuBLL()).getSubMenus(user))).ToString();
         }
 
         /// <summary>
         /// 获取Menu列表传给MenuIndex显示
         /// </summary>
+        /// <param name="i">判断是角色管理中的菜单还是菜单管理中的菜单,role,menu</param>
         /// <returns></returns>
-        public string getAllMenus()
+        public string getAllMenus(string i)
         {
             List<MenuModel> menulist= new MenuBLL().DoQuery("order by sortCode asc");
-            MenuModel root=new MenuModel();
-            root.parentId=-1;
-            root.id=0;
-            root.name="根节点";
-            root.enable="1";
-            root.group_id="0";
-            menulist.Add(root);
+            if (i == "menu")
+            {
+                MenuModel root = new MenuModel();
+                root.parentId = -1;
+                root.id = 0;
+                root.name = "根节点";
+                root.enable = "1";
+                root.group_id = "0";
+                menulist.Add(root);
+            }
             return new MyHttpResult(true, menulist).ToString();
         }
 

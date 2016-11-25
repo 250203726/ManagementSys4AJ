@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages.UnitManage {
+namespace WebPages.UnitManage.SavePage {
     
     
-    public partial class PaperOfSuperior {
+    public partial class SaveWorkSummary {
     }
 }

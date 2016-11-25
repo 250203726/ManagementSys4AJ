@@ -33,7 +33,7 @@ namespace WebPages
                 else//数据库校验
                 {
                     string sqlQuery = "SELECT id,account,nickname,email FROM nbers_user WHERE ( account=@uid OR nickname=@uid) AND password=@pwd";
-                    //密码使用md5加密（AesHelper类提供加密相关函数,后期再拓展，单纯的md5是不行的）
+                    //密码使用md5加密（AesHelper类提供加密相关函数,后期再拓展，单纯的md5是不行的） 补充ByWHZ：这种小系统用个MD5已经很好了，不要想太多！！给自己制造麻烦
                     UserModel ui = CPQuery.From(sqlQuery, new { uid = user_name, pwd = AesHelper.MD5Encrypt(user_pwd) }).ToSingle<UserModel>();
 
                     if (ui != null)

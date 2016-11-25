@@ -80,7 +80,7 @@
 
         //点击新增按钮事件
         function OnUpfiles() {
-            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/UnitManage/SaveWorkSummary.aspx?v="+Math.random);
+            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?v="+Math.random);
         }
          
         //删除数据 add wonder4 2016年11月7日22:54:21

@@ -366,12 +366,13 @@
         });
 
         $(function () {
-            var dataGrid = [
-                { id: 1, name: '管理员'},
-                { id: 2, name: '工作人员'},
-                { id: 3, name: '领导'},
-                { id: 4, name: '基层员工'},
-            ];
+            var dataGrid = GetDataByAjax("../NB_JsonHttp.aspx", "GETROLES").data.Rows;
+            //[
+            //    { id: 1, name: '管理员'},
+            //    { id: 2, name: '工作人员'},
+            //    { id: 3, name: '领导'},
+            //    { id: 4, name: '基层员工'},
+            //];
             $("#checkboxlist1").ligerCheckBoxList({
                 data: dataGrid,
                 textField: 'name',

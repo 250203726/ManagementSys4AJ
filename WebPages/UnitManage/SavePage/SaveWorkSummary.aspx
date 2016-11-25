@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveWorkSummary.aspx.cs" Inherits="WebPages.UnitManage.SaveWorkSummary" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveWorkSummary.aspx.cs" Inherits="WebPages.UnitManage.SavePage.SaveWorkSummary" %>
 
 <!DOCTYPE html>
 
@@ -6,26 +6,26 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>保存-工作总结</title>
-    <link href="../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../Components/NBersEditor/plugins/code/prettify.css" />
-    <script src="../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
-    <script charset="utf-8" src="../Components/NBersEditor/kindeditor.js"></script>
-    <script charset="utf-8" src="../Components/NBersEditor/lang/zh_CN.js"></script>
-    <script charset="utf-8" src="../Components/NBersEditor/plugins/code/prettify.js"></script>
+    <link href="../../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../Components/NBersEditor/plugins/code/prettify.css" />
+    <script src="../../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
+    <script charset="utf-8" src="../../Components/NBersEditor/kindeditor.js"></script>
+    <script charset="utf-8" src="../../Components/NBersEditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="../../Components/NBersEditor/plugins/code/prettify.js"></script>
 
-    <link href="../../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
-    <script src="../../assets/lib/ligerUI/js/ligerui.all.js"></script>
+    <link href="../../../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
+    <script src="../../../assets/lib/ligerUI/js/ligerui.all.js"></script>
     
-    <script src="../../assets/js/Util.js"></script>
+    <script src="../../../assets/js/Util.js"></script>
     <script type="text/javascript">
         var KE;
         $(function () {
             KindEditor.ready(function (K) {
                 KE = K.create('#kinde_content', {
-                    cssPath: '../Components/NBersEditor/plugins/code/prettify.css',
-                    uploadJson: '../Components/NBersEditor/KindeHandler.ashx?oprtype=upload',
-                    fileManagerJson: '../Components/NBersEditor/KindeHandler.ashx?oprtype=manger',
+                    cssPath: '../../Components/NBersEditor/plugins/code/prettify.css',
+                    uploadJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=upload',
+                    fileManagerJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=manger',
                     allowFileManager: true,
                     afterCreate: function () {
                     }
@@ -42,7 +42,7 @@
                 post_data.title = $("input[name=title]").val();
                 post_data.art_type = $("select[name=art_type] option:selected").val();
                 post_data.content = KE.html();
-                var Rtn = GetDataByAjax("../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
+                var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("新增成功,窗口在3秒钟后关闭！");
                     //setTimeout(window.top.tab.removeTabItem("Save_WorkSummary"),3000);
