@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveWorkPlan.aspx.cs" Inherits="WebPages.UnitManage.SavePage.SaveWorkPlan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveSafetyMeeting.aspx.cs" Inherits="WebPages.Safety.SavePage.SaveSafetyMeeting" %>
 
 <!DOCTYPE html>
 
@@ -133,9 +133,9 @@
                 <td><label for="art_type">所属类别</label></td>
                 <td>
                     <select name="art_type" validate="{required:true}" >
-                        <option value="工作计划_年度" selected="selected">工作计划_年度</option>
-                        <option value="工作计划_月度" >工作计划_月度</option>
-                        <option value="工作计划_周" >工作计划_周</option>
+                        <option value="安全例会_月度" selected="selected">安全例会_月度</option>
+                        <option value="安全例会_季度" >安全例会_季度</option>
+                        <option value="安全例会_其他专题" >安全例会_其他专题</option>
                     </select>
                 </td>
             </tr>

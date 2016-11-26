@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebPages.UnitManage
+namespace WebPages.Safety.SavePage
 {
-    public partial class WorkPlan : BasePage
+    public partial class SaveSafetyMeeting : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

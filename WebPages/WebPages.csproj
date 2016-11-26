@@ -1359,7 +1359,9 @@
     <Content Include="Safety\Examination.aspx" />
     <Content Include="Safety\Qualification.aspx" />
     <Content Include="Safety\SafetyCheck.aspx" />
+    <Content Include="Safety\SavePage\SaveSafetyMeeting.aspx" />
     <Content Include="Safety\Traffic.aspx" />
+    <Content Include="Safety\SafetyMeeting.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
     <Content Include="UnitManage\NetworkMap.aspx" />
@@ -1529,12 +1531,26 @@
     <Compile Include="Safety\SafetyCheck.aspx.designer.cs">
       <DependentUpon>SafetyCheck.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Safety\SavePage\SaveSafetyMeeting.aspx.cs">
+      <DependentUpon>SaveSafetyMeeting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveSafetyMeeting.aspx.designer.cs">
+      <DependentUpon>SaveSafetyMeeting.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Safety\Traffic.aspx.cs">
       <DependentUpon>Traffic.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Safety\Traffic.aspx.designer.cs">
       <DependentUpon>Traffic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\SafetyMeeting.aspx.cs">
+      <DependentUpon>SafetyMeeting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SafetyMeeting.aspx.designer.cs">
+      <DependentUpon>SafetyMeeting.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
