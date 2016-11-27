@@ -213,6 +213,7 @@
                     unit_type: "2",
                     unit_duty: "",
                     remark: "",
+                    child_type:""
                 };
             } else {
                 //f.set("readonly", true);

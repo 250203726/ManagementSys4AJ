@@ -17,7 +17,7 @@ namespace WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ( null == Session[BaseConst.USERSESSION] || string.IsNullOrEmpty(Session[BaseConst.USERSESSION].ToString()))
+            if ( null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account))
             {
                 Response.ContentType = "text/html";
                 Response.Clear();
@@ -457,7 +457,7 @@ namespace WebPages
             }
             BusinessUnitModel bu = JsonExtensions.FromJson<BusinessUnitModel>(input);
 
-            var userid =((UserModel)Session[BaseConst.USERSESSION]).id;
+            var userid =((UserModel)Public.User_Info).id;
             bu.createby = Convert.ToInt32(1);
             bu.createon = DateTime.Now;
 

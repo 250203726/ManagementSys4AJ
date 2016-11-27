@@ -14,7 +14,9 @@ namespace WebPages
         public string buttonJson = "";
         protected void Page_Init(object sender, EventArgs e)
         {
-            user = (UserModel)Session[BaseConst.USERSESSION];
+            //session 注入 Session[Public.SessionType.User_Info.ToString()] = ui; 这种写法
+            //取当前用户 系统中类似用法都可以这么些
+            user = (UserModel)Public.User_Info;
             String nodeid=Request.QueryString["nodeid"];
             
             if (user != null)

@@ -218,7 +218,7 @@
             if (btn.text == "增加") {
                 var formNULL = {
                     id: "0",
-                    accout: "",
+                    account: "",
                     nickname: "",
                     email: "",
                     phone: "",
