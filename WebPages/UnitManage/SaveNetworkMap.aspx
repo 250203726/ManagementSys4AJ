@@ -24,7 +24,14 @@
                 checkbox: false,
                 nodeWidth: 200,
                 render: t_render,
+                isExpand:5,
                 onContextmenu: function (node, e) {
+                    //console.log(e.target);
+                    if (e.target.nodeName.toLocaleUpperCase()!= "SPAN") {
+                        myTips("请在节点上点击右键，进行操作！");
+                        menu.hide();
+                        return false;
+                    }
                     selected_node = node;
                     menu.show({ top: e.pageY, left: e.pageX });
                     return false;
@@ -35,12 +42,11 @@
             $("#toptoolbar").ligerToolBar({
                 items: [
                         {
-                            text: '新增', click: itemclick, icon: 'add'
+                            text: '全部展开', click: tb_itemclick
                         },
                         { line: true },
-                        { text: '修改', click: itemclick },
-                        { line: true },
-                        { text: '删除', click: itemclick }
+                        { text: '全部折叠', click: tb_itemclick },
+                       
                 ]
             });
 
@@ -76,7 +82,8 @@
             });
 
             //
-            $("#toptoolbar").css("height", "31px");
+            //$("#toptoolbar").css("height", "31px");
+          
         });
 
         function itemclick(btn) {
@@ -152,11 +159,21 @@
             var station_name = data.station_name || "负责人";
             return auditor != "" ? item + "(" + station_name + "：" + auditor + ")" : item;
         }
+        function tb_itemclick(btn) {
+            if (btn.text == "全部展开") {
+                t.expandAll();
+            } else if (btn.text == "全部折叠") {
+                t.collapseAll();
+            }
+        }
     </script>
+    <style type="text/css">
+         
+    </style>
 </head>
 <body style=""overflow-x: hidden; padding: 5px; margin: 0;">
       <div id="toptoolbar"></div> 
-   <ul id="tree1" ></ul>
+       <ul id="tree1" ></ul>
     <div id="mytarget" style="width: 100%; display: none">
             <div id="myform"></div>
         </div>

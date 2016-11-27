@@ -21053,11 +21053,22 @@
             var g = this, p = this.options;
             $(".l-expandable-open", g.tree).click();
         },
+        wonder4_collapse: function (level) {
+            var g = this, p = this.options;
+            $(".l-expandable-open", g.tree).click();
+        },
         expandAll: function ()
         {
             var g = this, p = this.options;
             $(".l-expandable-close", g.tree).click();
-        }, 
+        },
+        wonder4_expand: function (level) {
+            var g = this, p = this.options;
+            var levelItem = this.getParentTreeItem(level);
+            //console.log(typeof (levelItem));
+            $(levelItem).find(".l-expandable-close").click();
+            //$(".l-expandable-close", levelItem.element).click();
+        },
         arrayToTree: function (data, id, pid)      //将ID、ParentID这种数据格式转换为树格式
         {
             var g = this, p = this.options;
