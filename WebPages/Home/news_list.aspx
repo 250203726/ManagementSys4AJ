@@ -31,7 +31,15 @@
             .news_list li span {
             float:right
             }
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            line-height: 25px;
+            position:absolute;
+            bottom:5px;
+        }
     </style>
+
 </head>
 <body>
     <div class="container">
@@ -47,17 +55,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">荆力总包
+                    <a class="navbar-brand" href="#">荆力总包安质部
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">首页</a></li>
-                        <li><a href="#">安全稽查</a></li>
-                        <li><a href="#">安全网络图</a></li>
-                        <li><a href="#">规章制度</a></li>
-                        <li><a href="#">上级来文</a></li>
+                        <li><a href="#">部门概况</a></li>
+                        <li><a href="#">部门管理</a></li>
+                        <li><a href="#">安全管理</a></li>
+                        <li><a href="#">质量管理</a></li>
+                        <li><a href="#">分公司管控</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -65,21 +74,36 @@
         </nav>
         <ol class="breadcrumb">
             <li>首页</li>
-            <li class="active">安全稽查</li>
+            <li class="active"><%=art_type %></li>
         </ol>
         <div>
            <ul class="news_list">
                <%
+                   int i = 0;
                    foreach (var item in newslist)
                    {
-                       Response.Write("<li><a href='"+item.id.ToString()+"'  target='_blank'>"+item.title+"</a><span>"+item.create_date.ToString("yyyy-MM-dd")+"</span></li>");
-                   }; 
+                       i++;
+                       Response.Write("<li><a href='news_view.aspx?oid="+item.id.ToString()+"'  target='_blank'>"+i.ToString()+". "+item.title+"</a><span>"+item.create_date.ToString("yyyy-MM-dd")+"</span></li>");
+                   };
                    %>               
            </ul>
-
+            <nav>
+      <ul class="pagination" style="float:right;display:none">
+        <li class="disabled"><a href="#">«</a></li>
+        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">»</a></li>
+     </ul>
+   </nav>
         </div>
     </div>
-
+        <div class="container footer">
+        Copyright©2016 荆力总包版权所有     地址：荆州**　 邮编：123456</br>
+            鄂ICP备05003329号  鄂公网安备 42050202000133号 
+    </div>
 </body>
 </html>
 

@@ -88,15 +88,7 @@
     <script type="text/javascript">
         var g;
         var tree_manger;
-        var user_type = [
-                                 {
-                                     id: "0",
-                                     text: "普通用户"
-                                 }, {
-                                     id: "1",
-                                     text: "超级管理员"
-                                 }
-        ];
+        var user_type;
         var station_list;
         $(function () {
             var groupicon = "../assets/lib/ligerUI/skins/icons/communication.gif";
@@ -167,6 +159,12 @@
                 },
             });
 
+            //获取角色类型
+            var myuser_type = GetDataByAjax('../NB_JsonHttp.aspx', "getroles", "", "", "");
+
+            user_type = $.map(myuser_type.data.Rows, function (item,n) {
+                return {id:item.id,text:item.name};
+            });
             //获取组织架构树
             tree_manger = $("#tree1").ligerGetTreeManager();
 

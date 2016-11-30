@@ -12,11 +12,12 @@ namespace WebPages.Home
     public partial class news_list : System.Web.UI.Page
     {
         public List<ArticleModel> newslist;
+        public string art_type;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string news_type = Request.QueryString["news_type"];
-            newslist = (new ArticleBLL()).DoQuery("art_type='"+ news_type+"'");
-
+            art_type = Request.QueryString["news_type"];
+            newslist = (new ArticleBLL()).DoQuery("art_type='"+ art_type + "' ORDER BY create_date DESC");
+            this.Title = "安质部-" + art_type;
         }
     }
 }

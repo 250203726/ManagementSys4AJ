@@ -67,10 +67,12 @@
         margin-top:-10px;
         }
         .tips_weather {
-        width: 43%;
-    text-align: right;
-    float:left;
-        margin-bottom: 5px;
+            width: 43%;
+            text-align: right;
+            float: left;
+            margin-bottom: 5px;
+            overflow-x:hidden;
+            height:20px;
         }
     </style>
    <script type="text/javascript">
@@ -91,7 +93,7 @@
                        }
                        var img = "<img width='16px' height='16px' src='http://i2.sinaimg.cn/dy/main/weather/weatherplugin/wthIco/20_20/" + _f
                        + "' />";
-                       var tq ="今日天气预报： "+ citytq + " " + img + " " + _w.s1 + " " + _w.t1 + "℃～" + _w.t2 + "℃  " + _w.d1 + _w.p1 + "级";
+                       var tq ="天气： "+ citytq + " " + img + " " + _w.s1 + " " + _w.t1 + "℃～" + _w.t2 + "℃  " + _w.d1 + _w.p1 + "级";
                        //#weather自己修改,天气样式自己打断点调试
                        $('div.tips_weather').html(tq);
                    }
@@ -99,9 +101,30 @@
            });
        }
 
+       function format_date(str_date) {
+           var milli = str_date.replace(/\/Date\((-?\d+)\)\//, '$1');
+           var s = "1990-01-1";
+           var dt = new Date(parseInt(milli));
+           if (dt && (dt instanceof Date)) {
+               if (dt.getFullYear() != 1)
+                   s = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+           }
+           return s;
+       }
+       var pageData;
        $(function () {
+            pageData=<%=PageData%>;
            findWeather();
+           initArticleList(pageData.station_duty,"station_duty");
+
        });
+
+       function initArticleList(data,model_name)
+       {
+           $.each(data,function(n,value){
+               $("ul."+model_name).append($("<li><a href='/home/news_view.aspx?oid="+value.id+"' target='_blank'>"+value.title+"<span class='myspan'>["+format_date(value.create_date)+"]</span></a> </li>"));
+           });        
+       }
    </script>
 </head>
 <body style="padding-top: 0;">
@@ -118,17 +141,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">荆力总包
+                    <a class="navbar-brand" href="#">荆力总包安质部
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">首页</a></li>
-                        <li><a href="#">安全稽查</a></li>
-                        <li><a href="#">安全网络图</a></li>
-                        <li><a href="#">规章制度</a></li>
-                        <li><a href="#">上级来文</a></li>
+                        <li><a href="#">部门概况</a></li>
+                        <li><a href="#">部门管理</a></li>
+                        <li><a href="#">安全管理</a></li>
+                        <li><a href="#">质量管理</a></li>
+                        <li><a href="#">分公司管控</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -206,13 +230,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="news_list.aspx?news_type=安全稽查" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
+                        <ul class="index_list station_duty">                            
                         </ul>
                     </div>
                 </div>
