@@ -108,7 +108,7 @@ namespace N_Bers.Business.BLL
             //当前用户是否管理员 管理员直接显示所有菜单
             //bool isAdmin = Core.Public.IsAdmin();
 
-            foreach (MenuModel menu in list)
+            foreach (MenuModel menu in list)//如果还有其他名字的按钮，比如分配角色，需要在下面多加一个if对应分配角色按钮
             {
                 if (menu.name.Equals("新增") )
                     buttonMenusString.Append("{ text: '新增', click: AddItem, icon: 'add' },{ line: true },");
@@ -116,6 +116,8 @@ namespace N_Bers.Business.BLL
                     buttonMenusString.Append("{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },");
                 if (menu.name.Equals("删除") )
                     buttonMenusString.Append( "{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },");
+                if (menu.name.Equals("分配角色"))
+                    buttonMenusString.Append("{ text: '分配角色', click: itemclick, icon: 'view' },{ line: true },");
             }
             //buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
             //buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
