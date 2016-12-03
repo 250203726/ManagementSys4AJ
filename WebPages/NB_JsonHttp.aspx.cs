@@ -120,6 +120,9 @@ namespace WebPages
                 case "GETARTICLE4GRID":
                     retJsonStr = GetArticle4Grid(onlyPara);
                     break;
+                case "GETARTICLEBYID":
+                    retJsonStr = GetArticleByID(onlyPara);
+                    break;
                 case "DELETEARTICLES":
                     retJsonStr = DeleteArticles(onlyPara);
                     break;
@@ -150,6 +153,20 @@ namespace WebPages
             Response.End();
         }
 
+        /// <summary>
+        /// 通过id获取文章
+        /// </summary>
+        /// <param name="onlyPara"></param>
+        /// <returns></returns>
+        private string GetArticleByID(string onlyPara)
+        {
+            return new MyHttpResult(true, (new ArticleBLL()).GetModel(Convert.ToInt32(onlyPara))).ToString();
+        }
+        /// <summary>
+        /// 根据id删除网络节点
+        /// </summary>
+        /// <param name="onlyPara"></param>
+        /// <returns></returns>
         private string DeleteMapNode(string onlyPara)
         {
             if (string.IsNullOrEmpty(onlyPara))
@@ -170,6 +187,11 @@ namespace WebPages
             
         }
 
+        /// <summary>
+        ///根据id获取网络节点
+        /// </summary>
+        /// <param name="onlyPara"></param>
+        /// <returns></returns>
         private string GetNetMapNode(string onlyPara)
         {
             return new MyHttpResult(true, (new NetMapBLL()).GetModelByGuid(new Guid(onlyPara))).ToString();
@@ -281,7 +303,12 @@ namespace WebPages
             }
             else
             {
-                myRtn = new MyHttpResult(artM.Update() > 0 ? true : false, "");
+                ArticleModel artM_old = (new ArticleBLL()).GetModel(artM.id);
+                artM_old.title = artM.title;
+                artM_old.content = artM.content;
+                artM_old.ispublish = artM.ispublish;
+
+                myRtn = new MyHttpResult(artM_old.Update() > 0 ? true : false, "");
             }
             return myRtn.ToString();
         }

@@ -35,11 +35,12 @@
              toolbar:     {
                     items: 
                     [
-
                           { line: true },
-                        { text: "新增工作总结", click: OnUpfiles, icon: "add" },
+                        { text: "新增", click: itemclick, icon: "add" },
+                         { line: true },
+                        { text: "修改", click: itemclick, icon: "edit" },
                           { line: true },
-                        { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
+                        { text: "删除", click: itemclick, icon: "delete" },
                           { line: true },
                     ]
                 },
@@ -73,15 +74,22 @@
             $("#pageloading").hide();
         });
 
-        function OnKeyDown(obj)
+        function itemclick(btn)
         {
-            
+            if (btn.text=="新增") {
+                window.top.f_addTab("Save_WorkSummary", btn.text+"-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=1&v=" + Math.random());
+            } else if (btn.text == "修改") {
+                var rows = g.getSelectedRows();
+                if (rows.length != 1) {
+                    myTips("请选择一条数据进行编辑！");
+                    return;
+                }
+                window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            } else if (btn.text == "删除") {
+
+            }
         }
 
-        //点击新增按钮事件
-        function OnUpfiles() {
-            window.top.f_addTab("Save_WorkSummary", "新建-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?v="+Math.random);
-        }
          
         //删除数据 add wonder4 2016年11月7日22:54:21
         function deleteRow() {

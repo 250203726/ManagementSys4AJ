@@ -116,7 +116,7 @@
             pageData=<%=PageData%>;
            findWeather();
            initArticleList(pageData.station_duty,"station_duty");
-
+           initNotice();
        });
 
        function initArticleList(data,model_name)
@@ -124,6 +124,11 @@
            $.each(data,function(n,value){
                $("ul."+model_name).append($("<li><a href='/home/news_view.aspx?oid="+value.id+"' target='_blank'>"+value.title+"<span class='myspan'>["+format_date(value.create_date)+"]</span></a> </li>"));
            });        
+       }
+       function initNotice() {
+           var header='<font color="red">重要公告：</font>';
+           var content=pageData.unit_notice[0].content;
+           $("marquee").html(header+content);
        }
    </script>
 </head>

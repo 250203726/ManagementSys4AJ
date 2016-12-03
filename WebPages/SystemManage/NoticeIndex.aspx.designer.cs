@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebPages.UnitManage.SavePage {
+namespace WebPages.SystemManage {
     
     
-    public partial class SaveWorkPlan {
+    public partial class NoticeIndex {
     }
 }

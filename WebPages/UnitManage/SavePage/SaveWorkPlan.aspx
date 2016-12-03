@@ -20,26 +20,27 @@
     <script src="../../../assets/js/Util.js"></script>
     <script type="text/javascript">
         var KE;
+        var page_data=<%=PageData%>;
+        var page_init;
         $(function () {
             KindEditor.ready(function (K) {
                 KE = K.create('#kinde_content', {
                     cssPath: '../../Components/NBersEditor/plugins/code/prettify.css',
                     uploadJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=upload',
                     fileManagerJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=manger',
-                    allowFileManager: true,
+                    allowFileManager: true,                    
                     afterCreate: function () {
                     }
                 });
                 prettyPrint();
+                //保证编辑器渲染完成
+                initPage();
             });
-        })
 
-    </script>
-    <script type="text/javascript">
-        $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
-                post_data.title = $("input[name=title]").val();
+                post_data.id=page_init.id.val();
+                post_data.title = page_init.title.val();
                 post_data.art_type = $("select[name=art_type] option:selected").val();
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
@@ -49,8 +50,31 @@
                 }
             });
 
-            $("#art_form").ligerForm();
-        });
+            page_init={
+                id:$("input[name=id]"),
+                title:$("input[name=title]"),
+                art_type: $("select[name=art_type]"),
+                content:KE,
+            };
+
+            window["f"]=$("#art_form").ligerForm();
+            
+            
+            
+        })
+        //初始化页面
+        function initPage() {
+            if (typeof(page_data)=="object") {
+                page_init.title.val(page_data.article.title);
+                f.setData({
+                    "id":''+page_data.article.id,
+                    "art_type":page_data.article.art_type,
+                    "ispublish":""+page_data.article.ispublish,
+                    "description":page_data.article.description
+                });
+                KE.html(page_data.article.content);
+            }
+        }
     </script>
     <style>
         .mytab {
@@ -115,6 +139,7 @@
 </head>
 <body>
     <div id="art_form">
+        <input type="hidden" name="id" value="0"/>
         <table class="mytab">
             <tr>
                 <td><label for="title">内容标题</label></td>

@@ -36,11 +36,12 @@
                toolbar: {
                    items:
                    [
-
                          { line: true },
-                       { text: "新增工作计划", click: OnUpfiles, icon: "add" },
-                         { line: true },
-                       { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
+                       { text: "新增", click: itemclick, icon: "add" },
+                         { line: true },                           
+                       { text: "修改", click: itemclick, icon: "edit" },
+                       { line: true },
+                       { text: "删除", click: itemclick, icon: "delete" },
                          { line: true },
                    ]
                },
@@ -74,13 +75,19 @@
             $("#pageloading").hide();
         });
 
-        function OnKeyDown(obj) {
-
-        }
-
-        //点击新增按钮事件
-        function OnUpfiles() {
-            window.top.f_addTab("Save_WorkPlan", "新建-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?v=" + Math.random);
+        function itemclick(btn) {
+            if (btn.text == "新增") {
+                window.top.f_addTab("Save_WorkPlan", btn.text+"-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?mode=1&v=" + Math.random());
+            } else if (btn.text == "修改") {
+                var rows = g.getSelectedRows();
+                if (rows.length != 1) {
+                    myTips("请选择一条数据进行编辑！");
+                    return;
+                }
+                window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            } else if (btn.text == "删除") {
+                deleteRow();
+            }
         }
 
         //删除数据 add wonder4 2016年11月7日22:54:21

@@ -1362,6 +1362,7 @@
     <Content Include="Safety\SavePage\SaveSafetyMeeting.aspx" />
     <Content Include="Safety\Traffic.aspx" />
     <Content Include="Safety\SafetyMeeting.aspx" />
+    <Content Include="SystemManage\NoticeIndex.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
     <Content Include="UnitManage\NetworkMap.aspx" />
@@ -1558,6 +1559,13 @@
     </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.designer.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemManage\NoticeIndex.aspx.cs">
+      <DependentUpon>NoticeIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\NoticeIndex.aspx.designer.cs">
+      <DependentUpon>NoticeIndex.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemManage\RoleIndex.aspx.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
