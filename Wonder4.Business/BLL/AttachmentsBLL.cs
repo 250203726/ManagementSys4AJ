@@ -59,7 +59,7 @@ namespace N_Bers.Business.BLL
 
         public List<AttachmentsModel> DoQuery(string strfilter)
         {            
-            string queryStr = "select * from nbers_Attachments where 1=1";
+            string queryStr = "SELECT * FROM (select ROW_NUMBER() OVER(PARTITION BY DocType ORDER BY id) rid,* from nbers_Attachments) tb where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

@@ -26,7 +26,7 @@
                     { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
                 ],
                 //data:grid_data.data,
-                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + myEscape('部门公告'),
+                url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + escape('部门公告'),
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
@@ -37,7 +37,7 @@
                           { line: true },
                           { text: "修改", click: itemclick, icon: "edit" },
                           { line: true },
-                        { text: "删除", click: itemclick, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
+                        { text: "删除", click: itemclick, icon: "delete" },
                           { line: true },
                     ]
                 },

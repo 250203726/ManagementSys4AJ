@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class news_view : System.Web.UI.Page
+    public partial class news_view : BasePage
     {
         public ArticleModel artM;
         protected void Page_Load(object sender, EventArgs e)

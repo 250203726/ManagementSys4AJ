@@ -45,7 +45,7 @@
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("新增成功,窗口在3秒钟后关闭！");
+                    myTips("保存成功");
                     //setTimeout(window.top.tab.removeTabItem("Save_WorkSummary"),3000);
                 }
             });

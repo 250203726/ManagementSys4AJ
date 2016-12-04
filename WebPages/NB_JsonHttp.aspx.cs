@@ -19,8 +19,10 @@ namespace WebPages
         {
             if ( null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account))
             {
+                //如果session超时，直接定向登录页
                 Response.ContentType = "text/html";
                 Response.Clear();
+                Response.AddHeader("Is_Out", "1");
                 Response.Write((new MyHttpResult(false,"登陆超时，请重新登陆！")).ToString());
                 Response.End();
             }
@@ -273,8 +275,25 @@ namespace WebPages
         }
 
         private string GetArticle4Grid(string onlyPara)
-        {
-            var fileList = (new ArticleBLL()).DoQuery(" art_type like '%" + onlyPara + "%'");
+        {            
+            string page = Request.Form["page"];
+            string pagesize = Request.Form["pagesize"];
+            string sortname = Request.Form["sortname"];
+            string sortorder = Request.Form["sortorder"];
+
+            StringBuilder strWhere = new StringBuilder(" art_type like '%" + onlyPara + "%'");
+            if (!string.IsNullOrEmpty(page))
+            {
+                int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
+                int endid = Convert.ToInt32(page) * (Convert.ToInt32(pagesize));
+                strWhere.Append(string.Format(" and rid BETWEEN {0} AND {1}", startid, endid));
+            }
+            if (!string.IsNullOrEmpty(sortname))
+            {
+                strWhere.Append(string.Format("order by {0} {1}", sortname, sortorder));
+            }
+
+            var fileList = (new ArticleBLL()).DoQuery(strWhere.ToString());
             var grid = new
             {
                 Rows = fileList,
@@ -308,7 +327,7 @@ namespace WebPages
                 artM_old.content = artM.content;
                 artM_old.ispublish = artM.ispublish;
 
-                myRtn = new MyHttpResult(artM_old.Update() > 0 ? true : false, "");
+                myRtn = new MyHttpResult((new ArticleBLL()).Update(artM_old) > 0 ? true : false, "");
             }
             return myRtn.ToString();
         }
@@ -320,7 +339,8 @@ namespace WebPages
         /// <returns></returns>
         private string GetFiles4Grid(string onlyPara)
         {
-            var fileList = (new AttachmentsBLL()).DoQuery(" DocType='"+onlyPara+"'");
+            var fileList = (new AttachmentsBLL()).DoQuery(" DocType='"+onlyPara+"'" + getFilters());
+            
             var grid = new {
                 Rows= fileList,
                 Total=fileList.Count
@@ -339,7 +359,9 @@ namespace WebPages
 
         private string GetStationList4Grid(string filter)
         {
-            filter = "unit_type=2";
+            filter = " unit_type=2 ";
+            filter += getFilters();
+
             var list = (new MyUnitBLL()).DoQuery(filter);
             var grid =new  {
                 Rows=list,
@@ -506,7 +528,16 @@ namespace WebPages
 
         private string GetUnits(string filter)
         {
-            List<BusinessUnitModel> list = (new MyUnitBLL()).DoQuery("unit_type=1");
+            string txt_filter = Request.Form["txt_filter"];
+
+            StringBuilder strWhere = new StringBuilder(" unit_type=1");
+            strWhere.Append(getFilters());
+            if (!string.IsNullOrEmpty(txt_filter))
+            {
+                strWhere.Append(string.Format(" and nickname LIKE '%{0}%' OR account LIKE '%{0}%'", txt_filter));
+            }
+
+            List<BusinessUnitModel> list = (new MyUnitBLL()).DoQuery(strWhere.ToString());
             var grid = new
             {
                 Rows = list,
@@ -813,6 +844,28 @@ namespace WebPages
             nodes += "]";
             return new MyHttpResult(true, nodes, "").ToString();
             
+        }
+
+        private string getFilters()
+        {
+            string page = Request.Form["page"];
+            string pagesize = Request.Form["pagesize"];
+            string sortname = Request.Form["sortname"];
+            string sortorder = Request.Form["sortorder"];
+
+            StringBuilder strWhere = new StringBuilder(" and 1=1");
+            if (!string.IsNullOrEmpty(page))
+            {
+                int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
+                int endid = Convert.ToInt32(page) * (Convert.ToInt32(pagesize));
+                strWhere.Append(string.Format(" and rid BETWEEN {0} AND {1}", startid, endid));
+            }
+            if (!string.IsNullOrEmpty(sortname))
+            {
+                strWhere.Append(string.Format(" order by {0} {1}", sortname, sortorder));
+            }
+
+            return strWhere.ToString();
         }
     }
 }

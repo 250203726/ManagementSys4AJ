@@ -105,7 +105,7 @@ namespace N_Bers.Business.Model
         /// ispublish
         /// </summary>		
         private int _ispublish;
-        [DataColumn(Alias = "ispublish",IsNullable =false)]
+        [DataColumn(Alias = "ispublish")]
         public int ispublish
         {
             get { return _ispublish; }

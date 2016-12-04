@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.SystemManage
 {
-    public partial class NoticeIndex : System.Web.UI.Page
+    public partial class NoticeIndex : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

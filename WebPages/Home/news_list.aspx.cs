@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class news_list : System.Web.UI.Page
+    public partial class news_list : BasePage
     {
         public List<ArticleModel> newslist;
         public string art_type;

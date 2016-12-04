@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class index : System.Web.UI.Page
+    public partial class index : BasePage
     {
         public string PageData;
         protected void Page_Load(object sender, EventArgs e)

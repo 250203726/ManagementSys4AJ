@@ -40,8 +40,8 @@ namespace N_Bers.Business.BLL
         }
 
         public List<BusinessUnitModel> DoQuery(string strfilter)
-        {
-            string queryStr = "select * from nbers_businessunit where 1=1";
+        {           
+            string queryStr = "SELECT * FROM (select ROW_NUMBER() OVER(PARTITION BY unit_type ORDER BY id) rid,* from nbers_businessunit) tb where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);

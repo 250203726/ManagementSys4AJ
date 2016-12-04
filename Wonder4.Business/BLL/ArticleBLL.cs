@@ -36,8 +36,8 @@ namespace N_Bers.Business.BLL
         }
 
         public List<ArticleModel> DoQuery(string strfilter)
-        {
-            string queryStr = "select * from nbers_articles where 1=1";
+        {            
+            string queryStr = "SELECT * FROM (select ROW_NUMBER() OVER(PARTITION BY art_type ORDER BY id) rid,* from nbers_articles) tb where 1=1";
             if (!string.IsNullOrEmpty(strfilter))
             {
                 queryStr = queryStr.Replace("1=1", strfilter);
@@ -47,6 +47,11 @@ namespace N_Bers.Business.BLL
 
         public int Update(ArticleModel t)
         {
+            if (t.ispublish.Equals(0))
+            {
+                string sql = "update nbers_articles set ispublish=@ispublish where id=@id";
+                CPQuery.From(sql, new { ispublish = t.ispublish, id = t.id }).ExecuteNonQuery();
+            }           
             return t.Update();
         }
     }
