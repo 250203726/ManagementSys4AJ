@@ -397,13 +397,13 @@ Public.limitLength = function(obj, count){
 Public.pageTab = function() {
 	$(document).on('click', '[rel=pageTab]', function(e){
 		e.preventDefault();
-		var tabid = $(this).attr('data-tabid'), url = $(this).attr('href'), showClose = $(this).attr('data-showClose'), text = $(this).attr('data-tabTxt') || $(this).text(),parentOpen = $(this).attr('data-parentOpen');
-		if(null==tabid || undefined==tabid || ""==tabid) tabid = new Date().getTime();
-		if(parentOpen){
-			parent.tab.addTabItem({tabid: tabid, text: text, url: url, showClose: showClose});
-		} else {
-			tab.addTabItem({tabid: tabid, text: text, url: url, showClose: showClose});
-		}
+		//var tabid = $(this).attr('data-tabid'), url = $(this).attr('href'), showClose = $(this).attr('data-showClose'), text = $(this).attr('data-tabTxt') || $(this).text(),parentOpen = $(this).attr('data-parentOpen');
+		//if(null==tabid || undefined==tabid || ""==tabid) tabid = new Date().getTime();
+		//if(parentOpen){
+		//	parent.tab.addTabItem({tabid: tabid, text: text, url: url, showClose: showClose});
+		//} else {
+		//	tab.addTabItem({tabid: tabid, text: text, url: url, showClose: showClose});
+		//}
 	});
 };
 Public.addTab=function(tabid,text,url){

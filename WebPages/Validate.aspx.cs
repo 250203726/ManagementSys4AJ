@@ -25,7 +25,7 @@ namespace WebPages
             {
                 serverCode += s;
             }
-            Session[N_Bers.Business.Core.BaseConst.SERVERCODE] = serverCode;
+            Session[N_Bers.Business.Core.Public.SessionType.Server_Code.ToString()] = serverCode;
         }
 
         private void CreateCheckCodeImage(string[] checkCode)

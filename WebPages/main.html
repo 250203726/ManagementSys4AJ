@@ -33,7 +33,11 @@
 			userObj.text(parent.SYSTEM.realName);
 			
 			$("#search").click(function(){
-				search();
+				//search();
+			});
+			$(document).on("click","#bd a",function(e){
+			    e.stopPropagation();
+			    return false;
 			});
 		});	
 	</script>

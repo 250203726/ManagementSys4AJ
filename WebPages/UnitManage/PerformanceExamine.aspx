@@ -50,7 +50,7 @@
            });
 
             //upfiles 渲染上传控件
-            $("#file_upload").uploadify({
+            window['file_upload'] = $("#file_upload").uploadify({
                 'formData': {
                     'timestamp': Math.random(),
                     'token': "wonder4",
@@ -73,6 +73,7 @@
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {
             //TODO：清理上传列表
+            //file_upload.cancel();
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 500, minHeight: 300, title: "绩效考核",
                 buttons: [

@@ -21,12 +21,11 @@
    
     <script src="assets/js/Util.js"></script>
     <script type="text/javascript">
-
+        var server_data;
         //误删，避免frameset中的登陆界面session过期在子框架加载的问题
         if (top.location != self.location) {
             top.location = self.location;
         }
-
         function check() {
             var username = $("#wscrm_Username").val();
             var password = $("#wscrm_Password").val();
@@ -60,6 +59,12 @@
                     e.preventDefault();
                 }
             });
+
+            //处理服务器返回
+            var server_json = $.parseJSON(server_data);
+            if (server_json && !server_json.status) {
+                myAlerts(server_json.msg, "提示", "warn");
+            }
         });
 
     </script>
@@ -85,13 +90,13 @@
                                 <tr>
                                     <td class="right">账&nbsp;&nbsp;&nbsp;&nbsp;号：</td>
                                     <td style="text-align: left;">
-                                        <input type="text" name="form-username" id="wscrm_Username" class="login-text" value="admin" />
+                                        <input type="text" name="form-username" id="wscrm_Username" class="login-text" value="" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="right">密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
                                     <td class="left">
-                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="admin" />
+                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,14 +107,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="2" style="text-align: center;">
                                         <div class="ht_10"></div>
                                         <a class="login-btn" href="index.aspx">
-
                                             <input type="submit" value="登&nbsp;&nbsp;录&nbsp;&nbsp;" class="login-btn" />
-
                                         </a>
-
                                     </td>
                                 </tr>
                             </tbody>

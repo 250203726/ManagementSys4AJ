@@ -22,7 +22,8 @@ namespace N_Bers.Business.Core
         /// </summary>
         public enum SessionType
         {
-            User_Info
+            User_Info,
+            Server_Code
         }
         /// <summary>
         /// 获取网站的物理文件目录 by wonder4 2016年10月31日12:24:46
@@ -66,6 +67,17 @@ namespace N_Bers.Business.Core
             get
             {
                 return GetSessionValue(SessionType.User_Info);
+            }
+        }
+
+        /// <summary>
+        /// 获取session中的验证码信息 by wonder4 2016年12月6日13:08:02
+        /// </summary>
+        public static string Auth_Code
+        {
+            get
+            {
+                return GetSessionValue(SessionType.Server_Code).ToString();
             }
         }
 
