@@ -80,6 +80,9 @@
     <Content Include="assets\img\echarts-logo.png" />
     <Content Include="assets\img\echarts-logo2.png" />
     <Content Include="assets\img\fork.png" />
+    <Content Include="assets\jorgchart\example.html" />
+    <Content Include="assets\jorgchart\jquery.jOrgChart.js" />
+    <Content Include="assets\jorgchart\prettify.js" />
     <Content Include="assets\js\index.js" />
     <Content Include="assets\js\jquery-1.11.1.js" />
     <Content Include="assets\js\jquery-1.11.1.min.js" />
@@ -1365,6 +1368,7 @@
     <Content Include="SystemManage\NoticeIndex.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
+    <Content Include="UnitManage\NetworkMap_New.aspx" />
     <Content Include="UnitManage\NetworkMap.aspx" />
     <Content Include="UnitManage\PaperOfSuperior.aspx" />
     <Content Include="UnitManage\PerformanceExamine.aspx" />
@@ -1372,6 +1376,7 @@
     <Content Include="UnitManage\SaveNetworkMap.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkPlan.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkSummary.aspx" />
+    <Content Include="UnitManage\Unit_duty.aspx" />
     <Content Include="UnitManage\WorkPlan.aspx" />
     <Content Include="UnitManage\WorkSummary.aspx" />
     <Content Include="upfiles\201611\img\logo.jpg" />
@@ -1574,6 +1579,13 @@
     <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UnitManage\NetworkMap_New.aspx.cs">
+      <DependentUpon>NetworkMap_New.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\NetworkMap_New.aspx.designer.cs">
+      <DependentUpon>NetworkMap_New.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UnitManage\NetworkMap.aspx.cs">
       <DependentUpon>NetworkMap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1622,6 +1634,13 @@
     </Compile>
     <Compile Include="UnitManage\SavePage\SaveWorkSummary.aspx.designer.cs">
       <DependentUpon>SaveWorkSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\Unit_duty.aspx.cs">
+      <DependentUpon>Unit_duty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\Unit_duty.aspx.designer.cs">
+      <DependentUpon>Unit_duty.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\WorkPlan.aspx.cs">
       <DependentUpon>WorkPlan.aspx</DependentUpon>
@@ -1725,6 +1744,8 @@
     <Folder Include="assets\echarts\chart\" />
     <Folder Include="assets\echarts\theme\" />
     <Folder Include="assets\echarts\www\" />
+    <Folder Include="assets\jorgchart\css\" />
+    <Folder Include="assets\jorgchart\images\" />
     <Folder Include="assets\kindeditor\" />
   </ItemGroup>
   <ItemGroup>

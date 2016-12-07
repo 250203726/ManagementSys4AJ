@@ -146,6 +146,9 @@ namespace WebPages
                 case "GETALLPARENT":
                     retJsonStr = getAllParent();
                     break;
+                case "DBBACKUP":
+                    retJsonStr = dbBackUp();
+                    break;
                 default:                
                     break;
             }
@@ -153,6 +156,14 @@ namespace WebPages
             Response.Clear();
             Response.Write(retJsonStr);
             Response.End();
+        }
+        /// <summary>
+        /// 创建数据库备份 2016年12月6日21:17:06
+        /// </summary>
+        /// <returns></returns>
+        private string dbBackUp()
+        {
+            return new MyHttpResult(DBHelper.DataBackupConfigDB("~/DB_bak"), "").ToString();
         }
 
         /// <summary>
