@@ -108,7 +108,8 @@
                         textFieldName: 'name',
                         isExpand: 1,
                         parentIDFieldName :'parentId',
-                        onCheck:onCheck
+                        onCheck:onCheck,
+                        autoCheckboxEven:false
                     });
 
                     //打开对话框

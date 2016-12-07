@@ -7,8 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.OtherCompany
 {
-    public partial class CheckReport : System.Web.UI.Page
-    {
+    public partial class CheckReport : BasePage{
         protected void Page_Load(object sender, EventArgs e)
         {
 

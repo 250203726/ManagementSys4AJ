@@ -33,16 +33,7 @@
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
-                    items: 
-                    [
-                          { line: true },
-                        { text: "新增", click: itemclick, icon: "add" },
-                         { line: true },
-                        { text: "修改", click: itemclick, icon: "edit" },
-                          { line: true },
-                        { text: "删除", click: itemclick, icon: "delete" },
-                          { line: true },
-                    ]
+                 items: <%= buttonJson %>  
                 },
                 //autoFilter: true
                 //{ line: true },
@@ -74,21 +65,32 @@
             $("#pageloading").hide();
         });
 
-        function itemclick(btn)
-        {
-            if (btn.text=="新增") {
-                window.top.f_addTab("Save_WorkSummary", btn.text+"-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=1&v=" + Math.random());
-            } else if (btn.text == "修改") {
-                var rows = g.getSelectedRows();
-                if (rows.length != 1) {
-                    myTips("请选择一条数据进行编辑！");
-                    return;
-                }
-                window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
-            } else if (btn.text == "删除") {
-
-            }
+        function AddItem(btn) {
+            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=1&v=" + Math.random());
         }
+        function EditItem(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
+            }
+            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+        }
+        //function itemclick(btn)
+        //{
+        //    if (btn.text=="新增") {
+        //        window.top.f_addTab("Save_WorkSummary", btn.text+"-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=1&v=" + Math.random());
+        //    } else if (btn.text == "修改") {
+        //        var rows = g.getSelectedRows();
+        //        if (rows.length != 1) {
+        //            myTips("请选择一条数据进行编辑！");
+        //            return;
+        //        }
+        //        window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+        //    } else if (btn.text == "删除") {
+
+        //    }
+        //}
 
          
         //删除数据 add wonder4 2016年11月7日22:54:21

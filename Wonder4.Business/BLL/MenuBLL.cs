@@ -117,11 +117,11 @@ namespace N_Bers.Business.BLL
                 if (menu.name.Equals("删除") )
                     buttonMenusString.Append( "{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },");
                 if (menu.name.Equals("分配角色"))
-                    buttonMenusString.Append("{ text: '分配角色', click: itemclick, icon: 'view' },{ line: true },");
+                    buttonMenusString.Append("{ text: '分配角色', click:AssigningRoles, icon: 'view' },{ line: true },");
+                if (menu.name.Equals("上传"))
+                    buttonMenusString.Append("{ text: '上传', click: OnUpfiles, icon: 'view' },{ line: true },");
             }
-            //buttonMenusString += "{ text: '新增', click: AddItem, icon: 'add' },{ line: true },";
-            //buttonMenusString += "{ text: '编辑', click: EditItem, icon: 'modify' },{ line: true },";
-            //buttonMenusString += "{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },";
+           
             buttonMenusString.Append( "]");
             return buttonMenusString.ToString();
         }

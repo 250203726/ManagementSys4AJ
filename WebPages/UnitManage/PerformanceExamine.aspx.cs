@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UnitManage
 {
-    public partial class PerformanceExamine : System.Web.UI.Page
+    public partial class PerformanceExamine : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

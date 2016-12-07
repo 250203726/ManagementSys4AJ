@@ -34,15 +34,7 @@
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
-                    items: 
-                    [
-
-                          { line: true },
-                        { text: "上传", click: OnUpfiles, icon: "upfiles" },
-                          { line: true },
-                        { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
-                          { line: true },
-                    ]
+                 items: <%= buttonJson %>
                 },
                 //autoFilter: true
                 //{ line: true },

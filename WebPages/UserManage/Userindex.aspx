@@ -147,15 +147,7 @@
                 pageSize: 30,
                 rownumbers: true,
                 toolbar: {
-                    items: [
-                    { text: '增加', click: itemclick, icon: 'add' },
-                    { line: true },
-                    { text: '修改', click: itemclick, icon: 'modify' },
-                    { line: true },
-                    { text: '删除', click: itemclick, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },
-                    { line: true },
-                    { text: '分配角色', click: itemclick, icon: 'view' }
-                    ]
+                    items: <%= buttonJson %>   
                 },
             });
 
@@ -212,89 +204,171 @@
         }
 
         //按钮点击事件
-        function itemclick(btn) {
-            if (btn.text == "增加") {
-                var formNULL = {
-                    id: "0",
-                    account: "",
-                    nickname: "",
-                    email: "",
-                    phone: "",
-                    type_id: "",
-                    unit_id: "",
-                    password: "",
-                    info: "",
-                };
-                f.setData(formNULL);
-                $.ligerDialog.open({
-                    target: $("#mytarget"), width: 600, title: btn.text + "用户",
-                    buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
-                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
-                    ]
-                });
-            } else if (btn.text == "修改") {
-                var rows = g.getSelectedRows();
-                if (rows.length != 1) {
-                    myTips("请选择一条数据进行编辑！");
-                    return;
-                }
-
-                var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUserInfo", rows[0].id);
-
-                f.setData(returnStr.data);
-                $.ligerDialog.open({
-                    target: $("#mytarget"), width: 600, title: btn.text + "用户",
-                    buttons: [
-                        { text: '确定', onclick: function (item, dialog) { f_save(dialog);} },
-                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
-                    ]
-                });
-            } else if (btn.text == "删除") {
-                var rows = g.getSelectedRows();
-                if (rows.length == 0) {
-                    myTips("请选择数据进行删除！");
-                    return;
-                }
-                //服务端删除，合并id为ids
-                var ids = rows.map(function (data, index) { return data.id }).join(",");
-                var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DeleteUsers", ids);
-
-                if (returnStr.result) {
-                    g.deleteSelectedRow();
-                    myTips(returnStr.msg);
-                } else {
-                    myTips("删除失败，请联系管理员！");
-                }
+        function AddItem(btn) {
+            var formNULL = {
+                id: "0",
+                account: "",
+                nickname: "",
+                email: "",
+                phone: "",
+                type_id: "",
+                unit_id: "",
+                password: "",
+                info: "",
+            };
+            f.setData(formNULL);
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 600, title: btn.text + "用户",
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+        }
+        function EditItem(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
             }
-            else if (btn.text == "分配角色") {
-                var rows = g.getSelectedRows();
-                if (rows.length != 1) {
-                    myTips("请选择一条数据分配角色！"); return;
-                }
-                //查询数据库，在复选框中绑定用户角色信息。并弹出对话框
-                //1.绑定数据 一个是用户名称 一个是角色列表
-                $("#username").html('用户“' + rows[0].nickname + '”的角色有：');
-                $("#userid").val(rows[0].id);
-                //选中已有角色列表
-                var userrole = GetDataByAjax("../NB_JsonHttp.aspx", "getUserRoles", rows[0].id);
-                if (userrole.result) {
-                    liger.get("checkboxlist1").setValue(userrole.data);
-                } else {
-                    myTips("选中已有角色列表时失败！");
-                }
 
-                //2.弹出对话框
-                $.ligerDialog.open({
-                    target: $("#roledialog"), width: 600,height:300, title: btn.text,
-                    buttons: [
-                        { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
-                        { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
-                    ]
-                });
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUserInfo", rows[0].id);
 
+            f.setData(returnStr.data);
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 600, title: btn.text + "用户",
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+        }
+        function deleteRow(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length == 0) {
+                myTips("请选择数据进行删除！");
+                return;
+            }
+            //服务端删除，合并id为ids
+            var ids = rows.map(function (data, index) { return data.id }).join(",");
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DeleteUsers", ids);
+
+            if (returnStr.result) {
+                g.deleteSelectedRow();
+                myTips(returnStr.msg);
+            } else {
+                myTips("删除失败，请联系管理员！");
             }
         }
+        function AssigningRoles(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据分配角色！"); return;
+            }
+            //查询数据库，在复选框中绑定用户角色信息。并弹出对话框
+            //1.绑定数据 一个是用户名称 一个是角色列表
+            $("#username").html('用户“' + rows[0].nickname + '”的角色有：');
+            $("#userid").val(rows[0].id);
+            //选中已有角色列表
+            var userrole = GetDataByAjax("../NB_JsonHttp.aspx", "getUserRoles", rows[0].id);
+            if (userrole.result) {
+                liger.get("checkboxlist1").setValue(userrole.data);
+            } else {
+                myTips("选中已有角色列表时失败！");
+            }
+
+            //2.弹出对话框
+            $.ligerDialog.open({
+                target: $("#roledialog"), width: 600, height: 300, title: btn.text,
+                buttons: [
+                    { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
+                    { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+                ]
+            });
+        }
+        //function itemclick(btn) {
+        //    if (btn.text == "增加") {
+        //        var formNULL = {
+        //            id: "0",
+        //            account: "",
+        //            nickname: "",
+        //            email: "",
+        //            phone: "",
+        //            type_id: "",
+        //            unit_id: "",
+        //            password: "",
+        //            info: "",
+        //        };
+        //        f.setData(formNULL);
+        //        $.ligerDialog.open({
+        //            target: $("#mytarget"), width: 600, title: btn.text + "用户",
+        //            buttons: [
+        //                { text: '确定', onclick: function (item, dialog) { f_save(dialog); } },
+        //                { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+        //            ]
+        //        });
+        //    } else if (btn.text == "修改") {
+        //        var rows = g.getSelectedRows();
+        //        if (rows.length != 1) {
+        //            myTips("请选择一条数据进行编辑！");
+        //            return;
+        //        }
+
+        //        var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "GetUserInfo", rows[0].id);
+
+        //        f.setData(returnStr.data);
+        //        $.ligerDialog.open({
+        //            target: $("#mytarget"), width: 600, title: btn.text + "用户",
+        //            buttons: [
+        //                { text: '确定', onclick: function (item, dialog) { f_save(dialog);} },
+        //                { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+        //            ]
+        //        });
+        //    } else if (btn.text == "删除") {
+        //        var rows = g.getSelectedRows();
+        //        if (rows.length == 0) {
+        //            myTips("请选择数据进行删除！");
+        //            return;
+        //        }
+        //        //服务端删除，合并id为ids
+        //        var ids = rows.map(function (data, index) { return data.id }).join(",");
+        //        var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DeleteUsers", ids);
+
+        //        if (returnStr.result) {
+        //            g.deleteSelectedRow();
+        //            myTips(returnStr.msg);
+        //        } else {
+        //            myTips("删除失败，请联系管理员！");
+        //        }
+        //    }
+        //    else if (btn.text == "分配角色") {
+        //        var rows = g.getSelectedRows();
+        //        if (rows.length != 1) {
+        //            myTips("请选择一条数据分配角色！"); return;
+        //        }
+        //        //查询数据库，在复选框中绑定用户角色信息。并弹出对话框
+        //        //1.绑定数据 一个是用户名称 一个是角色列表
+        //        $("#username").html('用户“' + rows[0].nickname + '”的角色有：');
+        //        $("#userid").val(rows[0].id);
+        //        //选中已有角色列表
+        //        var userrole = GetDataByAjax("../NB_JsonHttp.aspx", "getUserRoles", rows[0].id);
+        //        if (userrole.result) {
+        //            liger.get("checkboxlist1").setValue(userrole.data);
+        //        } else {
+        //            myTips("选中已有角色列表时失败！");
+        //        }
+
+        //        //2.弹出对话框
+        //        $.ligerDialog.open({
+        //            target: $("#roledialog"), width: 600,height:300, title: btn.text,
+        //            buttons: [
+        //                { text: '确定', onclick: function (item, dialog) { saveRole(); dialog.hidden(); } },
+        //                { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
+        //            ]
+        //        });
+
+        //    }
+        //}
 
         //树 节点点击事件
         function onClick(node) {

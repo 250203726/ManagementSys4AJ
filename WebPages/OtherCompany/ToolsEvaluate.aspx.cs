@@ -7,8 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.OtherCompany
 {
-    public partial class ToolsEvaluate : System.Web.UI.Page
-    {
+    public partial class ToolsEvaluate :BasePage{
         protected void Page_Load(object sender, EventArgs e)
         {
 
