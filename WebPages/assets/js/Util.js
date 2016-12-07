@@ -245,6 +245,9 @@ function myAlerts(scontent, stitle, type, fncallback) {
 
 //json时间 转换 add by wonder4 2016年11月5日15:41:23
 function g_render4time(rowdata, index, colvalue) {
+    if (!colvalue) {
+        return;
+    }
     var milli = colvalue.replace(/\/Date\((-?\d+)\)\//, '$1');
     var s = "";
     var dt = new Date(parseInt(milli));

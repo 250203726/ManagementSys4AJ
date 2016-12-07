@@ -24,23 +24,26 @@
                height: '99%',
                checkbox: true,
                columns: [
-                   { display: '文件名称', name: 'DocName', minWidth: 460, align: 'left', render: g_render4name },
-                   { display: '上传用户', name: 'CreateUser', width: 150 },
-                   { display: '文件大小', name: 'Filesize', width: 120, render: g_render4filesize },
-                   { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
+                   { display: '文件名称', name: 'title', minWidth: 460, align: 'left', render: g_render4name },
+                   { display: '类型', name: 'remark', width: 60, render: g_render4type },
+                   { display: '上传用户', name: 'create_user', width: 80 },
+                   { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=安全稽查",
+               url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey=安全稽查",
                pageSize: 30,
                rownumbers: true,
                toolbar: {
                    items:
                    [
-
+                        { line: true },
+                       { text: "新增", click: itemClick, icon: "add" },
+                         { line: true },
+                          { text: "修改", click: itemClick, icon: "edit" },
                          { line: true },
                        { text: "上传", click: OnUpfiles, icon: "upfiles" },
                          { line: true },
-                       { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
+                       { text: "删除", click: deleteRow, icon: "delete" },
                          { line: true },
                    ]
                },
@@ -63,10 +66,42 @@
                 'removeCompleted': false,
             });
 
+            //给工作工作计划名称绑定事件
+            $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+
+                var top_tab = window.top.tab;
+                var oid = $(e.target).attr("oid");
+                var url = $(e.target).attr("rel");
+                var author = $(e.target).attr("author");
+
+                if (top_tab.isTabItemExist("WorkPlan")) {
+                    top_tab.setHeader("WorkPlan", author + "-安全稽查");
+                    top_tab.setTabItemSrc("WorkPlan", url);
+                    top_tab.reload("WorkPlan");
+                    top_tab.selectTabItem("WorkPlan");
+                    return;
+                }
+
+                window.top.f_addTab("WorkPlan", author + "-工作计划", url);
+
+            });
+
             $("#pageloading").hide();
+
+
+
         });
 
         function OnKeyDown(obj) {
+
+        }
+
+        function itemClick(btn) {
+            if (btn.tex = "新增") {
+                window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?mode=1&v=" + Math.random());
+            }
 
         }
 
@@ -102,6 +137,9 @@
 
         //文件大小转换 add by wonder4 2016年11月5日15:41:23
         function g_render4filesize(rowdata, index, colvalue) {
+            if (!colvalue) {
+                return;
+            }
             var fileSize = Math.round(colvalue / 1024);
             var suffix = 'KB';
             if (fileSize > 1000) {
@@ -120,13 +158,27 @@
 
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
+            if (!colvalue) {
+                return;
+            }
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) + "..." : colvalue;
             var fileExt = (/[.]/.exec(colvalue)) ? /[^.]+$/.exec(colvalue.toLowerCase()) : '';
             var cls_icon = "ico-file-ico";
             if (fileExt.length > 0) {
                 cls_icon = "ico-file-" + fileExt[0];
             }
-            return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            if (rowdata.remark && rowdata.remark=="file") {//附件
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            } else {//文章
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a name='article' href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
+            }   
+        }
+        function g_render4type(rowdata, index, colvalue) {
+            if (rowdata.remark && rowdata.remark == "file") {//附件
+                return "附件";
+            } else if (rowdata.remark) {
+                return "文章";
+            }
         }
     </script>
 </head>

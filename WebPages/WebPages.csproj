@@ -1363,6 +1363,7 @@
     <Content Include="Safety\Qualification.aspx" />
     <Content Include="Safety\SafetyCheck.aspx" />
     <Content Include="Safety\SavePage\SaveSafetyMeeting.aspx" />
+    <Content Include="Safety\SavePage\SaveSafetyCheck.aspx" />
     <Content Include="Safety\Traffic.aspx" />
     <Content Include="Safety\SafetyMeeting.aspx" />
     <Content Include="SystemManage\NoticeIndex.aspx" />
@@ -1543,6 +1544,13 @@
     </Compile>
     <Compile Include="Safety\SavePage\SaveSafetyMeeting.aspx.designer.cs">
       <DependentUpon>SaveSafetyMeeting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveSafetyCheck.aspx.cs">
+      <DependentUpon>SaveSafetyCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveSafetyCheck.aspx.designer.cs">
+      <DependentUpon>SaveSafetyCheck.aspx</DependentUpon>
     </Compile>
     <Compile Include="Safety\Traffic.aspx.cs">
       <DependentUpon>Traffic.aspx</DependentUpon>

@@ -3,6 +3,7 @@ using N_Bers.Business.Core;
 using N_Bers.Business.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Wonder4.Map.Extensions;
+using Wonder4.Map.Extensions.DAL;
 
 namespace WebPages
 {
@@ -121,6 +123,9 @@ namespace WebPages
                     break;
                 case "GETARTICLE4GRID":
                     retJsonStr = GetArticle4Grid(onlyPara);
+                    break;
+                case "GETFILESANDARTICLE4GRID":
+                    retJsonStr = GetFilesAndArticle4Grid(onlyPara);
                     break;
                 case "GETARTICLEBYID":
                     retJsonStr = GetArticleByID(onlyPara);
@@ -357,6 +362,55 @@ namespace WebPages
                 Total=fileList.Count
             };
             return JsonExtensions.ToJson(grid);
+        }
+
+        /// <summary>
+        /// 根据分类名称获取附件和文章列表 by wonder4 2016年12月7日13:03:21
+        /// </summary>
+        /// <param name="onlyPara">分类名称</param>
+        /// <returns></returns>
+        private string GetFilesAndArticle4Grid(string onlyPara)
+        {
+            //var fileList = (new AttachmentsBLL()).DoQuery(" DocType='" + onlyPara + "'" + getFilters());
+            //var articleList = (new ArticleBLL()).DoQuery(" DocType='" + onlyPara + "'");
+            string strSql = @"WITH    tb
+                          AS ( SELECT   id ,
+                                        title ,
+                                        art_type ,
+                                        CONVERT(NVARCHAR(MAX), content) content ,
+                                        create_date ,
+                                        createby ,
+                                        create_user ,
+                                        'article' remark,
+                                        description ,
+                                        0 Filesize
+                               FROM     dbo.nbers_articles
+                               UNION
+                               SELECT   id ,
+                                        DocName title ,
+                                        DocType art_type ,
+                                        '' content,
+                                        CreateOn ,
+                                        createby ,
+                                        CreateUser ,
+                                        'file' Remarks ,
+                                        RootType ,
+                                        Filesize
+                               FROM     dbo.nbers_Attachments
+                             )
+
+                        SELECT  *
+                        FROM    tb 
+                                   WHERE    art_type = @type";
+
+            List< ArticleModel> allList = CPQuery.From(strSql, new { type = onlyPara }).ToList<ArticleModel>();
+
+            var data = new {
+                Rows= allList,
+                Total= allList.Count
+            };
+
+            return JsonExtensions.ToJson(data);
         }
 
         private string DeleteUsers(string onlyPara)

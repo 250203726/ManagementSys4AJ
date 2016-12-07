@@ -29,18 +29,18 @@ namespace WebPages
                 string auth_code = Request.Form["authCode"];
 
                 ////二维码校验
-                if (!Session[Public.SessionType.Server_Code.ToString()].Equals(auth_code))
-                {
-                    //Response.Write("<script>alert('验证码错误，请重新输入！')</script>");
-                    string strJson = Wonder4.Map.Extensions.JsonExtensions.ToJson(
-                    new
-                    {
-                        status = false,
-                        msg = "验证码错误，请重新输入！"
-                    });
-                    Response.Write("<script>server_data='{0}';</script>".Replace("{0}", strJson));
-                    return;
-                }
+                //if (!Session[Public.SessionType.Server_Code.ToString()].Equals(auth_code))
+                //{
+                //    //Response.Write("<script>alert('验证码错误，请重新输入！')</script>");
+                //    string strJson = Wonder4.Map.Extensions.JsonExtensions.ToJson(
+                //    new
+                //    {
+                //        status = false,
+                //        msg = "验证码错误，请重新输入！"
+                //    });
+                //    Response.Write("<script>server_data='{0}';</script>".Replace("{0}", strJson));
+                //    return;
+                //}
 
 
                 //为空需要重新登陆，敏感参数都要在服务端做校验

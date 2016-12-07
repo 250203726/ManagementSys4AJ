@@ -132,5 +132,15 @@ namespace N_Bers.Business.Model
             set { _description = value; }
         }
 
+        ///// <summary>
+        ///// filesize
+        ///// </summary>		
+        //private string _filesize;
+        //public string Filesize
+        //{
+        //    get { return _filesize; }
+        //    set { _filesize = value; }
+        //}
+
     }
 }
