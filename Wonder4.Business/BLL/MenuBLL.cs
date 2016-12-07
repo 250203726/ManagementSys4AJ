@@ -118,8 +118,8 @@ namespace N_Bers.Business.BLL
                     buttonMenusString.Append( "{ text: '删除', click: deleteRow, img: '../assets/lib/ligerUI/skins/icons/delete.gif' },{ line: true },");
                 if (menu.name.Equals("分配角色"))
                     buttonMenusString.Append("{ text: '分配角色', click:AssigningRoles, icon: 'view' },{ line: true },");
-                if (menu.name.Equals("上传"))
-                    buttonMenusString.Append("{ text: '上传', click: OnUpfiles, icon: 'view' },{ line: true },");
+                if (menu.name.Equals("上传附件"))
+                    buttonMenusString.Append("{ text: '上传附件', click: OnUpfiles, icon: 'view' },{ line: true },");
             }
            
             buttonMenusString.Append( "]");

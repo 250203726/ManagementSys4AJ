@@ -22,11 +22,11 @@
             window["g"] =
            $("#maingrid").ligerGrid({
                height: '99%',
-               checkbox: true,
+               //checkbox: true,
                columns: [
-                   { display: '文件名称', name: 'title', minWidth: 460, align: 'left', render: g_render4name },
-                   { display: '类型', name: 'remark', width: 60, render: g_render4type },
-                   { display: '上传用户', name: 'create_user', width: 80 },
+                   { display: '文件名称', name: 'title', minWidth: 100, align: 'left', render: g_render4name },
+                   { display: '类型', name: 'remark', width: 100, render: g_render4type },
+                   { display: '上传用户', name: 'create_user', width: 100 },
                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
@@ -34,18 +34,7 @@
                pageSize: 30,
                rownumbers: true,
                toolbar: {
-                   items:
-                   [
-                        { line: true },
-                       { text: "新增", click: itemClick, icon: "add" },
-                         { line: true },
-                          { text: "修改", click: itemClick, icon: "edit" },
-                         { line: true },
-                       { text: "上传", click: OnUpfiles, icon: "upfiles" },
-                         { line: true },
-                       { text: "删除", click: deleteRow, icon: "delete" },
-                         { line: true },
-                   ]
+                   items:<%= buttonJson %>
                },
                //autoFilter: true
                //{ line: true },
@@ -70,12 +59,10 @@
             $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 var top_tab = window.top.tab;
                 var oid = $(e.target).attr("oid");
                 var url = $(e.target).attr("rel");
                 var author = $(e.target).attr("author");
-
                 if (top_tab.isTabItemExist("WorkPlan")) {
                     top_tab.setHeader("WorkPlan", author + "-安全稽查");
                     top_tab.setTabItemSrc("WorkPlan", url);
@@ -83,27 +70,36 @@
                     top_tab.selectTabItem("WorkPlan");
                     return;
                 }
-
-                window.top.f_addTab("WorkPlan", author + "-工作计划", url);
-
+                window.top.f_addTab("WorkPlan", author + "-安全稽查", url);
             });
-
             $("#pageloading").hide();
-
-
-
         });
 
         function OnKeyDown(obj) {
 
         }
 
-        function itemClick(btn) {
-            if (btn.tex = "新增") {
-                window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?mode=1&v=" + Math.random());
+        function AddItem(btn) {
+            window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?nodeid=42&mode=1&v=" + Math.random());
+        }
+        function EditItem(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
             }
+            if (rows[0].remark == 'file') {
+                myTips("请选择文本类数据编辑！");
+                return;
+            }
+            window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?nodeid=42&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
 
         }
+        //function itemClick(btn) {
+        //    if (btn.tex = "新增") {
+        //        window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?mode=1&v=" + Math.random());
+        //    }
+        //}
 
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {
@@ -123,15 +119,27 @@
                 myTips("请选择数据进行删除！");
                 return;
             }
-            //服务端删除，合并id为ids
-            var ids = rows.map(function (data, index) { return data.id }).join(",");
-            var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
-
-            if (returnStr.result) {
-                g.deleteSelectedRow();
-                myTips(returnStr.msg);
-            } else {
-                myTips("删除失败，请联系管理员！");
+            if (rows[0].remark == 'file') {//删除附件
+                //服务端删除，合并id为ids
+                var ids = rows.map(function (data, index) { return data.id }).join(",");
+                var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
+                if (returnStr.result) {
+                    g.deleteSelectedRow();
+                    myTips(returnStr.msg);
+                } else {
+                    myTips("删除失败，请联系管理员！");
+                }
+            }
+            else {//删除文本
+                //服务端删除，合并id为ids
+                var ids = rows.map(function (data, index) { return data.id }).join(",");
+                var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);
+                if (returnStr.result) {
+                    g.deleteSelectedRow();
+                    myTips(returnStr.msg);
+                } else {
+                    myTips("删除失败，请联系管理员！");
+                }
             }
         }
 

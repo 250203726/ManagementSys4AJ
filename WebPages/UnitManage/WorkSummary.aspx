@@ -66,7 +66,7 @@
         });
 
         function AddItem(btn) {
-            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=1&v=" + Math.random());
+            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?nodeid=25&mode=1&v=" + Math.random());
         }
         function EditItem(btn) {
             var rows = g.getSelectedRows();
@@ -74,7 +74,7 @@
                 myTips("请选择一条数据进行编辑！");
                 return;
             }
-            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?nodeid=25&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
         //function itemclick(btn)
         //{

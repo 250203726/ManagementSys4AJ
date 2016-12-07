@@ -15,3 +15,4 @@ D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\WebPages.pdb
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\obj\Debug\WebPages.dll
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\obj\Debug\WebPages.pdb
 D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\obj\Debug\WebPages.csprojResolveAssemblyReference.cache
+E:\项目\安质部管理系统\ManagementSys4AJ\WebPages\bin\N_Bers.Business.pdb

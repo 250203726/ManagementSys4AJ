@@ -67,7 +67,7 @@
         });
 
         function AddItem(btn) {
-            window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?mode=1&v=" + Math.random());
+            window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?nodeid=29&mode=1&v=" + Math.random());
         }
         function EditItem(btn) {
             var rows = g.getSelectedRows();
@@ -75,7 +75,7 @@
                 myTips("请选择一条数据进行编辑！");
                 return;
             }
-            window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
         //function itemclick(btn) {
         //    if (btn.text == "新增") {

@@ -22,10 +22,10 @@ namespace WebPages
             if (user != null)
             {
                 //1、验证页面权限  调试过程中注释掉，正式环境加上
-                if (!validAccess.validPage(user.id.ToString(), nodeid))
-                {
-                    Response.Redirect("../error/404.html");
-                }
+                //if (!validAccess.validPage(user.id.ToString(), nodeid))
+                //{
+                //    Response.Redirect("../error/404.html");
+                //}
                 //2、验证按钮权限
                 nodeid = string.IsNullOrEmpty(nodeid) ? "0" : nodeid;
                 buttonJson = validAccess.getButton(user, nodeid);
