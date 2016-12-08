@@ -76,7 +76,7 @@ namespace N_Bers.Business.Model
             set { _remark = value; }
         }
         /// <summary>
-        /// 
+        /// hierarchy
         /// </summary>
         private int _sort_order;
         [DataColumn(Alias = "sort_order")]
@@ -84,6 +84,16 @@ namespace N_Bers.Business.Model
         {
             get { return _sort_order; }
             set { _sort_order = value; }
+        }
+        /// <summary>
+        /// hierarchy
+        /// </summary>
+        private int _hierarchy;
+        [DataColumn(Alias = "hierarchy")]
+        public int hierarchy
+        {
+            get { return _hierarchy; }
+            set { _hierarchy = value; }
         }
     }
 }

@@ -12,22 +12,16 @@ namespace WebPages.UnitManage
 {
     public partial class NetworkMap_New : Page
     {
-        public string strJSON = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //  strJSON = JsonExtensions.ToJson((new NetMapBLL()).DoQuery(""));
             NetMapBLL netMapbll = new NetMapBLL();
-            List<NetMapModel> netMList = netMapbll.DoQuery("");
 
-            List<NetMapInfo> list = new List<NetMapInfo>();
-           list.Add(netMapbll.GenerateTree());
-
-            strJSON = JsonExtensions.ToJson(list);
-
-            this.mybody.InnerHtml =string.Format( "<table><tr><td>{0}</td></tr></table>", strJSON);
-        }
-
-        
+            if (Cache.Get("cache_netmap")==null)
+            {
+                Cache.Insert("cache_netmap", netMapbll.GenerateTree4Dom());
+            }
+            this.myDiv.InnerHtml = Cache.Get("cache_netmap").ToString();
+        }     
 
     }
 }

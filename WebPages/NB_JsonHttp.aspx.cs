@@ -240,6 +240,10 @@ namespace WebPages
             old_model.auditor = new_model.auditor;
             old_model.station_name = new_model.station_name;
             old_model.sort_order = new_model.sort_order;
+            old_model.hierarchy = new_model.hierarchy;
+            
+            //去服务端缓存
+            Cache.Remove("cache_netmap");
 
             return JsonExtensions.ToJson(new MyHttpResult
             {

@@ -67,6 +67,7 @@
 
                     { type: "hidden", name: "parentguid", value: "" },
                       { display: "排序", name: "sort_order", type: "digits", labelAlign: "right", value: "0", newline: false },
+                       { display: "层级", name: "hierarchy", type: "digits", labelAlign: "right", newline: false },
                 ]
             });
             window["menu"] = $.ligerMenu({
@@ -101,6 +102,7 @@
                     "parentguid": selected_node.data.node_guid,
                     "sort_order": "0"
                 });
+                console.log(selected_node.data.node_guid);
                 f.setEnabled(["parentname"], false);
             } else if (btn.text == "修改") {
                 var guid = selected_node.data.node_guid;
@@ -110,7 +112,7 @@
                 }
                 var parent_name = parent_node.name;
                 var Rtn = GetDataByAjax('../NB_JsonHttp.aspx', "GetNetMapNode", guid);
-                Rtn.data.parentname = parent_name
+                Rtn.data.parentname = parent_name;
                 f.setData(Rtn.data);
                 f.setEnabled(["parentname"], false);
             } else if (btn.text == "删除") {
