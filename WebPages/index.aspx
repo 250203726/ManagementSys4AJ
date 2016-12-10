@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>首页</title>
-    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon"/>
+    <link rel="shoucut icon" href="assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/index.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />

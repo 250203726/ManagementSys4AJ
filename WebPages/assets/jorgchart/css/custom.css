@@ -8,7 +8,7 @@ body, html {
 }
 
 body {
-    background: url('../images/bkgd.png') repeat top left;
+    background: url('../../img/netmapbg.jpg') no-repeat top center;
     color: white;
     font-family: tahoma;
     font-weight: lighter;
@@ -28,9 +28,9 @@ text-align:center;
 padding:20px 0;
 }
 .header h1 {
-    color:blue;
+    color:#094da0;
     font-weight:bolder;
-    font-size:3em;
+    font-size:4em;
 }
 
 a {
@@ -49,7 +49,7 @@ a {
 
 /* Header */
 .brand {
-    color: #E05E00 !important;
+    color: #054a8d !important;
     font-family: georgia;
     font-style: italic;
 }
@@ -79,20 +79,35 @@ a {
     margin-top: 10px;
     /*padding: 20px;*/
 }
+table{
+    width: 100%!important;  
+}
 
     /* Custom node styling */
     .jOrgChart .node {
         font-size: 11px;
-        background-color: #35363B;
+        background-color: #054a8d;
         border-radius: 8px;
-        border: 3px solid white;
-        color: #F38630;
+        border: 2px solid white;
+        color: #ffffff;
         -moz-border-radius: 8px;
         height: auto;
         padding: 8px 2px;
         width: auto;
     }
-
+    .jOrgChart .right {
+        border-left: 2px solid #003278;
+    }
+    .jOrgChart .top {
+        border-top: 3px solid #003278;
+    }
+    .jOrgChart .down {
+        background-color: #003278;
+        margin: 0px auto;
+    }
+    .jOrgChart .left {
+        border-right: 2px solid #003278;
+    }
 .node p {
     font-family: tahoma;
     font-size: 10px;

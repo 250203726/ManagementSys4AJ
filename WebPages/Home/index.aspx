@@ -6,15 +6,10 @@
 <head>
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <%--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">--%>
+    <link rel="shoucut icon" href="../assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <%--<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>--%>
     <script src="../assets/js/jquery-1.11.1.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <%--<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>--%>
+
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <style type="text/css">
         .index_list {
@@ -74,6 +69,10 @@
             overflow-x:hidden;
             height:20px;
         }
+        .div_banner {
+            background: url('../assets/img/line.png') repeat-x top center;
+            width: 100%;
+        }
     </style>
    <script type="text/javascript">
        function findWeather() {
@@ -127,15 +126,15 @@
        }
        function initNotice() {
            var header='<font color="red">重要公告：</font>';
-           var content=pageData.unit_notice[0].content;
+           var content=pageData.unit_notice[0] && pageData.unit_notice[0].content;
            $("marquee").html(header+content);
        }
    </script>
 </head>
 <body style="padding-top: 0;">
+    <div class="div_banner">
     <div class="container">
-        <div class="div_logo">
-        </div>
+        <img src="../assets/img/banner-index.png" width="100%" />
         <nav class="navbar navbar-default " role="navigation" style="margin-bottom: 15px;">
             <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
             <div class="container-fluid">
@@ -163,14 +162,15 @@
                 <!-- /.navbar-collapse -->
             </div>
         </nav>
-        <div class="public_tips">
-            <marquee style="width:57%;float:left;" scrollamount="5"><font color="red">重要公告：</font>2016-11-20 在**地区举行年度总结大会，请全体员工务必参与，不得缺席...</marquee> 
-            <div class="tips_weather"></div>
-        </div>
+    </div>
     </div>
 
 
     <div class="container">
+        <div class="public_tips">
+            <marquee style="width: 57%; float: left;" scrollamount="5"><font color="red">重要公告：</font>2016-11-20 在**地区举行年度总结大会，请全体员工务必参与，不得缺席...</marquee>
+            <div class="tips_weather"></div>
+        </div>
         <div class="row">
             <div class="col-md-7">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -220,7 +220,7 @@
                     <div class="panel-heading" style="font-weight: bold">安 · 全 · 网 · 络 · 图</div>
                     <div class="panel-body">
                         <div>
-                            <a href="/UnitManage/NetworkMap.aspx" class="thumbnail">
+                            <a href="/UnitManage/NetworkMap_New.aspx" class="thumbnail" target="_blank">
                                 <img data-src="holder.js/100%x250" alt="..." src="../upfiles/201611/img/netmap.jpg">
                             </a>
                         </div>
@@ -235,7 +235,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="news_list.aspx?news_type=安全稽查" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list station_duty">                            
+                        <ul class="index_list station_duty">
                         </ul>
                     </div>
                 </div>

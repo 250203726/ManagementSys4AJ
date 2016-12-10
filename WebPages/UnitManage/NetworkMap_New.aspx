@@ -6,10 +6,11 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>网络安全图</title>
+    <link rel="shoucut icon" href="../assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/jorgchart/css/jquery.jOrgChart.css" rel="stylesheet" />
     <link href="../assets/jorgchart/css/prettify.css" rel="stylesheet" />
-    <link href="../assets/jorgchart/css/custom.css" rel="stylesheet" />
+    <link href="../assets/jorgchart/css/custom.css?v=20161210" rel="stylesheet" />
 
 
     <script src="../assets/js/jquery-1.11.1.min.js"></script>
