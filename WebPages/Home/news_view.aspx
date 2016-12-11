@@ -6,6 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <link rel="shoucut icon" href="../assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
     <link href="../Components/NBersEditor/plugins/code/prettify.css" rel="stylesheet" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js"></script>

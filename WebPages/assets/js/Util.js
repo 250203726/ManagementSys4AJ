@@ -269,3 +269,27 @@ function getQueryString(name) {
     }
     return false;
 }
+
+// 功能：以 open 方式打开窗口
+function openMyWin(sPath, sName, iX, iY) {
+    return openStdWin(sPath, sName, iX, iY);
+}
+
+function openStdWin(sPath, sName, iX, iY) {
+    if (!iX) iX = 800;
+    if (!iY) iY = 552;
+    if (!sName) sName = "";
+
+    var iL, iT;
+    iL = (window.screen.width - iX) / 2;
+    iT = (window.screen.height - iY - 80) / 2;
+
+    if (iL < 0) iL = 0;
+    if (iT < 0) iT = 0;
+
+    try {
+        return window.open(sPath, sName, "left=" + iL + ",top=" + iT + ",width=" + iX + ",height=" + iY + ",status=1,resizable=1");
+    }
+    catch (e) {
+    }
+}

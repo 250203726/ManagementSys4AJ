@@ -1,6 +1,7 @@
 ﻿using N_Bers.Business.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -16,7 +17,6 @@ namespace N_Bers.Business.Core
     /// </summary>
     public static class Public
     {
-
         /// <summary>
         /// session字段名称，用枚举值来规范
         /// </summary>
@@ -96,6 +96,22 @@ namespace N_Bers.Business.Core
                 TimeSpan tss = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
                 return Convert.ToInt32(tss.TotalMilliseconds);
             }
+        }
+
+        public static string GetSysValue(string key)
+        {
+            NameValueCollection myCol = new NameValueCollection();
+            myCol.Add("unit_decription", "部门概况");
+            myCol.Add("unit_manage", "部门管理");
+            myCol.Add("safety_manage", "安全管理");
+            myCol.Add("quality_manage", "质量管理");
+            myCol.Add("branch_manage", "分公司管控");
+
+            if (myCol.GetValues(key)!=null)
+            {
+                return myCol.GetValues(key)[0];
+            }
+            return string.Empty;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace WebPages.Home
                 Response.End();
             }
             artM = (new ArticleBLL()).GetModel(Convert.ToInt32(oid));
-            this.Title = "安质部-" + artM.title;
+            this.Title = "荆力总包安质部-" + artM.title;
         }
     }
 }

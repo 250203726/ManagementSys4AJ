@@ -154,6 +154,9 @@ namespace WebPages
                 case "DBBACKUP":
                     retJsonStr = dbBackUp();
                     break;
+                case "GETSTATIONDUTY4GRID":
+                    retJsonStr = GetStationDuty4Grid(onlyPara);
+                    break;
                 default:                
                     break;
             }
@@ -162,6 +165,26 @@ namespace WebPages
             Response.Write(retJsonStr);
             Response.End();
         }
+
+        /// <summary>
+        /// 获取岗位职责数据 add by wonder4 2016年12月11日13:55:19
+        /// </summary>
+        /// <returns></returns>
+        private string GetStationDuty4Grid(string type)
+        {
+
+            string filter = getFilters();
+            filter = string.Concat(" art_type LIKE '%_岗位职责' ", filter);
+            List<ArticleModel> list = (new ArticleBLL()).DoQuery(filter);
+            var grid = new {
+                Rows = list,
+                Total= list.Count
+            };
+
+
+            return JsonExtensions.ToJson(grid);
+        }
+
         /// <summary>
         /// 创建数据库备份 2016年12月6日21:17:06
         /// </summary>

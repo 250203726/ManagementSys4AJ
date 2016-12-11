@@ -877,6 +877,7 @@
     <Content Include="Home\index.aspx" />
     <Content Include="Home\news_list.aspx" />
     <Content Include="Home\news_view.aspx" />
+    <Content Include="Home\unit_decription.aspx" />
     <Content Include="OtherCompany\CheckReport.aspx" />
     <Content Include="OtherCompany\KaoHeDuiXian.aspx" />
     <Content Include="OtherCompany\PersonalInformation.aspx" />
@@ -1372,18 +1373,20 @@
     <Content Include="Safety\SavePage\SaveSafetyCheck.aspx" />
     <Content Include="Safety\Traffic.aspx" />
     <Content Include="Safety\SafetyMeeting.aspx" />
+    <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\NoticeIndex.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
     <Content Include="test.html" />
+    <Content Include="UnitDecription\StationDuty.aspx" />
     <Content Include="UnitManage\NetworkMap_New.aspx" />
     <Content Include="UnitManage\NetworkMap.aspx" />
     <Content Include="UnitManage\PaperOfSuperior.aspx" />
     <Content Include="UnitManage\PerformanceExamine.aspx" />
     <Content Include="UnitManage\RuleManagement.aspx" />
-    <Content Include="UnitManage\SaveNetworkMap.aspx" />
+    <Content Include="UnitDecription\SaveNetworkMap.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkPlan.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkSummary.aspx" />
-    <Content Include="UnitManage\Unit_duty.aspx" />
+    <Content Include="UnitDecription\UnitFigure.aspx" />
     <Content Include="UnitManage\WorkPlan.aspx" />
     <Content Include="UnitManage\WorkSummary.aspx" />
     <Content Include="upfiles\201611\img\logo.jpg" />
@@ -1447,6 +1450,13 @@
     </Compile>
     <Compile Include="Home\news_view.aspx.designer.cs">
       <DependentUpon>news_view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\unit_decription.aspx.cs">
+      <DependentUpon>unit_decription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home\unit_decription.aspx.designer.cs">
+      <DependentUpon>unit_decription.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -1586,6 +1596,13 @@
     <Compile Include="Safety\SafetyMeeting.aspx.designer.cs">
       <DependentUpon>SafetyMeeting.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SystemManage\MenuEdit.aspx.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\MenuEdit.aspx.designer.cs">
+      <DependentUpon>MenuEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemManage\MenuIndex.aspx.cs">
       <DependentUpon>MenuIndex.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1606,6 +1623,13 @@
     </Compile>
     <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitDecription\StationDuty.aspx.cs">
+      <DependentUpon>StationDuty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitDecription\StationDuty.aspx.designer.cs">
+      <DependentUpon>StationDuty.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\NetworkMap_New.aspx.cs">
       <DependentUpon>NetworkMap_New.aspx</DependentUpon>
@@ -1642,11 +1666,11 @@
     <Compile Include="UnitManage\RuleManagement.aspx.designer.cs">
       <DependentUpon>RuleManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UnitManage\SaveNetworkMap.aspx.cs">
+    <Compile Include="UnitDecription\SaveNetworkMap.aspx.cs">
       <DependentUpon>SaveNetworkMap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UnitManage\SaveNetworkMap.aspx.designer.cs">
+    <Compile Include="UnitDecription\SaveNetworkMap.aspx.designer.cs">
       <DependentUpon>SaveNetworkMap.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\SavePage\SaveWorkPlan.aspx.cs">
@@ -1663,12 +1687,12 @@
     <Compile Include="UnitManage\SavePage\SaveWorkSummary.aspx.designer.cs">
       <DependentUpon>SaveWorkSummary.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UnitManage\Unit_duty.aspx.cs">
-      <DependentUpon>Unit_duty.aspx</DependentUpon>
+    <Compile Include="UnitDecription\UnitFigure.aspx.cs">
+      <DependentUpon>UnitFigure.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UnitManage\Unit_duty.aspx.designer.cs">
-      <DependentUpon>Unit_duty.aspx</DependentUpon>
+    <Compile Include="UnitDecription\UnitFigure.aspx.designer.cs">
+      <DependentUpon>UnitFigure.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\WorkPlan.aspx.cs">
       <DependentUpon>WorkPlan.aspx</DependentUpon>

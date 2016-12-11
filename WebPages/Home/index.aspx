@@ -4,7 +4,7 @@
 
 <html lang="zh-CN">
 <head>
-    <title>首页</title>
+    <title>荆力总包安质部</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shoucut icon" href="../assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -73,6 +73,38 @@
             background: url('../assets/img/line.png') repeat-x top center;
             width: 100%;
         }
+        .navbar-wonder4 {
+            color: #fff !important;
+            background-color: #337ab7 !important;
+            border-color: #337ab7 !important;
+        }
+        .navbar-nav > .active > a {
+            color: #fff !important;
+            background-color: #337ab7!important;
+        }
+        .navbar-default .navbar-brand {
+        color:#fff!important;
+        }
+        .navbar-default .navbar-nav > li > a {
+        color:#fff!important;
+        font-size:15px
+        }
+        .navbar-default .navbar-nav > li > a:hover {
+        font-size:16px;
+        background-color:#2a7fc7!important;
+        }
+        .navbar {
+        border-radius:12px 0px 0px 0px !important;
+        font-family:'Microsoft YaHei UI','Microsoft YaHei'
+        }
+        .div_entersys {
+        height:65px;
+        z-index:9999;
+        position:absolute;
+        text-align:right;
+        right:14%;
+        width:90px;
+        }
     </style>
    <script type="text/javascript">
        function findWeather() {
@@ -132,12 +164,13 @@
    </script>
 </head>
 <body style="padding-top: 0;">
-    <div class="div_banner">
+    <div class="div_banner">    
     <div class="container">
+         <a href="../index.aspx" target="_blank"><div class="div_entersys"></div></a>
         <img src="../assets/img/banner-index.png" width="100%" />
-        <nav class="navbar navbar-default " role="navigation" style="margin-bottom: 15px;">
+        <nav class="navbar navbar-default navbar-wonder4 " role="navigation" style="margin-bottom: 15px;">
             <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
-            <div class="container-fluid">
+            <div class="container-fluid" style="border-bottom:solid 3px #ff9900">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7">
                         <span class="sr-only">菜单</span>
@@ -151,12 +184,12 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">首页</a></li>
-                        <li><a href="#">部门概况</a></li>
-                        <li><a href="#">部门管理</a></li>
-                        <li><a href="#">安全管理</a></li>
-                        <li><a href="#">质量管理</a></li>
-                        <li><a href="#">分公司管控</a></li>
+                        <li class="active"><a href="../Home/index.aspx">首页</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=unit_decription">部门概况</a></li>
+                        <li><a href="../Home/news_list.aspx?news_type=unit_manage">部门管理</a></li>
+                        <li><a href="../Home/news_list.aspx?news_type=safety_manage">安全管理</a></li>
+                        <li><a href="../Home/news_list.aspx?news_type=quality_manage">质量管理</a></li>
+                        <li><a href="../Home/news_list.aspx?news_type=branch_manage">分公司管控</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

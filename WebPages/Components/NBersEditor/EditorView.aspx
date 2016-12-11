@@ -6,6 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>文章查看</title>
+    <link rel="shoucut icon" href="../../assets/ico/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="themes/default/default.css" />
     <link rel="stylesheet" href="plugins/code/prettify.css" />
     <script src="../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
@@ -26,6 +27,9 @@
         .post_time_source {
             margin-top: 20px;
             color: #888;
+        }
+        .post_body {
+        margin-top:10px;
         }
     </style>
     <script type="text/javascript">

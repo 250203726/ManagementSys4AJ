@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>欢迎登录</title>
     <link rel="stylesheet" type="text/css" href="resources/css/theme/entrance.teal.css" />
-    <link rel="shoucut icon" href="assets/ico/favicon.png" type="image/x-icon"/>
+    <link rel="shoucut icon" href="assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="resources/css/ui.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/base.css" rel="stylesheet" type="text/css" />
     <link href="assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
