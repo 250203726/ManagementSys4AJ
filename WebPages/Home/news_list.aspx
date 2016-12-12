@@ -59,13 +59,12 @@
         border-radius:12px 0px 0px 0px !important;
         font-family:'Microsoft YaHei UI','Microsoft YaHei'
         }
-        .div_entersys {
-        height:65px;
-        z-index:9999;
-        position:absolute;
-        text-align:right;
-        right:14%;
-        width:90px;
+         .div_entersys {
+            height: 65px;
+            z-index: 9999;
+            position: absolute;
+            text-align: right;
+            width: 90px;
         }
         .page_l {
         padding-left:0px;
@@ -79,9 +78,24 @@
         }
     </style>
     <script type="text/javascript">
+        $(function () {
+            setRight();
+        });
         $(document).on("click", "li.mylist", function (e) {
             alert($(this).html());
         });
+        function changeFrameHeight() {
+            var ifm = $("#myiframe");
+            ifm.attr("height", document.documentElement.clientHeight);
+        }
+        function setRight() {
+            var margin_r = $("div.container:eq(0)").offset().left + 15;
+            $("div.div_entersys").attr("style", "right:" + margin_r + "px")
+        }
+        window.onresize = function () {
+            changeFrameHeight();
+            setRight();
+        }
     </script>
 </head>
 <body>
@@ -107,7 +121,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../Home/index.aspx">首页</a></li>
                         <li><a href="../Home/unit_decription.aspx?news_type=unit_decription">部门概况</a></li>
-                        <li><a href="../Home/news_list.aspx?news_type=unit_manage">部门管理</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=unit">部门管理</a></li>
                         <li><a href="../Home/news_list.aspx?news_type=safety_manage">安全管理</a></li>
                         <li><a href="../Home/news_list.aspx?news_type=quality_manage">质量管理</a></li>
                         <li><a href="../Home/news_list.aspx?news_type=branch_manage">分公司管控</a></li>

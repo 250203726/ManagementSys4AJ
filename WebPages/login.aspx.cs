@@ -60,7 +60,7 @@ namespace WebPages
                         var user = (UserModel)Public.User_Info;
 
                         var userid = user.id;
-                        Response.Redirect("index.aspx");
+                        Response.Redirect("~/Home/index.aspx");
                     }
                     else
                     {

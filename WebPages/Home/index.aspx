@@ -102,7 +102,6 @@
         z-index:9999;
         position:absolute;
         text-align:right;
-        right:14%;
         width:90px;
         }
     </style>
@@ -147,7 +146,11 @@
             pageData=<%=PageData%>;
            findWeather();
            initArticleList(pageData.station_duty,"station_duty");
+           initArticleList(pageData.work_summary,"work_summary");
+           initArticleList(pageData.safty_meeting,"safty_meeting");
+           initArticleList(pageData.work_plan,"work_plan");
            initNotice();
+           setRight();
        });
 
        function initArticleList(data,model_name)
@@ -158,14 +161,23 @@
        }
        function initNotice() {
            var header='<font color="red">重要公告：</font>';
-           var content=pageData.unit_notice[0] && pageData.unit_notice[0].content;
+           var content=pageData.unit_notice[0] && pageData.unit_notice[0].content || '暂无公告...';
            $("marquee").html(header+content);
+       }
+       function setRight()
+       {
+           var margin_r=$("div.container:eq(0)").offset().left+15;
+           $("div.div_entersys").attr("style","right:"+margin_r+"px")
+       }
+
+       window.onresize = function () {
+           setRight();
        }
    </script>
 </head>
 <body style="padding-top: 0;">
     <div class="div_banner">    
-    <div class="container">
+    <div class="container">        
          <a href="../index.aspx" target="_blank"><div class="div_entersys"></div></a>
         <img src="../assets/img/banner-index.png" width="100%" />
         <nav class="navbar navbar-default navbar-wonder4 " role="navigation" style="margin-bottom: 15px;">
@@ -186,10 +198,10 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="../Home/index.aspx">首页</a></li>
                         <li><a href="../Home/unit_decription.aspx?news_type=unit_decription">部门概况</a></li>
-                        <li><a href="../Home/news_list.aspx?news_type=unit_manage">部门管理</a></li>
-                        <li><a href="../Home/news_list.aspx?news_type=safety_manage">安全管理</a></li>
-                        <li><a href="../Home/news_list.aspx?news_type=quality_manage">质量管理</a></li>
-                        <li><a href="../Home/news_list.aspx?news_type=branch_manage">分公司管控</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=unit_manage">部门管理</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=safety_manage">安全管理</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=quality_manage">质量管理</a></li>
+                        <li><a href="../Home/unit_decription.aspx?news_type=branch_manage">分公司管控</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -261,12 +273,12 @@
                 </div>
             </div>
         </div>
-        <!--     -->
+        
         <div class="row">
             <div class="col-md-5">
                 <div class="panel panel-primary" style="margin-bottom: 10px">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="news_list.aspx?news_type=安全稽查" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">岗 · 位 · 职 · 责<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqjc" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
                         <ul class="index_list station_duty">
                         </ul>
@@ -276,15 +288,9 @@
             <div class="col-md-7">
                 <div class="panel panel-primary" style="margin-bottom: 10px">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="" target="_blank">更多>></a></span></div>
-                    <div class="panel-body">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
+                    <div class="panel-heading">工 · 作 · 总 · 结<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage&child_type=sjlw" target="_blank">更多>></a></span></div>
+                    <div class="panel-body" style="padding-left: 0;">
+                        <ul class="index_list work_summary">
                         </ul>
                     </div>
                 </div>
@@ -295,15 +301,9 @@
             <div class="col-md-5">
                 <div class="panel panel-primary" style="margin-bottom: 10px">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">安 · 全 · 例 · 会<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
+                        <ul class="index_list safty_meeting">                         
                         </ul>
                     </div>
                 </div>
@@ -311,55 +311,14 @@
             <div class="col-md-7">
                 <div class="panel panel-primary" style="margin-bottom: 10px">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="" target="_blank">更多>></a></span></div>
-                    <div class="panel-body">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-5">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">工 · 作 · 计 · 划<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
+                        <ul class="index_list work_plan">                            
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="" target="_blank">更多>></a></span></div>
-                    <div class="panel-body">
-                        <ul class="index_list">
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">李克强在第六次全国妇女儿童工作会议上强调...  <span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时...  <span class="myspan">[2016-09-21]</span> </a></li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时<span class="myspan">[2016-09-21]</span></a> </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时 <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a>  </li>
-                            <li><a href="http://news.china.com.cn/world/2016-11/19/content_39740545.htm">习近平：中厄深化互利共赢合作恰逢其时  <span class="myspan">[2016-09-21]</span></a> </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div>     
     </div>
     <%--页脚--%>
     <div class="container footer">

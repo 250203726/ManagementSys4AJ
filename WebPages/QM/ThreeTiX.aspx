@@ -30,7 +30,7 @@
                    { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=三体系",
+               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=三体系建设",
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -55,7 +55,7 @@
                     'timestamp': Math.random(),
                     'token': "wonder4",
                     'fkGuid': "123456",
-                    'docType': '三体系',
+                    'docType': '三体系建设',
                 },
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
