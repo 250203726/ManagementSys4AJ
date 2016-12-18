@@ -20,6 +20,8 @@
     <script src="../../../assets/js/Util.js"></script>
     <script type="text/javascript">
         var KE;
+        var page_data=<%=PageData%>;
+        var page_init;
         $(function () {
             KindEditor.ready(function (K) {
                 KE = K.create('#kinde_content', {
@@ -31,6 +33,8 @@
                     }
                 });
                 prettyPrint();
+                //保证编辑器渲染完成
+                initPage();
             });
         })
 
@@ -39,18 +43,35 @@
         $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
-                post_data.title = $("input[name=title]").val();
-                post_data.art_type = $("select[name=art_type] option:selected").val();
-                post_data.content = KE.html();
+                post_data.title = page_init.title.val();
+                post_data.art_type = '工作总结';
+                post_data.content =KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("新增成功,窗口在3秒钟后关闭！");
-                    //setTimeout(window.top.tab.removeTabItem("Save_WorkSummary"),3000);
+                    myTips("保存成功");
                 }
             });
+            page_init={
+                id:$("input[name=id]"),
+                title:$("input[name=title]"),
+                content:KE,
+            };
 
-            $("#art_form").ligerForm();
+            window["f"]=$("#art_form").ligerForm();
         });
+        //初始化页面
+        function initPage() {
+            if (typeof(page_data)=="object" && page_data.article) {
+                page_init.title && page_init.title.val(page_data.article.title);
+                f.setData({
+                    "id":''+page_data.article.id,
+                    "art_type":'工作总结',
+                    "ispublish":""+page_data.article.ispublish,
+                    "description":page_data.article.description
+                });
+                KE.html(page_data.article.content);
+            }
+        }
     </script>
     <style>
         .mytab {
@@ -130,22 +151,9 @@
             </td>
             </tr>
             <tr>
-                <td><label for="art_type">所属类别</label></td>
-                <td>
-                    <select name="art_type" validate="{required:true}" >
-                        <option value="岗位职责" >岗位职责</option>
-                        <option value="工作总结" selected="selected">工作总结</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="description">内容摘要</label></td>
-                <td><textarea name="description" value="" class="myinput"></textarea></td>
-            </tr>
-            <tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>
-                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:250px;visibility:hidden;"></textarea>
+                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:400px;visibility:hidden;"></textarea>
                 </td>
             </tr>
         </table>

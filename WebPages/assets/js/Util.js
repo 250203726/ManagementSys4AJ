@@ -293,3 +293,10 @@ function openStdWin(sPath, sName, iX, iY) {
     catch (e) {
     }
 }
+function g_render4type(rowdata, index, colvalue) {
+    if (rowdata.remark && rowdata.remark == "file") {//附件
+        return "附件";
+    } else if (rowdata.remark) {
+        return "文章";
+    }
+}

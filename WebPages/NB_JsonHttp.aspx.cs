@@ -398,10 +398,7 @@ namespace WebPages
         /// <returns></returns>
         private string GetFilesAndArticle4Grid(string onlyPara)
         {
-            //var fileList = (new AttachmentsBLL()).DoQuery(" DocType='" + onlyPara + "'" + getFilters());
-            //var articleList = (new ArticleBLL()).DoQuery(" DocType='" + onlyPara + "'");
-            string strSql = @"WITH    tb
-                          AS ( SELECT   id ,
+            string sql = @"SELECT   id ,
                                         title ,
                                         art_type ,
                                         CONVERT(NVARCHAR(MAX), content) content ,
@@ -423,14 +420,11 @@ namespace WebPages
                                         'file' Remarks ,
                                         RootType ,
                                         Filesize
-                               FROM     dbo.nbers_Attachments
-                             )
+                               FROM     dbo.nbers_Attachments";
 
-                        SELECT  *
-                        FROM    tb 
-                                   WHERE    art_type = @type";
+            string strSql=SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%'", onlyPara), getFilters());
 
-            List< ArticleModel> allList = CPQuery.From(strSql, new { type = onlyPara }).ToList<ArticleModel>();
+            List< ArticleModel> allList = CPQuery.From(strSql).ToList<ArticleModel>();
 
             var data = new {
                 Rows= allList,

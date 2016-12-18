@@ -22,15 +22,14 @@
             window["g"] =
            $("#maingrid").ligerGrid({
                height: '99%',
-               checkbox: true,
                columns: [
-                   { display: '文件名称', name: 'DocName', minWidth: 460, align: 'left', render: g_render4name },
-                   { display: '上传用户', name: 'CreateUser', width: 150 },
-                   { display: '文件大小', name: 'Filesize', width: 120, render: g_render4filesize },
-                   { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
+                    { display: '类型', name: 'remark', width: 40, render: g_render4type },
+                   { display: '文件名称', name: 'title', minWidth: 100, align: 'left', render: g_render4name },
+                   { display: '上传用户', name: 'create_user', width: 100 },
+                   { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=绩效考核",
+               url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey="+myEscape('绩效考核'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -55,10 +54,32 @@
                 'removeCompleted': false,
             });
 
+            //给工作工作计划名称绑定事件
+            $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+
+                var top_tab = window.top.tab;
+                var oid = $(e.target).attr("oid");
+                var url = $(e.target).attr("rel");
+                var author = $(e.target).attr("author");
+
+                if (top_tab.isTabItemExist("PerformanceExamine")) {
+                    top_tab.setHeader("PerformanceExamine", author + "-绩效考核");
+                    top_tab.setTabItemSrc("PerformanceExamine", url);
+                    top_tab.reload("PerformanceExamine");
+                    top_tab.selectTabItem("PerformanceExamine");
+                    return;
+                }
+
+                window.top.f_addTab("PerformanceExamine", author + "-绩效考核", url);
+
+            });
+
             $("#pageloading").hide();
         });
 
-        function OnKeyDown(obj) {
+        function EditItem() {
 
         }
 
@@ -73,7 +94,25 @@
                 ]
             });
         }
-
+        function ItemClick(btn) {
+            //SavePerformanceExamine.aspx
+            window.top.f_addTab("Save_PerformanceExamine", btn.text + "-绩效考核", "/UnitManage/SavePage/SavePerformanceExamine.aspx?mode=1&v=" + Math.random());
+        }
+        function AddItem() {
+    
+        }
+        function EditItem(btn) {
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
+            }
+            if (rows[0].remark == 'file') {
+                myTips("请选择文本类数据编辑！");
+                return;
+            }
+            window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/UnitManage/SavePage/SavePerformanceExamine.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+        }
         //删除数据 add wonder4 2016年11月7日22:54:21
         function deleteRow() {
             var rows = g.getSelectedRows();
@@ -112,14 +151,22 @@
 
 
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
+        //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
+            if (!colvalue) {
+                return;
+            }
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) + "..." : colvalue;
             var fileExt = (/[.]/.exec(colvalue)) ? /[^.]+$/.exec(colvalue.toLowerCase()) : '';
             var cls_icon = "ico-file-ico";
             if (fileExt.length > 0) {
                 cls_icon = "ico-file-" + fileExt[0];
             }
-            return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            if (rowdata.remark && rowdata.remark=="file") {//附件
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            } else {//文章
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a name='article' href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
+            }   
         }
     </script>
 </head>

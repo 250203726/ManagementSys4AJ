@@ -11,7 +11,7 @@ namespace WebPages.UnitManage.SavePage
 {
     public partial class SaveWorkPlan : BasePage
     {
-        public string PageData;
+        public string PageData="{}";
         protected void Page_Load(object sender, EventArgs e)
         {
             string oid = Request.QueryString["oid"];

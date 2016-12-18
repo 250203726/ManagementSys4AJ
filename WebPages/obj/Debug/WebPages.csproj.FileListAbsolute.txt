@@ -23,6 +23,3 @@ E:\127.0.0.1\ManagementSys4AJ\WebPages\bin\N_Bers.Business.pdb
 E:\127.0.0.1\ManagementSys4AJ\WebPages\obj\Debug\WebPages.csprojResolveAssemblyReference.cache
 E:\127.0.0.1\ManagementSys4AJ\WebPages\obj\Debug\WebPages.dll
 E:\127.0.0.1\ManagementSys4AJ\WebPages\obj\Debug\WebPages.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\N_Bers.Business.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\Wonder4.Map.Extensions.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\WebPages\bin\Wonder4.Map.Extensions.xml

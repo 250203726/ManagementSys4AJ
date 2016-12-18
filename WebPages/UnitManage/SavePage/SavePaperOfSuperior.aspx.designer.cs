@@ -10,6 +10,6 @@
 namespace WebPages.UnitManage.SavePage {
     
     
-    public partial class SaveWorkSummary {
+    public partial class SavePaperOfSuperior {
     }
 }

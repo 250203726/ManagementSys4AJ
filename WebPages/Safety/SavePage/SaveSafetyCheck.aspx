@@ -46,7 +46,6 @@
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("保存成功");
-                    //setTimeout(window.top.tab.removeTabItem("Save_WorkSummary"),3000);
                 }
             });
 
@@ -69,8 +68,7 @@
                 f.setData({
                     "id":''+page_data.article.id,
                     "art_type":page_data.article.art_type,
-                    "ispublish":""+page_data.article.ispublish,
-                    "description":page_data.article.description
+                    "ispublish":""+page_data.article.ispublish
                 });
                 KE.html(page_data.article.content);
             }
@@ -155,13 +153,9 @@
             </td>
             </tr>
             <tr>
-                <td><label for="description">内容摘要</label></td>
-                <td><textarea name="description" value="" class="myinput"></textarea></td>
-            </tr>
-            <tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>
-                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:250px;visibility:hidden;"></textarea>
+                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:400px;visibility:hidden;"></textarea>
                 </td>
             </tr>
         </table>

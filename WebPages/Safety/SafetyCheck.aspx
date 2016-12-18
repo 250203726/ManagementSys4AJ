@@ -22,23 +22,19 @@
             window["g"] =
            $("#maingrid").ligerGrid({
                height: '99%',
-               //checkbox: true,
-               columns: [
+               columns: [                   
+                   { display: '类型', name: 'remark', width: 40, render: g_render4type },
                    { display: '文件名称', name: 'title', minWidth: 100, align: 'left', render: g_render4name },
-                   { display: '类型', name: 'remark', width: 100, render: g_render4type },
                    { display: '上传用户', name: 'create_user', width: 100 },
                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey=安全稽查",
+               url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey="+myEscape('安全稽查'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
                    items:<%= buttonJson %>
                },
-               //autoFilter: true
-               //{ line: true },
-               //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
            });
 
             //upfiles 渲染上传控件
@@ -78,6 +74,9 @@
         function OnKeyDown(obj) {
 
         }
+        function ItemClick() {
+    
+        }
 
         function AddItem(btn) {
             window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?nodeid=42&mode=1&v=" + Math.random());
@@ -93,7 +92,6 @@
                 return;
             }
             window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?nodeid=42&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
-
         }
         //function itemClick(btn) {
         //    if (btn.tex = "新增") {

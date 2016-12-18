@@ -60,6 +60,7 @@
                     data: JSONdata.data,
                     checkbox: true,
                     idFieldName: 'id',
+                    iconFieldName :'icon_x',
                     isExpand: 1 ,
                     parentIDFieldName: 'parentId',
                     textFieldName: 'name',
@@ -107,6 +108,7 @@
                         dFieldName: 'id',
                         textFieldName: 'name',
                         isExpand: 1,
+                        iconFieldName :'icon_x',
                         parentIDFieldName :'parentId',
                         onCheck:onCheck,
                         autoCheckboxEven:false

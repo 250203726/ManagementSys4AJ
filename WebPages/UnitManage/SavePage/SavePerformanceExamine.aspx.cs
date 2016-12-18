@@ -9,9 +9,9 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UnitManage.SavePage
 {
-    public partial class SaveWorkSummary : BasePage
+    public partial class PerformanceExamine : BasePage
     {
-        public string PageData = "{}";
+        public string PageData="{}";
         protected void Page_Load(object sender, EventArgs e)
         {
             string oid = Request.QueryString["oid"];
@@ -23,7 +23,7 @@ namespace WebPages.UnitManage.SavePage
                 {
                     article = art
                 };
-                PageData = Wonder4.Map.Extensions.JsonExtensions.ToJson(page_data);
+                PageData=Wonder4.Map.Extensions.JsonExtensions.ToJson(page_data);
             }
         }
     }

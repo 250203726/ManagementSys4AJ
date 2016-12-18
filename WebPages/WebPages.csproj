@@ -1384,7 +1384,10 @@
     <Content Include="UnitManage\PerformanceExamine.aspx" />
     <Content Include="UnitManage\RuleManagement.aspx" />
     <Content Include="UnitDecription\SaveNetworkMap.aspx" />
+    <Content Include="UnitManage\SavePage\SavePerformanceExamine.aspx" />
+    <Content Include="UnitManage\SavePage\SavePaperOfSuperior.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkPlan.aspx" />
+    <Content Include="UnitManage\SavePage\SaveRuleManagement.aspx" />
     <Content Include="UnitManage\SavePage\SaveWorkSummary.aspx" />
     <Content Include="UnitDecription\UnitFigure.aspx" />
     <Content Include="UnitManage\WorkPlan.aspx" />
@@ -1465,7 +1468,6 @@
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="List.cs" />
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1673,12 +1675,33 @@
     <Compile Include="UnitDecription\SaveNetworkMap.aspx.designer.cs">
       <DependentUpon>SaveNetworkMap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UnitManage\SavePage\SavePerformanceExamine.aspx.cs">
+      <DependentUpon>SavePerformanceExamine.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\SavePage\SavePerformanceExamine.aspx.designer.cs">
+      <DependentUpon>SavePerformanceExamine.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\SavePage\SavePaperOfSuperior.aspx.cs">
+      <DependentUpon>SavePaperOfSuperior.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\SavePage\SavePaperOfSuperior.aspx.designer.cs">
+      <DependentUpon>SavePaperOfSuperior.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UnitManage\SavePage\SaveWorkPlan.aspx.cs">
       <DependentUpon>SaveWorkPlan.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UnitManage\SavePage\SaveWorkPlan.aspx.designer.cs">
       <DependentUpon>SaveWorkPlan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitManage\SavePage\SaveRuleManagement.aspx.cs">
+      <DependentUpon>SaveRuleManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnitManage\SavePage\SaveRuleManagement.aspx.designer.cs">
+      <DependentUpon>SaveRuleManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitManage\SavePage\SaveWorkSummary.aspx.cs">
       <DependentUpon>SaveWorkSummary.aspx</DependentUpon>

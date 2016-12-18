@@ -13,6 +13,7 @@
 
     <script src="../Components/NBersFileServices/jquery.uploadify.js" type="text/javascript"></script>
     <link href="../Components/NBersFileServices/uploadify.css" rel="stylesheet" />
+    <link href="../Components/NBersFileServices/file-icon.css" rel="stylesheet" />
 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
@@ -21,28 +22,35 @@
             window["g"] =
            $("#maingrid").ligerGrid({
                height: '99%',
-               checkbox: true,
                columns: [
-                   { display: '类别', name: 'art_type', width: 150 },
+                   { display: '类型', name: 'remark', width: 40, render: g_render4type },
                    { display: '文章标题', name: 'title', minWidth: 260, align: 'left', render: g_render4name },
-                   { display: '摘要', name: 'description', width: 150 },
+                   { display: '所属分类', name: 'art_type', width: 150 },
                    { display: '作者', name: 'create_user', width: 120, },
                    { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
                ],
-               //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=GetArticle4Grid&strkey=" + myEscape('工作计划'),
+               url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey=" + myEscape('工作计划'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
                    items:<%= buttonJson %>  
                },
-               //autoFilter: true
-               //{ line: true },
-               //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
            });
-
+            //upfiles 渲染上传控件
+            window['file_upload'] = $("#file_upload").uploadify({
+                'formData': {
+                    'timestamp': Math.random(),
+                    'token': "wonder4",
+                    'fkGuid': "123456",
+                    'docType': '工作计划',
+                },
+                'swf': '../Components/NBersFileServices/uploadify.swf',
+                'uploader': '../Components/NBersFileServices/FileHandler.ashx',
+                'buttonText': '上传',
+                'removeCompleted': false,
+            });
             //给工作工作计划名称绑定事件
-            $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a", function (e) {
+            $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -69,28 +77,31 @@
         function AddItem(btn) {
             window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?nodeid=29&mode=1&v=" + Math.random());
         }
+        function ItemClick(btn) {
+            AddItem(btn);
+        }
+        function OnUpfiles() {
+            //TODO：清理上传列表
+            //file_upload.cancel();
+            $.ligerDialog.open({
+                target: $("#mytarget"), width: 500, minHeight: 300, title: "工作计划",
+                buttons: [
+                    { text: '取消', onclick: function (item, dialog) { g.reload(); dialog.hidden(); } }
+                ]
+            });
+        }
         function EditItem(btn) {
             var rows = g.getSelectedRows();
             if (rows.length != 1) {
                 myTips("请选择一条数据进行编辑！");
                 return;
             }
+            if (rows[0].remark == 'file') {
+                myTips("请选择文本类数据编辑！");
+                return;
+            }
             window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
-        //function itemclick(btn) {
-        //    if (btn.text == "新增") {
-                
-        //    } else if (btn.text == "修改") {
-        //        var rows = g.getSelectedRows();
-        //        if (rows.length != 1) {
-        //            myTips("请选择一条数据进行编辑！");
-        //            return;
-        //        }
-        //        window.top.f_addTab("Save_WorkPlan", btn.text + "-工作计划", "/UnitManage/SavePage/SaveWorkPlan.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
-        //    } else if (btn.text == "删除") {
-        //        deleteRow();
-        //    }
-        //}
 
         //删除数据 add wonder4 2016年11月7日22:54:21
         function deleteRow() {
@@ -110,14 +121,22 @@
                 myTips("删除失败，请联系管理员！");
             }
         }
-
-
-
-
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
+            if (!colvalue) {
+                return;
+            }
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) + "..." : colvalue;
-            return "<a href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
+            var fileExt = (/[.]/.exec(colvalue)) ? /[^.]+$/.exec(colvalue.toLowerCase()) : '';
+            var cls_icon = "ico-file-ico";
+            if (fileExt.length > 0) {
+                cls_icon = "ico-file-" + fileExt[0];
+            }
+            if (rowdata.remark && rowdata.remark=="file") {//附件
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            } else {//文章
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a name='article' href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
+            }
         }
        </script>
 </head>

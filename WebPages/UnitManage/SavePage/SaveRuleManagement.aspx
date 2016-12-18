@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveWorkPlan.aspx.cs" Inherits="WebPages.UnitManage.SavePage.SaveWorkPlan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveRuleManagement.aspx.cs" Inherits="WebPages.UnitManage.SavePage.SaveRuleManagement" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>保存-工作计划</title>
+    <title>保存-工作总结</title>
     <link href="../../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../Components/NBersEditor/plugins/code/prettify.css" />
     <script src="../../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
@@ -28,7 +28,7 @@
                     cssPath: '../../Components/NBersEditor/plugins/code/prettify.css',
                     uploadJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=upload',
                     fileManagerJson: '../../Components/NBersEditor/KindeHandler.ashx?oprtype=manger',
-                    allowFileManager: true,                    
+                    allowFileManager: true,
                     afterCreate: function () {
                     }
                 });
@@ -36,35 +36,36 @@
                 //保证编辑器渲染完成
                 initPage();
             });
+        })
 
+    </script>
+    <script type="text/javascript">
+        $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
-                post_data.id=page_init.id.val();
                 post_data.title = page_init.title.val();
-                post_data.art_type = $("select[name=art_type] option:selected").val();
+                post_data.art_type = '制度管理';
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("保存成功");
                 }
             });
-
             page_init={
                 id:$("input[name=id]"),
                 title:$("input[name=title]"),
-                art_type: $("select[name=art_type]"),
                 content:KE,
             };
 
             window["f"]=$("#art_form").ligerForm();
-        })
+        });
         //初始化页面
         function initPage() {
             if (typeof(page_data)=="object" && page_data.article) {
                 page_init.title && page_init.title.val(page_data.article.title);
                 f.setData({
                     "id":''+page_data.article.id,
-                    "art_type":page_data.article.art_type,
+                    "art_type":'工作总结',
                     "ispublish":""+page_data.article.ispublish,
                     "description":page_data.article.description
                 });
@@ -135,7 +136,6 @@
 </head>
 <body>
     <div id="art_form">
-        <input type="hidden" name="id" value="0"/>
         <table class="mytab">
             <tr>
                 <td><label for="title">内容标题</label></td>
@@ -151,18 +151,9 @@
             </td>
             </tr>
             <tr>
-                <td><label for="art_type">所属类别</label></td>
-                <td>
-                    <select name="art_type" validate="{required:true}" >
-                        <option value="工作计划_年度" selected="selected">工作计划_年度</option>
-                        <option value="工作计划_月度" >工作计划_月度</option>
-                        <option value="工作计划_周" >工作计划_周</option>
-                    </select>
-                </td>
-            </tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>
-                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="10" style="width:100%;height:400px;visibility:hidden;"></textarea>
+                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:400px;visibility:hidden;"></textarea>
                 </td>
             </tr>
         </table>

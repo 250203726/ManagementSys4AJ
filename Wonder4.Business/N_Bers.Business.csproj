@@ -60,6 +60,7 @@
     <Compile Include="Core\CryptoHelper.cs" />
     <Compile Include="Core\DBHelper.cs" />
     <Compile Include="Core\Public.cs" />
+    <Compile Include="Core\SQLHelper.cs" />
     <Compile Include="Model\AccessModel.cs" />
     <Compile Include="Core\BaseConst.cs" />
     <Compile Include="Core\MyHttpResult.cs" />

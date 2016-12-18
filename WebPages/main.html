@@ -36,12 +36,26 @@
 			$("#search").click(function(){
 				//search();
 			});
-			$(document).on("click","#bd a",function(e){
-			    e.stopPropagation();
-			    return false;
-			});
+			
 		});	
 	</script>
+    <script>
+        $(document).on("click","a",function(e){
+            var cur=$(this);
+            if (cur.attr("data-tabid").length==0 || cur.attr("rel").length==0) {
+                return;
+            }
+            window.top.f_addTab("tab_"+cur.attr("data-tabid"), cur.attr("data-tabTxt"), cur.attr("rel"));
+            e.stopPropagation();
+            return false;
+        });
+
+    </script>
+    <style>
+        a {
+        cursor:pointer;
+        }
+    </style>
 </head>
 <body style="padding:0;">
 	<div id="hd" class="hd">
@@ -57,60 +71,61 @@
 	  	<p class="welcome">
 	  		<img alt="" src="resources/images/icn_user_gray.png" width="14" height="16" />
 		  	<strong><span id="greetings">您好</span>，<span id="username">管理员</span>！</strong>
-		  	维护<a data-tabid="khlb" data-tabTxt="客户列表" data-parentOpen="true" rel="pageTab"  href="${path}/customer/toList">「部门概况」、</a>
-		  	<a data-tabid="dwlb" data-tabTxt="单位列表" data-parentOpen="true" rel="pageTab" href="${path}/company/toList">「工作总结」</a>信息。
-		  	
+		  	维护
+            <a data-tabid="109" data-tabTxt="公告管理" data-parentOpen="true" rel="/SystemManage/NoticeIndex.aspx?nodeid=109">「公告管理」、</a>
+              <a data-tabid="110" data-tabTxt="形象及宗旨" data-parentOpen="true" rel="/UnitDecription/UnitFigure.aspx?nodeid=110&oid=24"  >「形象及宗旨」</a>信息。		  	
 	  	</p>
 	</div>
 	<div id="bd" class="clearfix" >
 		<div class="col-main">
 		    <div class="main-wrap cf">
 		      <div class="m-top">
-		      	 <form onsubmit="return search();" method="post">
+		      	 <!--<form onsubmit="return search();" method="post">
 			      	 <div class="storages-search">
 			      	 <label for="">工作计划名称:</label>
 			      	 <span class="ui-search"><input type="text" name="contractName" id="contractName" class="ui-input" /></span>
 			      	 <input type="submit" class="ui-btn" value="查 询" /></div>
-		      	</form>
+		      	</form>-->
 		      </div>
 		      <ul class="quick-links">
 		        <li class="contract-huiqian">
-		        	<a data-tabid="" data-tabTxt="部门概况" data-parentOpen="true" rel="pageTab" href="${path}/contract/add?moduleType=1">
-		        		<span></span>部门概况
+		        	<a data-tabid="37" data-tabTxt="安全例会" data-parentOpen="true" rel="/Safety/SafetyMeeting.aspx?nodeid=37" >
+		        		<span></span>安全例会
 	        		</a>
 		        </li>
 		        <li class="division-edit">
-		        	<a data-tabid="" data-tabTxt="部门管理" data-parentOpen="true" rel="pageTab" href="${path}/contract/add?moduleType=2">
-		        		<span></span>部门管理
+		        	<a data-tabid="39" data-tabTxt="教育培训" data-parentOpen="true" rel="/Safety/EducationTraing.aspx?nodeid=39">
+		        		<span></span>教育培训
 	        		</a>
 		        </li>
 		        <li class="fund-transfers">
-		        	<a data-tabid=""  data-tabTxt="安全管理" data-parentOpen="true" rel="pageTab" href="${path}/contract/subAdd?moduleType=1">
-		        		<span></span>安全管理
+		        	<a data-tabid="40"  data-tabTxt="资质审核" data-parentOpen="true" rel="/Safety/Qualification.aspx?nodeid=40" >
+		        		<span></span>资质审核
 		        	</a>
 		        </li>
 		        <li class="statistics-funds">
-		        	<a data-tabid="" data-tabTxt="质量管理" data-parentOpen="true" rel="pageTab" href="${path}/contract/subAdd?moduleType=2">
-		        		<span></span>质量管理
+		        	<a data-tabid="41" data-tabTxt="交通安全" data-parentOpen="true" rel="/Safety/Traffic.aspx?nodeid=41">
+		        		<span></span>交通安全
 		        	</a>
 		        </li>
 		        <li class="customer-list">
-		        	<a data-tabid="" data-tabTxt="分公司管控" data-parentOpen="true" rel="pageTab" href="${path}/gongdan/add">
-		        		<span></span>分公司管控
+		        	<a data-tabid="44" data-tabTxt="三体系建设" data-parentOpen="true" rel="/QM/ThreeTix.aspx?nodeid=44" >
+		        		<span></span>三体系建设
 		        	</a>
 		        </li>
 		        <li class="manufacturer-list">
-		        	<a data-tabid="" data-tabTxt="上级来文" data-parentOpen="true" rel="pageTab" href="${path }/process/add">
+		        	<a data-tabid="23" data-tabTxt="上级来文" data-parentOpen="true" rel="/UnitManage/PaperOfSuperior.aspx?nodeid=23">
 		        		<span></span>上级来文
 		        	</a>
 		        </li>
 		        <li class="user_list">
-		        	<a data-tabid="" data-tabTxt="安全例会" data-parentOpen="true" rel="pageTab" href="${path}/fund/receipt/add">
+		        	<a data-tabid="37" data-tabTxt="安全例会" data-parentOpen="true" rel="/Safety/SafetyMeeting.aspx?nodeid=37">
 		        		<span></span>安全例会
 		        	</a>
 		        </li>
 		        <li class="feedback">
-		        	<a data-tabid="" data-tabTxt="资质审核" data-parentOpen="true" rel="pageTab" href="${path}/fund/pay/add"><span></span>资质审核</a>
+		        	<a data-tabid="40" data-tabTxt="资质审核" data-parentOpen="true" rel="/Safety/Qualification.aspx?nodeid=40">
+                    <span></span>资质审核</a>
 		        </li>
 		      </ul>
 		    </div>
@@ -120,29 +135,29 @@
 		    <h2>快速查看</h2>
 		    <div class="list">
 		      <ul>
+              <li>
+                  <a rel="/UnitManage/NetworkMap_New.aspx" data-tabid="NetworkMap" data-tabTxt="预览公司网络安全图" data-parentOpen="true">  查看公司网络安全图</a>
+              </li>
 		      	<li>
-		      		<a rel="pageTab" data-tabid="httj" data-tabTxt="合同统计" data-parentOpen="true"> 查看安全稽查</a>
+		      		<a rel="/Safety/SafetyCheck.aspx?nodeid=42" data-tabid="32" data-tabTxt="安全稽查" data-parentOpen="true"> 查看安全稽查</a>
 		      	</li>
 		        <li>
-		        	<a rel="pageTab" data-tabid="sfkcx" data-tabTxt="收付款查询" data-parentOpen="true"> 查看安全例会</a>
+		        	<a rel="/UnitDecription/UnitFigure.aspx?nodeid=111&oid=25" data-tabid="111" data-tabTxt="部门职责" data-parentOpen="true"> 查看部门职责</a>
 		        </li>
 		      	<li>
-		      		<a rel="pageTab" data-tabid="sgdlb" data-tabTxt="施工单列表" data-parentOpen="true">  查看安规考试</a>
+		      		<a rel="/Safety/Examination.aspx?nodeid=38" data-tabid="38" data-tabTxt="安规考试" data-parentOpen="true">  查看安规考试</a>
 		      	</li>
 		      	<li>
-		      		<a rel="pageTab" data-tabid="bzgctj" data-tabTxt="报装工程统计" data-parentOpen="true" >  查看教育培训</a>
+		      		<a rel="/OtherCompany/CheckReport.aspx?nodeid=46" data-tabid="46" data-tabTxt="安全稽查通报" data-parentOpen="true" >  查看安全稽查通报</a>
 		      	</li>
 		      	<li>
-		      		<a rel="pageTab" data-tabid="fbdwtj" data-tabTxt="分包单位统计" data-parentOpen="true">  查看资质审核</a>
+		      		<a rel="/OtherCompany/ToolsStandard.aspx?nodeid=47" data-tabid="47" data-tabTxt="工器具配置标准" data-parentOpen="true">  查看工器具配置标准</a>
 		      	</li>
 		        <li>
-		        	<a rel="pageTab" data-tabid="rwdjtz" data-tabTxt="任务登记台账" data-parentOpen="true">  查看交通安全</a>
+		        	<a rel="/OtherCompany/ToolsEvaluate.aspx?nodeid=48" data-tabid="48" data-tabTxt="工器具管理评价" data-parentOpen="true">  查工器具管理评价</a>
 		       	</li>
 		        <li>
-		        	<a rel="pageTab" data-tabid="gcxmqd" data-tabTxt="工程项目清单" data-parentOpen="true" >  查看质量管理</a>
-		        </li>
-		        <li>
-		        	<a rel="pageTab" data-tabid="xmyytj" data-tabTxt="项目盈余统计" data-parentOpen="true" >  查看分公司管控</a>
+		        	<a rel="/OtherCompany/KaoHeDuiXian.aspx?nodeid=49" data-tabid="40" data-tabTxt="分公司考核兑现" data-parentOpen="true" >  查看分公司考核兑现</a>
 		        </li>
 		      </ul>
 		    </div>
@@ -150,15 +165,15 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	    Public.pageTab();
-	    function search() {
-	        var name = $("#contractName").val();
-	        if (parent.tab.isTabItemExist('htzhcx')) {
-	            parent.tab.removeTabItem('htzhcx');
-	        }
-	        parent.Public.addTab('htzhcx', "合同信息综合查询", "${path}/report/toContractQuery?contractName=" + name);
-	        return false;
-	    }
+	    //Public.pageTab();
+	    //function search() {
+	    //    var name = $("#contractName").val();
+	    //    if (parent.tab.isTabItemExist('htzhcx')) {
+	    //        parent.tab.removeTabItem('htzhcx');
+	    //    }
+	    //    parent.Public.addTab('htzhcx', "合同信息综合查询", "${path}/report/toContractQuery?contractName=" + name);
+	    //    return false;
+	    //}
 	</script>
 </body>
 </html>

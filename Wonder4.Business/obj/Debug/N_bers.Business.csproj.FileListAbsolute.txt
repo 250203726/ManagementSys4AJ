@@ -11,4 +11,3 @@ E:\127.0.0.1\ManagementSys4AJ\WebPages\bin\N_Bers.Business.pdb
 E:\127.0.0.1\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.csprojResolveAssemblyReference.cache
 E:\127.0.0.1\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.dll
 E:\127.0.0.1\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.pdb
-D:\99CodeBitch\01DotNet\ManagementSys4AJ\Wonder4.Business\obj\Debug\N_Bers.Business.csprojResolveAssemblyReference.cache

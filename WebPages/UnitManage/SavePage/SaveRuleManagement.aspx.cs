@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.UnitManage.SavePage
 {
-    public partial class SaveWorkSummary : BasePage
+    public partial class SaveRuleManagement : BasePage
     {
         public string PageData = "{}";
         protected void Page_Load(object sender, EventArgs e)

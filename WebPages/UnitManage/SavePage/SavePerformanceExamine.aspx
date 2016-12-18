@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveWorkPlan.aspx.cs" Inherits="WebPages.UnitManage.SavePage.SaveWorkPlan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SavePerformanceExamine.aspx.cs" Inherits="WebPages.UnitManage.SavePage.PerformanceExamine" %>
 
 <!DOCTYPE html>
 
@@ -55,18 +55,16 @@
                 art_type: $("select[name=art_type]"),
                 content:KE,
             };
-
             window["f"]=$("#art_form").ligerForm();
         })
         //初始化页面
         function initPage() {
-            if (typeof(page_data)=="object" && page_data.article) {
+            if (typeof(page_data)=="object"  && page_data.article) {
                 page_init.title && page_init.title.val(page_data.article.title);
                 f.setData({
                     "id":''+page_data.article.id,
                     "art_type":page_data.article.art_type,
-                    "ispublish":""+page_data.article.ispublish,
-                    "description":page_data.article.description
+                    "ispublish":""+page_data.article.ispublish
                 });
                 KE.html(page_data.article.content);
             }
@@ -154,15 +152,16 @@
                 <td><label for="art_type">所属类别</label></td>
                 <td>
                     <select name="art_type" validate="{required:true}" >
-                        <option value="工作计划_年度" selected="selected">工作计划_年度</option>
-                        <option value="工作计划_月度" >工作计划_月度</option>
-                        <option value="工作计划_周" >工作计划_周</option>
+                        <option value="绩效考核_年度" selected="selected">绩效考核_年度</option>
+                        <option value="绩效考核_季度" >绩效考核_季度</option>
+                        <option value="绩效考核_月度" >绩效考核_月度</option>
                     </select>
                 </td>
             </tr>
+            <tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>
-                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="10" style="width:100%;height:400px;visibility:hidden;"></textarea>
+                    <textarea name="kinde_content" id="kinde_content" cols="100" rows="8" style="width:100%;height:400px;visibility:hidden;"></textarea>
                 </td>
             </tr>
         </table>

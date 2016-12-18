@@ -24,21 +24,18 @@
                 height: '99%',
                 checkbox:true,
                 columns: [
-                    { display: '文件名称', name: 'DocName', minWidth: 460, align: 'left', render: g_render4name },
-                    { display: '上传用户', name: 'CreateUser', width: 150 },
-                    { display: '文件大小', name: 'Filesize', width: 120, render: g_render4filesize },
-                    { display: '上传时间', name: 'CreateOn', width:120,render: g_render4time }
+                  { display: '类型', name: 'remark', width: 40, render: g_render4type },
+                   { display: '文章标题', name: 'title', minWidth: 260, align: 'left', render: g_render4name },
+                   { display: '所属分类', name: 'art_type', width: 150 },
+                   { display: '作者', name: 'create_user', width: 120, },
+                   { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
                 ],
-                //data:grid_data.data,
-                url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=上级来文",
+                url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey="+myEscape('上级来文'),
                 pageSize: 30,
                 rownumbers: true,
              toolbar:     {
                  items: <%= buttonJson %>
                 },
-                //autoFilter: true
-                //{ line: true },
-                //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
             });
 
             //upfiles 渲染上传控件
@@ -54,15 +51,45 @@
                  'buttonText': '上传',
                  'removeCompleted': false,
              });
+            //给工作工作计划名称绑定事件
+             $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
+                 e.stopPropagation();
+                 e.preventDefault();
 
+                 var top_tab = window.top.tab;
+                 var oid = $(e.target).attr("oid");
+                 var url = $(e.target).attr("rel");
+                 var author = $(e.target).attr("author");
+
+                 if (top_tab.isTabItemExist("PaperOfSuperior")) {
+                     top_tab.setHeader("PaperOfSuperior", author + "-上级来文");
+                     top_tab.setTabItemSrc("PaperOfSuperior", url);
+                     top_tab.reload("PaperOfSuperior");
+                     top_tab.selectTabItem("PaperOfSuperior");
+                     return;
+                 }
+                 window.top.f_addTab("PaperOfSuperior", author + "-上级来文", url);
+
+             });
             $("#pageloading").hide();
         });
 
-        function OnKeyDown(obj)
+        function EditItem(obj)
         {
-            
+            var rows = g.getSelectedRows();
+            if (rows.length != 1) {
+                myTips("请选择一条数据进行编辑！");
+                return;
+            }
+            if (rows[0].remark == 'file') {
+                myTips("请选择文本类数据编辑！");
+                return;
+            }
+            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-制度管理", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
-
+        function ItemClick(btn) {
+            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-制度管理", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=1&v=" + Math.random());
+        }
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {
             //TODO：清理上传列表
@@ -113,13 +140,20 @@
         
         //渲染文件名称为超链接  add by wonder4 2016年11月5日15:41:23
         function g_render4name(rowdata, index, colvalue) {
+            if (!colvalue) {
+                return;
+            }
             var docname = colvalue.length > 50 ? colvalue.substr(0, 50) + "..." : colvalue;
             var fileExt = (/[.]/.exec(colvalue)) ? /[^.]+$/.exec(colvalue.toLowerCase()) : '';
             var cls_icon = "ico-file-ico";
             if (fileExt.length > 0) {
                 cls_icon = "ico-file-" + fileExt[0];
             }
-            return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            if (rowdata.remark && rowdata.remark=="file") {//附件
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+            } else {//文章
+                return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a name='article' href='javascript:void(0);' rel='/Components/NBersEditor/EditorView.aspx?oid=" + rowdata.id + " 'oid='" + rowdata.id + " 'author='" + rowdata.create_user + "'>" + docname + "</a>";
+            }
         }
     </script>
 </head>

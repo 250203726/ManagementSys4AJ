@@ -40,6 +40,7 @@
                 single: true,
                 slide: true,
                 idFieldName: 'id',
+                iconFieldName:'icon_x',
                 parentIDFieldName: 'parentId',
                 textFieldName: 'name',
             });
