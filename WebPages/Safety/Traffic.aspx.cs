@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Safety
 {
-    public partial class Traffic : System.Web.UI.Page
+    public partial class Traffic :BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

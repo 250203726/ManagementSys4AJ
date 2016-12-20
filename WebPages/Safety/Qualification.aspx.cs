@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Safety
 {
-    public partial class Qualification : System.Web.UI.Page
+    public partial class Qualification:BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

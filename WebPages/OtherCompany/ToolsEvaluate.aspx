@@ -30,7 +30,7 @@
                    { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=工器具管理评价",
+               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey="+myEscape('工器具管理评价'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -52,7 +52,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
 
             $("#pageloading").hide();
@@ -61,7 +60,9 @@
         function OnKeyDown(obj) {
 
         }
-
+        function ItemClick() {
+    
+        }
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {
             //TODO：清理上传列表

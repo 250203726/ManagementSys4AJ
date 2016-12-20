@@ -300,3 +300,14 @@ function g_render4type(rowdata, index, colvalue) {
         return "文章";
     }
 }
+
+//点击新增按钮事件
+function OnUpfiles() {
+    //TODO：清理上传列表
+    $.ligerDialog.open({
+        target: $("#mytarget"), width: 500, minHeight: 300, title: "上传文件",
+        buttons: [
+            { text: '取消', onclick: function (item, dialog) { g.reload(); dialog.hidden(); } }
+        ]
+    });
+}

@@ -30,23 +30,19 @@
                    { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=三体系建设",
+               url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=" + myEscape('三体系建设'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
                    items:
                    [
-
                          { line: true },
                        { text: "上传", click: OnUpfiles, icon: "upfiles" },
                          { line: true },
-                       { text: "删除", click: deleteRow, icon: "../assets/lib/ligerUI/skins/icons/delete.gif" },
+                       { text: "删除", click: deleteRow, icon: "delete" },
                          { line: true },
                    ]
                },
-               //autoFilter: true
-               //{ line: true },
-               //{ text: "下载", click: OnKeyDown, icon: "download", options: { id: "123" } },
            });
 
             //upfiles 渲染上传控件
@@ -60,7 +56,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
 
             $("#pageloading").hide();

@@ -24,13 +24,13 @@
                height: '99%',
                //checkbox: true,
                columns: [
+                   { display: '类型', name: 'remark', width: 40, render: g_render4type },
                    { display: '文件名称', name: 'title', minWidth: 100, align: 'left', render: g_render4name },
-                   { display: '类型', name: 'remark', width: 100, render: g_render4type },
                    { display: '上传用户', name: 'create_user', width: 100 },
                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey=安规考试",
+               url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey="+myEscape('安规考试'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -52,7 +52,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
 
             //给工作工作计划名称绑定事件
@@ -63,20 +62,20 @@
                 var oid = $(e.target).attr("oid");
                 var url = $(e.target).attr("rel");
                 var author = $(e.target).attr("author");
-                if (top_tab.isTabItemExist("WorkPlan")) {
-                    top_tab.setHeader("WorkPlan", author + "-安规考试");
-                    top_tab.setTabItemSrc("WorkPlan", url);
-                    top_tab.reload("WorkPlan");
-                    top_tab.selectTabItem("WorkPlan");
+                if (top_tab.isTabItemExist("Examination")) {
+                    top_tab.setHeader("Examination", author + "-安规考试");
+                    top_tab.setTabItemSrc("Examination", url);
+                    top_tab.reload("Examination");
+                    top_tab.selectTabItem("Examination");
                     return;
                 }
-                window.top.f_addTab("WorkPlan", author + "-安规考试", url);
+                window.top.f_addTab("Examination", author + "-安规考试", url);
             });
             $("#pageloading").hide();
         });
 
-       function OnKeyDown(obj) {
-
+        function ItemClick(btn) {
+            AddItem(btn);
        }
 
        function AddItem(btn) {
@@ -89,7 +88,7 @@
                return;
            }
            if (rows[0].remark == 'file') {
-               myTips("请选择文本类数据编辑！");
+               myTips("请选择文章类数据编辑！");
                return;
            }
            window.top.f_addTab("Save_Examination", btn.text + "-安规考试", "/Safety/SavePage/SaveExamination.aspx?nodeid=42&mode=2&oid=" + rows[0].id + "&v=" + Math.random());

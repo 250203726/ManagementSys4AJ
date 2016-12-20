@@ -28,7 +28,6 @@
                    { display: '上传用户', name: 'create_user', width: 100 },
                    { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
                ],
-               //data:grid_data.data,
                url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey="+myEscape('安全稽查'),
                pageSize: 30,
                rownumbers: true,
@@ -48,7 +47,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
 
             //给工作工作计划名称绑定事件
@@ -59,14 +57,14 @@
                 var oid = $(e.target).attr("oid");
                 var url = $(e.target).attr("rel");
                 var author = $(e.target).attr("author");
-                if (top_tab.isTabItemExist("WorkPlan")) {
-                    top_tab.setHeader("WorkPlan", author + "-安全稽查");
-                    top_tab.setTabItemSrc("WorkPlan", url);
-                    top_tab.reload("WorkPlan");
-                    top_tab.selectTabItem("WorkPlan");
+                if (top_tab.isTabItemExist("SafetyCheck")) {
+                    top_tab.setHeader("SafetyCheck", author + "-安全稽查");
+                    top_tab.setTabItemSrc("SafetyCheck", url);
+                    top_tab.reload("SafetyCheck");
+                    top_tab.selectTabItem("SafetyCheck");
                     return;
                 }
-                window.top.f_addTab("WorkPlan", author + "-安全稽查", url);
+                window.top.f_addTab("SafetyCheck", author + "-安全稽查", url);
             });
             $("#pageloading").hide();
         });
@@ -74,8 +72,8 @@
         function OnKeyDown(obj) {
 
         }
-        function ItemClick() {
-    
+        function ItemClick(btn) {
+            AddItem(btn);
         }
 
         function AddItem(btn) {
@@ -88,16 +86,11 @@
                 return;
             }
             if (rows[0].remark == 'file') {
-                myTips("请选择文本类数据编辑！");
+                myTips("请选择文章类数据编辑！");
                 return;
             }
             window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?nodeid=42&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
-        //function itemClick(btn) {
-        //    if (btn.tex = "新增") {
-        //        window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/Safety/SavePage/SaveSafetyCheck.aspx?mode=1&v=" + Math.random());
-        //    }
-        //}
 
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {

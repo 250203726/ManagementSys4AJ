@@ -50,7 +50,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
             //给工作工作计划名称绑定事件
             $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
@@ -82,7 +81,7 @@
                 return;
             }
             if (rows[0].remark == 'file') {
-                myTips("请选择文本类数据编辑！");
+                myTips("请选择文章类数据编辑！");
                 return;
             }
             window.top.f_addTab("Save_RuleManagement", btn.text + "-制度管理", "/UnitManage/SavePage/SaveRuleManagement.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
@@ -111,7 +110,12 @@
             }
             //服务端删除，合并id为ids
             var ids = rows.map(function (data, index) { return data.id }).join(",");
-            var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
+            //服务端删除，合并id为ids
+            if (rows.remark && rows.remark=="file") {//附件
+                var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
+            }else {
+                var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);
+            }
 
             if (returnStr.result) {
                 g.deleteSelectedRow();

@@ -1367,8 +1367,10 @@
     <Content Include="Safety\Examination.aspx" />
     <Content Include="Safety\Qualification.aspx" />
     <Content Include="Safety\SafetyCheck.aspx" />
+    <Content Include="Safety\SavePage\SaveQualification.aspx" />
     <Content Include="Safety\SavePage\SaveEducationTraing.aspx" />
     <Content Include="Safety\SavePage\SaveExamination.aspx" />
+    <Content Include="Safety\SavePage\SaveTraffic.aspx" />
     <Content Include="Safety\SavePage\SaveSafetyMeeting.aspx" />
     <Content Include="Safety\SavePage\SaveSafetyCheck.aspx" />
     <Content Include="Safety\Traffic.aspx" />
@@ -1556,6 +1558,13 @@
     <Compile Include="Safety\SafetyCheck.aspx.designer.cs">
       <DependentUpon>SafetyCheck.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Safety\SavePage\SaveQualification.aspx.cs">
+      <DependentUpon>SaveQualification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveQualification.aspx.designer.cs">
+      <DependentUpon>SaveQualification.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Safety\SavePage\SaveEducationTraing.aspx.cs">
       <DependentUpon>SaveEducationTraing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1569,6 +1578,13 @@
     </Compile>
     <Compile Include="Safety\SavePage\SaveExamination.aspx.designer.cs">
       <DependentUpon>SaveExamination.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveTraffic.aspx.cs">
+      <DependentUpon>SaveTraffic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Safety\SavePage\SaveTraffic.aspx.designer.cs">
+      <DependentUpon>SaveTraffic.aspx</DependentUpon>
     </Compile>
     <Compile Include="Safety\SavePage\SaveSafetyMeeting.aspx.cs">
       <DependentUpon>SaveSafetyMeeting.aspx</DependentUpon>

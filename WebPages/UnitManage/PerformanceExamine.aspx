@@ -51,7 +51,6 @@
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
                 'buttonText': '上传',
-                'removeCompleted': false,
             });
 
             //给工作工作计划名称绑定事件
@@ -108,7 +107,7 @@
                 return;
             }
             if (rows[0].remark == 'file') {
-                myTips("请选择文本类数据编辑！");
+                myTips("请选择文章类数据编辑！");
                 return;
             }
             window.top.f_addTab("Save_SafetyCheck", btn.text + "-安全稽查", "/UnitManage/SavePage/SavePerformanceExamine.aspx?mode=2&oid=" + rows[0].id + "&v=" + Math.random());
@@ -120,10 +119,13 @@
                 myTips("请选择数据进行删除！");
                 return;
             }
-            //服务端删除，合并id为ids
             var ids = rows.map(function (data, index) { return data.id }).join(",");
-            var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
-
+            //服务端删除，合并id为ids
+            if (rows.remark && rows.remark=="file") {//附件
+                var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
+            }else {
+                var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);
+            }
             if (returnStr.result) {
                 g.deleteSelectedRow();
                 myTips(returnStr.msg);

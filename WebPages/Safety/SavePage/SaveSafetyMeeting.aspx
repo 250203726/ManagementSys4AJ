@@ -20,6 +20,8 @@
     <script src="../../../assets/js/Util.js"></script>
     <script type="text/javascript">
         var KE;
+         var page_data=<%= String.IsNullOrEmpty(PageData)?"{}":PageData %>;
+        var page_init;
         $(function () {
             KindEditor.ready(function (K) {
                 KE = K.create('#kinde_content', {
@@ -44,12 +46,11 @@
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("新增成功,窗口在3秒钟后关闭！");
-                    //setTimeout(window.top.tab.removeTabItem("Save_WorkSummary"),3000);
+                    myTips("新增成功！");
                 }
             });
 
-            $("#art_form").ligerForm();
+            window["f"]=$("#art_form").ligerForm();
         });
     </script>
     <style>
