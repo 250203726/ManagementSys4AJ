@@ -105,6 +105,7 @@
         }
     </style>
     <script type="text/javascript">
+        var sysKey=<%= sysKeyValue%>;
         $(function () {
             $(".page_l li:eq(0)").click();
             setRight();
@@ -112,22 +113,7 @@
             child_type && initPage(child_type)           
         });
         function initPage(child_type) {
-            switch (child_type) {
-                case "aqjc":
-                    child_type = "安全稽查";
-                    break;
-                case "aqlh":
-                    child_type = "安全例会";
-                    break;
-                case "jypx":
-                    child_type = "教育培训";
-                    break;
-                case "zlgl":
-                    child_type = "质量管理";
-                    break;
-                default:
-                    break;
-            }
+            child_type=sysKey[child_type] || '';            
             $("ul.list-group li").each(function (item) {
                 if ($(this).html()==child_type) {
                     $(this).click();
@@ -137,7 +123,7 @@
         $(document).on("click", "li.mylist", function (e) {
             var all_li = $(".page_l li");
             var click_li = $(this);
-            var type = click_li.html();
+            var type = click_li.attr("rel");
             var myframe = $("#myiframe");
             if (click_li.hasClass("active")) {
                 return;
@@ -146,6 +132,7 @@
                 all_li.removeClass("active");
                 click_li.addClass("active");
             }
+            type=sysKey[type] || '';
             switch (type) {
                 case "形象及宗旨":
                     myframe.show();
@@ -322,7 +309,7 @@
                 <%
                     foreach (var item in type_tree)
                     {
-                        Response.Write("<li class='list-group-item mylist'>"+item.name+"</li>");
+                        Response.Write("<li class='list-group-item mylist' rel='"+item.paramss+"'>"+item.name+"</li>");
                     }
                     %>
             </ul>

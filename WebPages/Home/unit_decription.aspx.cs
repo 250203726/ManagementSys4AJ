@@ -2,6 +2,7 @@
 using N_Bers.Business.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,8 +21,9 @@ namespace WebPages.Home
             type_tree = (new MenuBLL()).DoQuery(string.Format("and moduleId='{0}' AND parentId<>0 ORDER BY sortCode", art_type));
             art_type = string.IsNullOrEmpty(N_Bers.Business.Core.Public.GetSysValue(art_type)) ? art_type : N_Bers.Business.Core.Public.GetSysValue(art_type);
             newslist = (new ArticleBLL()).DoQuery("art_type='" + art_type + "' ORDER BY create_date DESC");
-
             this.Title = "荆力总包安质部-" + art_type;
         }
+
+        
     }
 }

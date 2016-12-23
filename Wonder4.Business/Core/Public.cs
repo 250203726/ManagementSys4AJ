@@ -107,6 +107,26 @@ namespace N_Bers.Business.Core
             myCol.Add("quality_manage", "质量管理");
             myCol.Add("branch_manage", "分公司管控");
 
+            myCol.Add("gzjh", "工作计划");
+            myCol.Add("zdgl", "管理制度");
+            myCol.Add("aqjc", "安全稽查");
+            myCol.Add("aqlh", "安全例会");
+            myCol.Add("agks", "安规考试");
+            myCol.Add("jypx", "教育培训");
+            myCol.Add("zgsh", "资质审核");
+            myCol.Add("jtaq", "交通安全");
+            myCol.Add("bmzz", "部门职责");
+            myCol.Add("gwzz", "岗位职责");
+            myCol.Add("stxjs", "三体系建设");
+            myCol.Add("xxjzz", "形象及宗旨");
+            myCol.Add("gwryxx", "岗位人员信息");
+            myCol.Add("aqjctb", "安全稽查通报");
+            myCol.Add("gqjpzbz", "工器具配置标准");
+            myCol.Add("gqjglpj", "工器具管理评价");
+            myCol.Add("fgskhdx", "分公司考核兑现");
+            myCol.Add("gsaqwlt", "公司安全网络图");
+
+
             if (myCol.GetValues(key)!=null)
             {
                 return myCol.GetValues(key)[0];

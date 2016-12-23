@@ -56,7 +56,7 @@ namespace N_Bers.Business.Model
             set{ _url = value; }
         }        	
 
-		[DataColumn(Alias = "params",IsNullable=true)]
+		[DataColumn(Alias = "params",IsNullable=true,DefaultValue ="")]
         public string paramss
         {
             get{ return _params; }
