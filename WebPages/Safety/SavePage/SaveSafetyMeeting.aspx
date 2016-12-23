@@ -41,6 +41,8 @@
         $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
+                post_data.id=page_init.id.val();
+                post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 post_data.title = $("input[name=title]").val();
                 post_data.art_type = $("select[name=art_type] option:selected").val();
                 post_data.content = KE.html();

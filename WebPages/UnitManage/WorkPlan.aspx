@@ -27,7 +27,8 @@
                    { display: '文章标题', name: 'title', minWidth: 260, align: 'left', render: g_render4name },
                    { display: '所属分类', name: 'art_type', width: 150 },
                    { display: '作者', name: 'create_user', width: 120, },
-                   { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
+                   { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time },
+                    { display: '操作', width: 120,render:g_render4handlebar }
                ],
                url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey=" + myEscape('工作计划'),
                pageSize: 30,

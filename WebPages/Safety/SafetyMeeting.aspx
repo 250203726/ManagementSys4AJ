@@ -25,7 +25,8 @@
                     { display: '类型', name: 'remark', width: 40, render: g_render4type },
                    { display: '文件名称', name: 'title', minWidth: 100, align: 'left', render: g_render4name },
                    { display: '上传用户', name: 'create_user', width: 100 },
-                   { display: '上传时间', name: 'create_date', width: 120, render: g_render4time }
+                   { display: '上传时间', name: 'create_date', width: 120, render: g_render4time },
+                    { display: '操作', width: 120,render:g_render4handlebar }
                ],
                url: "../NB_JsonHttp.aspx?oprtype=GetFilesAndArticle4Grid&strkey=" + myEscape('安全例会'),
                pageSize: 30,

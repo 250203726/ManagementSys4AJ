@@ -111,7 +111,7 @@ namespace N_Bers.Business.Model
             set { _doctype = value; }
         }
         /// <summary>
-        /// Remarks
+        /// Remarks 
         /// </summary>		
         private string _remarks;
         [DataColumn(Alias = "Remarks")]
@@ -120,6 +120,15 @@ namespace N_Bers.Business.Model
             get { return _remarks; }
             set { _remarks = value; }
         }
-
+        /// <summary>
+        /// ispublish
+        /// </summary>		
+        private int _ispublish;
+        [DataColumn(Alias = "ispublish")]
+        public int Ispublish
+        {
+            get { return _ispublish; }
+            set { _ispublish = value; }
+        }
     }
 }

@@ -43,9 +43,11 @@
         $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
+                post_data.id=page_init.id.val();
                 post_data.title = page_init.title.val();
                 post_data.art_type = '制度管理';
                 post_data.content = KE.html();
+                post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("保存成功");

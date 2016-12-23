@@ -43,9 +43,12 @@
         $(function() {
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
+                post_data.id=page_init.id.val();
+                post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 post_data.title = $("input[name=title]").val();
                 post_data.art_type = '教育培训';
                 post_data.content = KE.html();
+                
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("保存成功！");

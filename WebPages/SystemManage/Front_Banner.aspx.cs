@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.SystemManage
 {
-    public partial class MenuIndex_bak : BasePage
+    public partial class Front_Banner : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

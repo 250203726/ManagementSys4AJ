@@ -157,6 +157,9 @@ namespace WebPages
                 case "GETSTATIONDUTY4GRID":
                     retJsonStr = GetStationDuty4Grid(onlyPara);
                     break;
+                case "PUBLISHARTICLE":
+                    retJsonStr = PublishArticle(onlyPara,onlyPara2);
+                    break;
                 default:                
                     break;
             }
@@ -167,6 +170,34 @@ namespace WebPages
         }
 
         /// <summary>
+        /// 文章发布
+        /// </summary>
+        /// <param name="onlyPara"></param>
+        /// <param name="onlyPara2"></param>
+        /// <returns></returns>
+        private string PublishArticle(string onlyPara, string onlyPara2)
+        {
+            var file_type = Request.Form["file_type"];
+            var ispublish = Request.Form["ispublish"];
+            var update_to = Request.Form["update_to"];
+            if (string.IsNullOrEmpty(onlyPara))
+            {
+                return (new MyHttpResult(false, "参数错误,请联系管理员！")).ToString();
+            }
+            if ("file".Equals(file_type))
+            {
+                CPQuery.From(string.Format("UPDATE nbers_Attachments SET ispublish={0} WHERE id={1} AND ispublish={2}", update_to, onlyPara, ispublish)).ExecuteNonQuery();
+            }
+            else
+            {
+                CPQuery.From(string.Format("UPDATE nbers_articles SET ispublish={0} WHERE id={1} AND ispublish={2}", update_to, onlyPara, ispublish)).ExecuteNonQuery();
+            }
+
+            return (new MyHttpResult(true, "处理成功！")).ToString();
+
+        }
+
+        /// <summary>
         /// 获取岗位职责数据 add by wonder4 2016年12月11日13:55:19
         /// </summary>
         /// <returns></returns>
@@ -174,7 +205,18 @@ namespace WebPages
         {
 
             string filter = getFilters();
-            filter = string.Concat(" art_type LIKE '%_岗位职责' ", filter);
+            string is_indexpage = Request.QueryString["strkey2"];
+            if ("is_front".Equals(is_indexpage))
+            {
+                filter = string.Concat(" art_type LIKE '%_岗位职责' and isnull(ispublish,0)=1", filter);
+            }
+            else
+            {
+                filter = string.Concat(" art_type LIKE '%_岗位职责' ", filter);
+            }
+
+
+            
             List<ArticleModel> list = (new ArticleBLL()).DoQuery(filter);
             var grid = new {
                 Rows = list,
@@ -323,8 +365,14 @@ namespace WebPages
             string pagesize = Request.Form["pagesize"];
             string sortname = Request.Form["sortname"];
             string sortorder = Request.Form["sortorder"];
-
             StringBuilder strWhere = new StringBuilder(" art_type like '%" + onlyPara + "%'");
+            string is_indexpage = Request.QueryString["strkey2"];
+            if ("is_front".Equals(is_indexpage))
+            {
+                strWhere.Append(" and isnull(ispublish,0)=1 ");                
+            }
+           
+            
             if (!string.IsNullOrEmpty(page))
             {
                 int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
@@ -382,7 +430,14 @@ namespace WebPages
         /// <returns></returns>
         private string GetFiles4Grid(string onlyPara)
         {
-            var fileList = (new AttachmentsBLL()).DoQuery(" DocType='"+onlyPara+"'" + getFilters());
+            StringBuilder strWhere = new StringBuilder(" DocType='" + onlyPara + "'");
+            string is_indexpage = Request.QueryString["strkey2"];
+            if ("is_front".Equals(is_indexpage))
+            {
+                strWhere.Append(" and isnull(ispublish,0)=1 ");
+            }
+            strWhere.Append(getFilters());
+            var fileList = (new AttachmentsBLL()).DoQuery(strWhere.ToString());
             
             var grid = new {
                 Rows= fileList,
@@ -407,7 +462,8 @@ namespace WebPages
                                         create_user ,
                                         'article' remark,
                                         description ,
-                                        0 Filesize
+                                        0 Filesize,
+                                                ispublish
                                FROM     dbo.nbers_articles
                                UNION
                                SELECT   id ,
@@ -419,10 +475,21 @@ namespace WebPages
                                         CreateUser ,
                                         'file' Remarks ,
                                         RootType ,
-                                        Filesize
+                                        Filesize,
+                                                ispublish
                                FROM     dbo.nbers_Attachments";
 
-            string strSql=SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%'", onlyPara), getFilters());
+            string is_indexpage = Request.QueryString["strkey2"];
+            string strSql = string.Empty;
+            if ("is_front".Equals(is_indexpage))
+            {
+                strSql= SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%' and isnull(ispublish,0)=1", onlyPara), getFilters());
+            }
+            else
+            {
+                strSql = SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%'", onlyPara), getFilters());
+            }
+            
 
             List< ArticleModel> allList = CPQuery.From(strSql).ToList<ArticleModel>();
 

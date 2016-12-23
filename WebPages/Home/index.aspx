@@ -133,11 +133,11 @@
 
        function format_date(str_date) {
            var milli = str_date.replace(/\/Date\((-?\d+)\)\//, '$1');
-           var s = "1990-01-1";
+           var s = "01-01";
            var dt = new Date(parseInt(milli));
            if (dt && (dt instanceof Date)) {
                if (dt.getFullYear() != 1)
-                   s = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+                   s =  (dt.getMonth() + 1) + "-" + dt.getDate();
            }
            return s;
        }
@@ -156,7 +156,7 @@
        function initArticleList(data,model_name)
        {
            $.each(data,function(n,value){
-               $("ul."+model_name).append($("<li><a href='/home/news_view.aspx?oid="+value.id+"' target='_blank'>"+value.title+"<span class='myspan'>["+format_date(value.create_date)+"]</span></a> </li>"));
+               $("ul."+model_name).append($("<li><a href='/home/news_view.aspx?oid="+value.id+"' target='_blank'>"+value.title+"<span class='myspan'>"+format_date(value.create_date)+"</span></a> </li>"));
            });        
        }
        function initNotice() {
@@ -276,9 +276,9 @@
         
         <div class="row">
             <div class="col-md-5">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
+                <div class="panel panel-primary" style="margin-bottom: 10px;min-height: 203px;">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">岗 · 位 · 职 · 责<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqjc" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqjc" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
                         <ul class="index_list station_duty">
                         </ul>
@@ -286,9 +286,9 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
+                <div class="panel panel-primary" style="margin-bottom: 10px;min-height: 203px;">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">工 · 作 · 总 · 结<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage&child_type=sjlw" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">安 · 全 · 例 · 会<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqlh" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
                         <ul class="index_list work_summary">
                         </ul>
@@ -299,9 +299,9 @@
 
         <div class="row">
             <div class="col-md-5">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
+                <div class="panel panel-primary" style="margin-bottom: 10px;min-height: 203px;">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">安 · 全 · 例 · 会<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">教 · 育 · 培 · 训<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=jypx" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
                         <ul class="index_list safty_meeting">                         
                         </ul>
@@ -309,9 +309,9 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="panel panel-primary" style="margin-bottom: 10px">
+                <div class="panel panel-primary" style="margin-bottom: 10px;min-height: 203px;">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">工 · 作 · 计 · 划<span class="myspan"><a href="unit_decription.aspx?news_type=unit_manage" target="_blank">更多>></a></span></div>
+                    <div class="panel-heading">质 · 量 · 管 · 理<span class="myspan"><a href="unit_decription.aspx?news_type=quality_manage&child_type=zlgl" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
                         <ul class="index_list work_plan">                            
                         </ul>

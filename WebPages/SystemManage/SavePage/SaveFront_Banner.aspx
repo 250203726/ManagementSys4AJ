@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveQualification.aspx.cs" Inherits="WebPages.Safety.SavePage.SaveQualification" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SaveFront_Banner.aspx.cs" Inherits="WebPages.SystemManage.SaveFront_Banner" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>保存-资质审核</title>
+    <title>保存-工作总结</title>
     <link href="../../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../Components/NBersEditor/plugins/code/prettify.css" />
     <script src="../../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
@@ -20,7 +20,7 @@
     <script src="../../../assets/js/Util.js"></script>
     <script type="text/javascript">
         var KE;
-         var page_data=<%= String.IsNullOrEmpty(PageData)?"{}":PageData %>;
+        var page_data=<%=PageData%>;
         var page_init;
         $(function () {
             KindEditor.ready(function (K) {
@@ -44,33 +44,32 @@
             $(document).on("click", "input[name=btn_submit]", function () {
                 var post_data = {};
                 post_data.id=page_init.id.val();
-                post_data.ispublish=$("select[name=ispublish] option:selected").val();
-                post_data.title = $("input[name=title]").val();
-                post_data.art_type = '资质审核';
+                post_data.title = page_init.title.val();
+                post_data.art_type = '上级来文';
                 post_data.content = KE.html();
+                post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("保存成功！");
+                    myTips("保存成功");
                 }
             });
-
-            page_init = {
-                id: $("input[name=id]"),
-                title: $("input[name=title]"),
-                content: KE,
+            page_init={
+                id:$("input[name=id]"),
+                title:$("input[name=title]"),
+                content:KE,
             };
 
-            window["f"]= $("#art_form").ligerForm();
+            window["f"]=$("#art_form").ligerForm();
         });
-
         //初始化页面
         function initPage() {
-            if (typeof (page_data) == "object" && page_data.article) {
-                page_data.article && page_init.title.val(page_data.article.title);
+            if (typeof(page_data)=="object" && page_data.article) {
+                page_init.title && page_init.title.val(page_data.article.title);
                 f.setData({
-                    "id": '' + page_data.article.id,
-                    "art_type": page_data.article.art_type,
-                    "ispublish": "" + page_data.article.ispublish
+                    "id":''+page_data.article.id,
+                    "art_type":'上级来文',
+                    "ispublish":""+page_data.article.ispublish,
+                    "description":page_data.article.description
                 });
                 KE.html(page_data.article.content);
             }

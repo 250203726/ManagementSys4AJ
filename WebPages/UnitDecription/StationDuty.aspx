@@ -40,7 +40,7 @@
                     { display: '名称', name: 'title', align: 'left' ,render:g_render4title},
                     { display: '对应岗位', name: 'art_type' ,render:g_render4type},
                     { display: '最后编辑时间', name: 'create_date',render:g_render4time },
-                     { display: '备注', name: 'remark' }
+                     { display: '操作', width: 120,render:g_render4handlebar }
                 ],
                 url:"../NB_JsonHttp.aspx?oprtype=GetStationDuty4Grid",
                 pageSize: 30,
@@ -72,7 +72,7 @@
         }
          //
         function g_render4title(rowdata, index, colvalue) {
-            return '<a href="javascript:void(0)" rel='+rowdata.id+'>'+colvalue+'</a>';
+            return '<a name="title" href="javascript:void(0)" rel='+rowdata.id+'>'+colvalue+'</a>';
         }
 
         function g_render4type(rowdata, index, colvalue) {
@@ -83,7 +83,7 @@
             }           
         }
 
-        $(document).on("click","table.l-grid-body-table a",function(e){
+        $(document).on("click","table.l-grid-body-table a[name=title]",function(e){
             var article_id=$(this).attr("rel");
             window.top.f_addTab("View_StationDudy_"+article_id, "编辑岗位职责", "../UnitDecription/UnitFigure.aspx?type=station_duty&oid="+article_id);
         });

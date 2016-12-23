@@ -14,13 +14,47 @@ namespace WebPages.Home
         public string PageData;
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<ArticleModel> all_list = (new ArticleBLL()).DoQuery(" 1=1 order by art_type,create_date,ispublish DESC");
-            var station_duty = (from item in all_list where item.art_type.EndsWith("_岗位职责") select item).Take(6);
-            //var unit_notice = (from item in all_list where item.art_type.Equals("部门公告") select item).Take(1);
+            string strQuery = @"
+                                            WITH    tb
+                      AS ( SELECT   ROW_NUMBER() OVER ( ORDER BY id ) rid ,
+                                    *
+                           FROM     ( SELECT    id ,
+                                                title ,
+                                                art_type ,
+                                                CONVERT(NVARCHAR(MAX), content) content ,
+                                                create_date ,
+                                                createby ,
+                                                create_user ,
+                                                'article' remark ,
+                                                description ,
+                                                0 Filesize,
+                                                ispublish
+                                      FROM      dbo.nbers_articles
+                                      UNION
+                                      SELECT    id ,
+                                                DocName title ,
+                                                DocType art_type ,
+                                                '' content ,
+                                                CreateOn ,
+                                                createby ,
+                                                CreateUser ,
+                                                'file' Remarks ,
+                                                RootType ,
+                                                Filesize,
+                                                ispublish
+                                      FROM      dbo.nbers_Attachments
+                                    ) tb
+                         )
+                SELECT  
+                        *
+                FROM    tb where 1=1 order by art_type,create_date DESC";
+            strQuery = strQuery.Replace("1=1", "isnull(ispublish,0)=1");
+            List<ArticleModel> all_list = Wonder4.Map.Extensions.DAL.CPQuery.From(strQuery).ToList<ArticleModel>();
+            var station_duty = (from item in all_list where item.art_type.EndsWith("安全稽查") select item).Take(6);
             var unit_notice = all_list.Where(p=>p.art_type.Equals("部门公告") && p.ispublish.Equals(1)).Take(1);
-            var safty_meeting = all_list.Where(p=>p.art_type.StartsWith("安全例会_")).Take(6);
-            var work_plan = all_list.Where(p => p.art_type.EndsWith("_工作计划")).Take(6);
-            var work_summary = all_list.Where(p => p.art_type.EndsWith("工作总结")).Take(6);
+            var safty_meeting = all_list.Where(p=>p.art_type.StartsWith("安全例会")).Take(6);
+            var work_plan = all_list.Where(p => p.art_type.EndsWith("教育培训")).Take(6);
+            var work_summary = all_list.Where(p => p.art_type.EndsWith("三体系建设")).Take(6);
             var myPageData = new
             {
                 station_duty = station_duty,

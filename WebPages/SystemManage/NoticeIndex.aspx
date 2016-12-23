@@ -58,11 +58,14 @@
             $("#pageloading").hide();
         });
 
-        function OnKeyDown(obj)
+        function AddItem(btn)
         {
-            
+            itemclick(btn);
         }
 
+        function EditItem(btn) {
+            itemclick(btn);
+        }
         //点击新增按钮事件
         function itemclick(btn) {
             if (btn.text == "新增") {

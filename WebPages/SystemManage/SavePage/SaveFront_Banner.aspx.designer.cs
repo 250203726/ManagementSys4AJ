@@ -10,6 +10,6 @@
 namespace WebPages.SystemManage {
     
     
-    public partial class MenuIndex_bak {
+    public partial class SaveFront_Banner {
     }
 }

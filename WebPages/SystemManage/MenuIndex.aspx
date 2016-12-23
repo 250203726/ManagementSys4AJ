@@ -56,7 +56,7 @@
                     { display: "菜单名称", name: "name", type: "text", newline: false },
                     { display: "父级菜单", name: "parentName", type: "text", newline: false },
                     { type: "hidden", name: "parentId", value: "" },
-                    { display: "菜单简码", name: "code", type: "text", newline: false },
+                    //{ display: "菜单简码", name: "code", type: "text", newline: false },
                     { display: "模块简码", name: "moduleId", type: "text", newline: false },
                     { display: "请求路径", name: "url", type: "text", newline: false },
                     //{ display: "图标路径", name: "icon", type: "text", newline: false },
@@ -169,7 +169,7 @@
                 //myTips("点击修改"+node.data.id);
                 //初始化表格
                 var data = GetDataByAjax("../NB_JsonHttp.aspx", "getMenuById", node.data.id);
-                data.parentName=node.data.name;
+                data.data.parentName=menuTree.getParent(node).name;
                 InitForm(data.data);
                 //打开对话框
                 $.ligerDialog.open({

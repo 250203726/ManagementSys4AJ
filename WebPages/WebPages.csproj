@@ -1375,9 +1375,11 @@
     <Content Include="Safety\SavePage\SaveSafetyCheck.aspx" />
     <Content Include="Safety\Traffic.aspx" />
     <Content Include="Safety\SafetyMeeting.aspx" />
+    <Content Include="SystemManage\Front_Banner.aspx" />
     <Content Include="SystemManage\MenuEdit.aspx" />
     <Content Include="SystemManage\NoticeIndex.aspx" />
     <Content Include="SystemManage\RoleIndex.aspx" />
+    <Content Include="SystemManage\SavePage\SaveFront_Banner.aspx" />
     <Content Include="test.html" />
     <Content Include="UnitDecription\StationDuty.aspx" />
     <Content Include="UnitManage\NetworkMap_New.aspx" />
@@ -1614,6 +1616,13 @@
     <Compile Include="Safety\SafetyMeeting.aspx.designer.cs">
       <DependentUpon>SafetyMeeting.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SystemManage\Front_Banner.aspx.cs">
+      <DependentUpon>Front_Banner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\Front_Banner.aspx.designer.cs">
+      <DependentUpon>Front_Banner.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemManage\MenuEdit.aspx.cs">
       <DependentUpon>MenuEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1641,6 +1650,13 @@
     </Compile>
     <Compile Include="SystemManage\RoleIndex.aspx.designer.cs">
       <DependentUpon>RoleIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemManage\SavePage\SaveFront_Banner.aspx.cs">
+      <DependentUpon>SaveFront_Banner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemManage\SavePage\SaveFront_Banner.aspx.designer.cs">
+      <DependentUpon>SaveFront_Banner.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnitDecription\StationDuty.aspx.cs">
       <DependentUpon>StationDuty.aspx</DependentUpon>

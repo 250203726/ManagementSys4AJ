@@ -22,13 +22,13 @@
              window["g"] =
             $("#maingrid").ligerGrid({
                 height: '99%',
-                checkbox:true,
                 columns: [
                   { display: '类型', name: 'remark', width: 40, render: g_render4type },
                    { display: '文章标题', name: 'title', minWidth: 260, align: 'left', render: g_render4name },
                    { display: '所属分类', name: 'art_type', width: 150 },
                    { display: '作者', name: 'create_user', width: 120, },
-                   { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time }
+                   { display: '最新编辑', name: 'create_date', width: 120, render: g_render4time },
+                    { display: '操作', width: 120,render:g_render4handlebar }
                 ],
                 url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey="+myEscape('上级来文'),
                 pageSize: 30,
@@ -73,7 +73,7 @@
             $("#pageloading").hide();
         });
 
-        function EditItem(obj)
+        function EditItem(btn)
         {
             var rows = g.getSelectedRows();
             if (rows.length != 1) {
@@ -84,10 +84,10 @@
                 myTips("请选择文章类数据编辑！");
                 return;
             }
-            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-制度管理", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-上级来文", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
         function ItemClick(btn) {
-            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-制度管理", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=1&v=" + Math.random());
+            window.top.f_addTab("Save_PaperOfSuperior", btn.text + "-上级来文", "/UnitManage/SavePage/SavePaperOfSuperior.aspx?nodeid=29&mode=1&v=" + Math.random());
         }
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {

@@ -43,6 +43,7 @@
                 post_data.title = page_init.title.val();
                 post_data.art_type = $("select[name=art_type] option:selected").val();
                 post_data.content = KE.html();
+                post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
                     myTips("保存成功");

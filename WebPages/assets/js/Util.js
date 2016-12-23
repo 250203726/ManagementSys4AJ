@@ -30,6 +30,12 @@ function getQueryString(sURL, sParamName) {
 
     return undefined;
 }
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
 // 功能：将字符串进行 HTML 编码，以便实现从 Web 服务器到客户端的可靠的 HTTP 传输
 function HtmlEncode(s) {
     s = s.replace(/&/g, "&amp;");
@@ -311,3 +317,28 @@ function OnUpfiles() {
         ]
     });
 }
+
+function g_render4handlebar(rowdata, index, colvalue) {
+    var ispublish = rowdata.ispublish;
+    if ("1" == ispublish) {
+        return '<a href="javascript:void(0)" name="handlebar" rel="1" file_type="' + rowdata.remark + '" data-id="' + rowdata .id+ '" update_to="0"">不在首页显示</a>';
+    } else {
+        return '<a href="javascript:void(0)" name="handlebar" rel="0"  file_type="' + rowdata.remark + '"data-id="' + rowdata.id + '" update_to="1"">发布到首页</a>';
+    }
+}
+
+$(document).on("click", "table.l-grid-body-table a[name=handlebar]", function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var id = $(this).attr("data-id");
+    var ispublish = $(this).attr("rel");
+    var file_type = $(this).attr("file_type");
+    var update_to = $(this).attr("update_to");
+    if (!id) {
+        return;
+    }
+    var rtn = GetDataByAjax('../../NB_JsonHttp.aspx', 'PublishArticle', id, null, { ispublish: ispublish, file_type: file_type, update_to: update_to });
+    if (rtn && rtn.result) {
+        g.reload();
+    }
+});

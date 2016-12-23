@@ -108,8 +108,32 @@
         $(function () {
             $(".page_l li:eq(0)").click();
             setRight();
+            var child_type = getUrlParam("child_type");
+            child_type && initPage(child_type)           
         });
-
+        function initPage(child_type) {
+            switch (child_type) {
+                case "aqjc":
+                    child_type = "安全稽查";
+                    break;
+                case "aqlh":
+                    child_type = "安全例会";
+                    break;
+                case "jypx":
+                    child_type = "教育培训";
+                    break;
+                case "zlgl":
+                    child_type = "质量管理";
+                    break;
+                default:
+                    break;
+            }
+            $("ul.list-group li").each(function (item) {
+                if ($(this).html()==child_type) {
+                    $(this).click();
+                }
+            });
+        }
         $(document).on("click", "li.mylist", function (e) {
             var all_li = $(".page_l li");
             var click_li = $(this);
@@ -122,7 +146,6 @@
                 all_li.removeClass("active");
                 click_li.addClass("active");
             }
-            console.log(type);
             switch (type) {
                 case "形象及宗旨":
                     myframe.show();
@@ -140,24 +163,12 @@
                     openMyWin("../UnitManage/NetworkMap_New.aspx", "荆力总包安质部-网络安全图");
                     break;
                 case "绩效考核":
-                    myframe.hide();
-                    render4File(type);
-                    break;
                 case "工作计划":
-                    myframe.hide();
-                    render4Article(type);
-                    break;
                 case "工作总结":
-                    myframe.hide();
-                    render4Article(type);
-                    break;
                 case "管理制度":
-                    myframe.hide();
-                    render4File(type);
-                    break;
                 case "上级来文":
                     myframe.hide();
-                    render4File(type);
+                    render4FilesAndArticle(type);
                     break;
                 case "安全稽查":
                 case "安全例会":
@@ -199,9 +210,10 @@
         });
 
         function render4stationduty() {
-            var station_duty = GetDataByAjax("../NB_JsonHttp.aspx", "GetStationDuty4Grid");
+            var station_duty = GetDataByAjax("../NB_JsonHttp.aspx", "GetStationDuty4Grid", '', 'is_front');
             var tpl = "<li><a href='news_view.aspx?oid=@id'  target='_blank'>@rowid. @title</a><span>@time</span></li>";
             var ul = $("ul.news_list");
+            ul.find("li").remove();
             if (station_duty && station_duty.Rows && station_duty.Rows.length != $("ul.news_list li").length) {
                 for (var i = 0; i < station_duty.Total; i++) {
                     ul.append(tpl.replace("@id", station_duty.Rows[i].id).replace("@title", station_duty.Rows[i].title).replace("@rowid", i + 1).replace("@time", g_render4time(null, null, station_duty.Rows[i].create_date)));
@@ -210,10 +222,10 @@
         }
 
         function render4Article(type) {
-            var article_list = GetDataByAjax("../NB_JsonHttp.aspx", "GetArticle4Grid", type);
+            var article_list = GetDataByAjax("../NB_JsonHttp.aspx", "GetArticle4Grid", type, 'is_front');
             var tpl = "<li><a href='news_view.aspx?oid=@id'  target='_blank'>@rowid. @title</a><span>@time</span></li>";
             var ul = $("ul.news_list");
-            $("ul.news_list li").remove();
+            ul.find("li").remove();
             if (article_list && article_list.Rows && article_list.Rows.length) {
                 for (var i = 0; i < article_list.Total; i++) {
                     ul.append(tpl.replace("@id", article_list.Rows[i].id).replace("@title", article_list.Rows[i].title).replace("@rowid", i + 1).replace("@time", g_render4time(null, null, article_list.Rows[i].create_date)));
@@ -222,10 +234,10 @@
         }
 
         function render4File(type) {
-            var file_list = GetDataByAjax("../NB_JsonHttp.aspx", "getfiles4grid", type);
+            var file_list = GetDataByAjax("../NB_JsonHttp.aspx", "getfiles4grid", type, 'is_front');
             var tpl = "<li><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=@id'  target='_blank'>@rowid. @title</a><span>@time</span></li>";
             var ul = $("ul.news_list");
-            $("ul.news_list li").remove();
+            ul.find("li").remove();
             if (file_list && file_list.Rows && file_list.Rows.length) {
                 for (var i = 0; i < file_list.Total; i++) {
                     ul.append(tpl.replace("@id", file_list.Rows[i].id).replace("@title", file_list.Rows[i].DocName).replace("@rowid", i + 1).replace("@time", g_render4time(null, null, file_list.Rows[i].CreateOn)));
@@ -234,12 +246,12 @@
         }
 
         function render4FilesAndArticle(type) {
-            var article_list = GetDataByAjax("../NB_JsonHttp.aspx", "GetFilesAndArticle4Grid", type);
+            var article_list = GetDataByAjax("../NB_JsonHttp.aspx", "GetFilesAndArticle4Grid", type, 'is_front');
             var url = 'news_view.aspx?oid=';
             var url2 = '../Components/NBersFileServices/DownloadHandler.ashx?fileids=';
             var tpl = "<li><a href='@url@id'  target='_blank'>@rowid. [@type]  @title</a><span>@time</span></li>";
             var ul = $("ul.news_list");
-            $("ul.news_list li").remove();
+            ul.find("li").remove();
             if (article_list && article_list.Rows && article_list.Rows.length) {
                 for (var i = 0; i < article_list.Total; i++) {
                     if (article_list.Rows[i].remark == "article") {
