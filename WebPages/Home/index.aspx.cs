@@ -50,6 +50,7 @@ namespace WebPages.Home
                 FROM    tb where 1=1 order by art_type,create_date DESC";
             strQuery = strQuery.Replace("1=1", "isnull(ispublish,0)=1");
             List<ArticleModel> all_list = Wonder4.Map.Extensions.DAL.CPQuery.From(strQuery).ToList<ArticleModel>();
+            var index_banner = all_list.Where(p => p.art_type.StartsWith("首页新闻")).Take(5);
             var station_duty = (from item in all_list where item.art_type.EndsWith("安全稽查") select item).Take(6);
             var unit_notice = all_list.Where(p=>p.art_type.Equals("部门公告") && p.ispublish.Equals(1)).Take(1);
             var safty_meeting = all_list.Where(p=>p.art_type.StartsWith("安全例会")).Take(6);
@@ -62,6 +63,7 @@ namespace WebPages.Home
                 safty_meeting= safty_meeting,
                 work_plan= work_plan,
                 work_summary= work_summary,
+                index_banner= index_banner,
             };
 
             PageData=Wonder4.Map.Extensions.JsonExtensions.ToJson(myPageData);

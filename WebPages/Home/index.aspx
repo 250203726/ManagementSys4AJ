@@ -9,6 +9,7 @@
     <link rel="shoucut icon" href="../assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../assets/js/jquery-1.11.1.min.js"></script>
+    <script src="../assets/js/template.min.js"></script>
 
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
     <style type="text/css">
@@ -44,7 +45,7 @@
                     text-decoration: none;
                 }
 
-        .carousel-inner .item img {
+        .carousel-inner .item a img {
             width: 900px;
             height: 350px;
         }
@@ -151,6 +152,7 @@
            initArticleList(pageData.work_plan,"work_plan");
            initNotice();
            setRight();
+           renderTpl();
        });
 
        function initArticleList(data,model_name)
@@ -172,6 +174,13 @@
 
        window.onresize = function () {
            setRight();
+       }
+       function renderTpl() {
+           var Banner_li = template('tpl-carousel-li', pageData);
+           $('#carousel-li').html(Banner_li);
+
+           var Banner_item= template('tpl-carousel-item', pageData);
+           $('#carousel-item').html(Banner_item);
        }
    </script>
 </head>
@@ -208,8 +217,7 @@
             </div>
         </nav>
     </div>
-    </div>
-
+    </div>            
 
     <div class="container">
         <div class="public_tips">
@@ -220,44 +228,13 @@
             <div class="col-md-7">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <ol class="carousel-indicators" id="carousel-li">
                     </ol>
 
                     <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="../upfiles/201611/img/1.jpg" alt="...">
-                            <div class="carousel-caption">
-                                这是是关于图片的摘要......
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../upfiles/201611/img/2.png" alt="...">
-                            <div class="carousel-caption">
-                                这是是关于图片的摘要......
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../upfiles/201611/img/3.jpg" alt="...">
-                            <div class="carousel-caption">
-                                这是是关于图片的摘要......
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="carousel-inner" role="listbox"  id="carousel-item">
                 </div>
+                    </div>
             </div>
             <div class="col-md-5">
                 <div class="panel panel-primary">
@@ -325,6 +302,32 @@
         Copyright©2016 荆力总包版权所有     地址：荆州**　 邮编：123456</br>
             鄂ICP备05003329号  鄂公网安备 42050202000133号 
     </div>
+        <script type="text/html" id="tpl-carousel-li">
+                        {{each index_banner as value i}}
+                            <li data-target="#carousel-example-generic" data-slide-to="{{i}}" {{if i ==0}}class="active"{{/if}}></li>
+                        {{/each}}
+        </script>
+        <script type="text/html" id="tpl-carousel-item">
+                        {{each index_banner as value i}}
+                            <div class="item {{if i ==0}}active{{/if}}">
+                                <a href="../Home/news_view.aspx?oid={{value.id}}" target="_blank">
+                                    <img src="{{value.description}}" alt="{{value.title}}">
+                                </a>
+                            <div class="carousel-caption">
+                                {{value.title}}
+                            </div>
+                        </div>
+                        {{/each}}
+                <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+          </script>     
 </body>
 </html>
 

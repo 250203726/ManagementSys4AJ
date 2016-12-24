@@ -172,7 +172,7 @@
                 data.data.parentName=menuTree.getParent(node).name;
                 !data.data.paramss && (data.data.paramss="");
                 InitForm(data.data);
-                //f.setEnabled("paramss",false);
+                f.setEnabled("paramss",false);
                 //打开对话框
                 $.ligerDialog.open({
                     target: $("#mytarget"), width: 680, title: "编辑",

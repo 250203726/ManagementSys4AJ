@@ -95,6 +95,7 @@
     <Content Include="assets\js\login.js" />
     <Content Include="assets\js\params.js" />
     <Content Include="assets\js\placeholder.js" />
+    <Content Include="assets\js\template.min.js" />
     <Content Include="assets\js\Util.js" />
     <Content Include="assets\lib\images\loading.gif" />
     <Content Include="assets\lib\images\top.jpg" />

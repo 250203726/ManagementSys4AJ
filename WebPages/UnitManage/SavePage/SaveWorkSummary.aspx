@@ -138,6 +138,7 @@
 </head>
 <body>
     <div id="art_form">
+         <input type="hidden" name="id" value="0"/>
         <table class="mytab">
             <tr>
                 <td><label for="title">内容标题</label></td>

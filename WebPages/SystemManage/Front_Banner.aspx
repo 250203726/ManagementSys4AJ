@@ -11,10 +11,6 @@
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
 
-    <script src="../Components/NBersFileServices/jquery.uploadify.js" type="text/javascript"></script>
-    <link href="../Components/NBersFileServices/uploadify.css" rel="stylesheet" />
-    <link href="../Components/NBersFileServices/file-icon.css" rel="stylesheet" />
-
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -35,18 +31,6 @@
                 },
             });
 
-            //upfiles 渲染上传控件
-             $("#file_upload").uploadify({
-                 'formData': {
-                     'timestamp': Math.random(),
-                     'token': "wonder4",
-                     'fkGuid': "123456",
-                     'docType': '首页新闻',
-                 },
-                 'swf': '../Components/NBersFileServices/uploadify.swf',
-                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
-                 'buttonText': '上传',
-             });
             //给工作工作计划名称绑定事件
              $(document).on("click", "table.l-grid-body-table td div.l-grid-row-cell-inner a[name=article]", function (e) {
                  e.stopPropagation();
@@ -88,16 +72,7 @@
         function ItemClick(btn) {
             window.top.f_addTab("Save_Front_Banner", btn.text + "-首页新闻", "/SystemManage/SavePage/SaveFront_Banner.aspx?nodeid=29&mode=1&v=" + Math.random());
         }
-        //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
-        function OnUpfiles() {
-            //TODO：清理上传列表
-            $.ligerDialog.open({
-                target: $("#mytarget"), width: 500,minHeight:300, title: "上传文件",
-                buttons: [
-                    { text: '取消', onclick: function (item, dialog) { g.reload(); dialog.hidden(); } }
-                ]
-            });
-        }
+        
          
         //删除数据 add wonder4 2016年11月7日22:54:21
         function deleteRow() {
@@ -145,8 +120,5 @@
     <div id="maingrid"></div>
   <div style="display:none;">
 </div>
-         <div id="mytarget" style="width:99%; margin:3px; display:none;">
-             <input type="file" name="file_upload" id="file_upload" />
-     </div> 
 </body>
 </html>
