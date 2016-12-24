@@ -5,15 +5,8 @@ using Wonder4.Map.Extensions.DAL;
 
 namespace WebPages
 {
-    public partial class index : System.Web.UI.Page
+    public partial class index :BasePage
     {
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            if (Session[BaseConst.USERSESSION] == null)
-            {
-                Response.Redirect("login.aspx");
-            }
-        }
         protected void Page_Load(object sender, EventArgs e)
         {                      
         }

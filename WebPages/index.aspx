@@ -22,6 +22,7 @@
         var accordion = null;
         var tree = null;
         var tabItems = [];
+        var sysKey=<%=sysKeyValue%>;
         var sidebarData = GetDataByAjax('../NB_JsonHttp.aspx', "getParentMenusByJson");
         var navigateData = GetDataByAjax('../NB_JsonHttp.aspx', "getSubMenusByJson");
         $(function () {

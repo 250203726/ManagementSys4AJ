@@ -10,36 +10,30 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/main.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/base.css">
 	<script src="resources/js/jquery-1.7.2.min.js" type="text/javascript" ></script>
-	<script src="resources/js/config.js" type="text/javascript" ></script>
-	<script src="resources/js/cnDateFn.js" type="text/javascript">
-        <script  type="text/javascript">
-		$(document).ready(function(){
-			var greetings = "";
-			var cur_time = new Date().getHours();
-			if(cur_time >= 0 && cur_time <= 4 ) {
-				greetings = "已经夜深了，请注意休息";
-			} else if (cur_time > 4 && cur_time <= 7 ) {
-				greetings = "早上好";
-			} else if (cur_time > 7 && cur_time < 12 ) {
-				greetings = "上午好";
-			} else if (cur_time >= 12 && cur_time <= 18 ) {
-				greetings = "下午好";
-			} else {
-				greetings = "晚上好";
-			};
-			var greetObj = $("#greetings");
-			var userObj = $("#username");
-			
-			greetObj.text(greetings);
-			userObj.text(parent.SYSTEM.realName);
-			
-			$("#search").click(function(){
-				//search();
-			});
-			
-		});	
-	</script>
+    <script src="resources/js/cnDateFn.js" type="text/javascript"></script>
+
     <script>
+        $(function(){
+            var greetings = "";
+            var cur_time = new Date().getHours();
+            if(cur_time >= 0 && cur_time <= 4 ) {
+                greetings = "已经夜深了，请注意休息";
+            } else if (cur_time > 4 && cur_time <= 7 ) {
+                greetings = "早上好";
+            } else if (cur_time > 7 && cur_time < 12 ) {
+                greetings = "上午好";
+            } else if (cur_time >= 12 && cur_time <= 18 ) {
+                greetings = "下午好";
+            } else {
+                greetings = "晚上好";
+            };
+            var greetObj = $("#greetings");
+            var userObj = $("#username");
+			
+            greetObj.text(greetings);
+            userObj.text(window.top.sysKey.CurrentUserName);
+			
+        });
         $(document).on("click","a",function(e){
             var cur=$(this);
             if (cur.attr("data-tabid").length==0 || cur.attr("rel").length==0) {
@@ -70,7 +64,7 @@
 		<p class="ht_10"></p>
 	  	<p class="welcome">
 	  		<img alt="" src="resources/images/icn_user_gray.png" width="14" height="16" />
-		  	<strong><span id="greetings">您好</span>，<span id="username">管理员</span>！</strong>
+		  	<strong><span id="greetings">您好</span>，<span id="username"></span>！</strong>
 		  	维护
             <a data-tabid="109" data-tabTxt="公告管理" data-parentOpen="true" rel="/SystemManage/NoticeIndex.aspx?nodeid=109">「公告管理」、</a>
               <a data-tabid="110" data-tabTxt="形象及宗旨" data-parentOpen="true" rel="/UnitDecription/UnitFigure.aspx?nodeid=110&oid=24"  >「形象及宗旨」</a>信息。		  	
