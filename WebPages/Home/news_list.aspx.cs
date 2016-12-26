@@ -9,11 +9,12 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class news_list : BasePage
+    public partial class news_list : System.Web.UI.Page
     {
         public List<ArticleModel> newslist;
         public string art_type;
         public List<MenuModel> type_tree;
+        public string sysKeyValue = "{}";
         protected void Page_Load(object sender, EventArgs e)
         {
             art_type = Request.QueryString["news_type"];

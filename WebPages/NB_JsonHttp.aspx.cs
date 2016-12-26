@@ -19,19 +19,21 @@ namespace WebPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ( null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account))
+         
+            string oprType, onlyPara,onlyPara2,retJsonStr=string.Empty;
+            oprType = Request.QueryString["oprtype"];
+            onlyPara = Request.QueryString["strkey"];
+            onlyPara2 = Request.QueryString["strkey2"];
+
+            if (!onlyPara2.Equals("is_front") && (null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account)))
             {
                 //如果session超时，直接定向登录页
                 Response.ContentType = "text/html";
                 Response.Clear();
                 Response.AddHeader("Is_Out", "1");
-                Response.Write((new MyHttpResult(false,"登陆超时，请重新登陆！")).ToString());
+                Response.Write((new MyHttpResult(false, "登陆超时，请重新登陆！")).ToString());
                 Response.End();
             }
-            string oprType, onlyPara,onlyPara2,retJsonStr=string.Empty;
-            oprType = Request.QueryString["oprtype"];
-            onlyPara = Request.QueryString["strkey"];
-            onlyPara2 = Request.QueryString["strkey2"];
             switch (oprType.ToUpper())
             {
                 case "GETMENU":

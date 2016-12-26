@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Components.NBersEditor
 {
-    public partial class EditorView : BasePage
+    public partial class EditorView : System.Web.UI.Page
     {
         public ArticleModel artM;
         protected void Page_Load(object sender, EventArgs e)

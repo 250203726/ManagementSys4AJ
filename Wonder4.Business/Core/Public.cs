@@ -133,5 +133,49 @@ namespace N_Bers.Business.Core
             }
             return string.Empty;
         }
+
+        public static string GenderKey()
+        {
+            Dictionary<string, string> myCol = new Dictionary<string, string>();
+            myCol.Add("stsz", "系统设置");
+            myCol.Add("jsgl", "角色管理");
+            myCol.Add("jbxx", "基础信息");
+            myCol.Add("cdgl", "菜单管理");
+            myCol.Add("yhgl", "用户管理");
+            myCol.Add("bmgl", "部门管理");
+            myCol.Add("sjhw", "上级来文");
+            myCol.Add("gzzj", "工作总结");
+            myCol.Add("bmgk", "部门概况");
+            myCol.Add("jxkh", "绩效考核");
+            myCol.Add("gzjh", "工作计划");
+            myCol.Add("zdgl", "管理制度");
+            myCol.Add("aqgl", "安全管理");
+            myCol.Add("aqjc", "安全稽查");
+            myCol.Add("aqlh", "安全例会");
+            myCol.Add("agks", "安规考试");
+            myCol.Add("jypx", "教育培训");
+            myCol.Add("zgsh", "资质审核");
+            myCol.Add("jtaq", "交通安全");
+            myCol.Add("zlgl", "质量管理");
+            myCol.Add("gggl", "公告管理");
+            myCol.Add("bmzz", "部门职责");
+            myCol.Add("gwzz", "岗位职责");
+            myCol.Add("fgsgl", "分公司管控");
+            myCol.Add("stxjs", "三体系建设");
+            myCol.Add("xxjzz", "形象及宗旨");
+            myCol.Add("gwryxx", "岗位人员信息");
+            myCol.Add("syxwgl", "首页新闻管理");
+            myCol.Add("aqjctb", "安全稽查通报");
+            myCol.Add("gqjpzbz", "工器具配置标准");
+            myCol.Add("gqjglpj", "工器具管理评价");
+            myCol.Add("fgskhdx", "分公司考核兑现");
+            myCol.Add("gsaqwlt", "公司安全网络图");
+            myCol.Add("bbgl_page", "部门管理");
+            myCol.Add("gwgl_page", "岗位管理");
+
+            myCol.Add("CurrentUserName", (User_Info==null)?"":((UserModel)User_Info).nickname);
+
+            return Wonder4.Map.Extensions.JsonExtensions.ToJson(myCol);
+        }
     }
 }

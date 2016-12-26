@@ -10,11 +10,12 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class unit_decription : BasePage
+    public partial class unit_decription : System.Web.UI.Page
     {
         public List<ArticleModel> newslist;
         public string art_type;
         public List<MenuModel> type_tree;
+        public string sysKeyValue = "{}";
         protected void Page_Load(object sender, EventArgs e)
         {
             art_type = Request.QueryString["news_type"];
@@ -22,6 +23,7 @@ namespace WebPages.Home
             art_type = string.IsNullOrEmpty(N_Bers.Business.Core.Public.GetSysValue(art_type)) ? art_type : N_Bers.Business.Core.Public.GetSysValue(art_type);
             newslist = (new ArticleBLL()).DoQuery("art_type='" + art_type + "' ORDER BY create_date DESC");
             this.Title = "荆力总包安质部-" + art_type;
+            sysKeyValue = N_Bers.Business.Core.Public.GenderKey();
         }
 
         

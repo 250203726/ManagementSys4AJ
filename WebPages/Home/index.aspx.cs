@@ -9,9 +9,10 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.Home
 {
-    public partial class index : BasePage
+    public partial class index : System.Web.UI.Page
     {
         public string PageData;
+        public string sysKeyValue = "{}";
         protected void Page_Load(object sender, EventArgs e)
         {
             string strQuery = @"
@@ -67,6 +68,7 @@ namespace WebPages.Home
             };
 
             PageData=Wonder4.Map.Extensions.JsonExtensions.ToJson(myPageData);
-        }
+            sysKeyValue =N_Bers.Business.Core.Public.GenderKey();
+    }
     }
 }
