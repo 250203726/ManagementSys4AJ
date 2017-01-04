@@ -25,7 +25,7 @@ namespace WebPages
             onlyPara = Request.QueryString["strkey"];
             onlyPara2 = Request.QueryString["strkey2"];
 
-            if (!onlyPara2.Equals("is_front") && (null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account)))
+            if (!("is_front").Equals(onlyPara2)&& (null == Public.User_Info || string.IsNullOrEmpty(((UserModel)Public.User_Info).account)))
             {
                 //如果session超时，直接定向登录页
                 Response.ContentType = "text/html";
@@ -208,13 +208,16 @@ namespace WebPages
 
             string filter = getFilters();
             string is_indexpage = Request.QueryString["strkey2"];
+            string queryCount = string.Empty;
             if ("is_front".Equals(is_indexpage))
             {
                 filter = string.Concat(" art_type LIKE '%_岗位职责' and isnull(ispublish,0)=1", filter);
+                queryCount = " art_type LIKE '%_岗位职责' and isnull(ispublish,0)=1 ";
             }
             else
             {
                 filter = string.Concat(" art_type LIKE '%_岗位职责' ", filter);
+                queryCount = " art_type LIKE '%_岗位职责' ";
             }
 
 
@@ -222,7 +225,7 @@ namespace WebPages
             List<ArticleModel> list = (new ArticleBLL()).DoQuery(filter);
             var grid = new {
                 Rows = list,
-                Total= list.Count
+                Total = (new ArticleBLL()).DoQuery(queryCount).Count
             };
 
 
@@ -373,7 +376,8 @@ namespace WebPages
             {
                 strWhere.Append(" and isnull(ispublish,0)=1 ");                
             }
-           
+
+            string queryCount = strWhere.ToString();
             
             if (!string.IsNullOrEmpty(page))
             {
@@ -390,7 +394,7 @@ namespace WebPages
             var grid = new
             {
                 Rows = fileList,
-                Total = fileList.Count
+                Total = (new ArticleBLL()).DoQuery(queryCount).Count
             };
             return JsonExtensions.ToJson(grid);
         }
@@ -439,12 +443,15 @@ namespace WebPages
             {
                 strWhere.Append(" and isnull(ispublish,0)=1 ");
             }
+
+            string queryCount = strWhere.ToString();
+
             strWhere.Append(getFilters());
             var fileList = (new AttachmentsBLL()).DoQuery(strWhere.ToString());
             
             var grid = new {
                 Rows= fileList,
-                Total=fileList.Count
+                Total= (new AttachmentsBLL()).DoQuery(queryCount).Count
             };
             return JsonExtensions.ToJson(grid);
         }
@@ -483,22 +490,24 @@ namespace WebPages
                                FROM     dbo.nbers_Attachments";
 
             string is_indexpage = Request.QueryString["strkey2"];
-            string strSql = string.Empty;
+            string strSql,queryCount= string.Empty;
             if ("is_front".Equals(is_indexpage))
             {
                 strSql= SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%' and isnull(ispublish,0)=1", onlyPara), getFilters());
+                queryCount = string.Format("art_type like '{0}%' and isnull(ispublish,0)=1", onlyPara);
             }
             else
             {
                 strSql = SQLHelper.GetSubSqlStr(sql, "id", string.Format("art_type like '{0}%'", onlyPara), getFilters());
+                queryCount = string.Format("art_type like '{0}%'", onlyPara);
             }
-            
 
-            List< ArticleModel> allList = CPQuery.From(strSql).ToList<ArticleModel>();
+
+            List < ArticleModel> allList = CPQuery.From(strSql).ToList<ArticleModel>();
 
             var data = new {
                 Rows= allList,
-                Total= allList.Count
+                Total= CPQuery.From(string.Concat("SELECT * FROM (", sql, ") a WHERE ", queryCount)).ToList<ArticleModel>().Count
             };
 
             return JsonExtensions.ToJson(data);
@@ -516,12 +525,13 @@ namespace WebPages
         private string GetStationList4Grid(string filter)
         {
             filter = " unit_type=2 ";
+            string queryCount = filter;
             filter += getFilters();
-
+            
             var list = (new MyUnitBLL()).DoQuery(filter);
             var grid =new  {
                 Rows=list,
-                Total=list.Count()
+                Total= (new MyUnitBLL()).DoQuery(queryCount).Count()
             };
             return JsonExtensions.ToJson(grid);
         }
@@ -687,17 +697,19 @@ namespace WebPages
             string txt_filter = Request.Form["txt_filter"];
 
             StringBuilder strWhere = new StringBuilder(" unit_type=1");
-            strWhere.Append(getFilters());
             if (!string.IsNullOrEmpty(txt_filter))
             {
                 strWhere.Append(string.Format(" and nickname LIKE '%{0}%' OR account LIKE '%{0}%'", txt_filter));
             }
+            string queryCount = strWhere.ToString();
+            strWhere.Append(getFilters());
+           
 
             List<BusinessUnitModel> list = (new MyUnitBLL()).DoQuery(strWhere.ToString());
             var grid = new
             {
                 Rows = list,
-                Total = list.Count
+                Total = (new MyUnitBLL()).DoQuery(queryCount).Count
             };
             return JsonExtensions.ToJson(grid);
         }
@@ -723,27 +735,29 @@ namespace WebPages
                 strWhere.Append(string.Format(@" and unit_id in(SELECT bu2.id FROM dbo.nbers_businessunit bu1 JOIN dbo.nbers_businessunit 
                 bu2 ON bu1.id=bu2.pid WHERE bu1.id={0} UNION SELECT id FROM dbo.nbers_businessunit WHERE id={0})", unit_id));
             }
-            if (!string.IsNullOrEmpty(page))
-            {
-                int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
-                int endid = Convert.ToInt32(page)* (Convert.ToInt32(pagesize));
-                strWhere.Append(string.Format(" and rid BETWEEN {0} AND {1}", startid,endid));
-            }
-            if (!string.IsNullOrEmpty(sortname))
-            {
-                strWhere.Append(string.Format("order by {0} {1}",sortname,sortorder));
-            }
+           
             if (!string.IsNullOrEmpty(txt_filter))
             {
                 strWhere.Append(string.Format("and nickname LIKE '%{0}%' OR account LIKE '%{0}%'", txt_filter));
             }
+            string queryCount = strWhere.ToString();
 
+            if (!string.IsNullOrEmpty(page))
+            {
+                int startid = (Convert.ToInt32(page) - 1) * (Convert.ToInt32(pagesize));
+                int endid = Convert.ToInt32(page) * (Convert.ToInt32(pagesize));
+                strWhere.Append(string.Format(" and rid BETWEEN {0} AND {1}", startid, endid));
+            }
+            if (!string.IsNullOrEmpty(sortname))
+            {
+                strWhere.Append(string.Format("order by {0} {1}", sortname, sortorder));
+            }
 
             List<UserModel> list = (new MyUserBLL()).DoQuery(strWhere.ToString());
             var grid = new
             {
                 Rows = list,
-                Total = list.Count
+                Total = (new MyUserBLL()).DoQuery(queryCount).Count
             };
             return JsonExtensions.ToJson(grid);
         }
