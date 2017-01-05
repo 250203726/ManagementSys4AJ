@@ -45,7 +45,7 @@
                 var post_data = {};
                 post_data.id=page_init.id.val();
                 post_data.title = page_init.title.val();
-                post_data.art_type = '制度管理';
+                post_data.art_type = '管理制度';
                 post_data.content = KE.html();
                 post_data.ispublish=$("select[name=ispublish] option:selected").val();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
@@ -67,7 +67,7 @@
                 page_init.title && page_init.title.val(page_data.article.title);
                 f.setData({
                     "id":''+page_data.article.id,
-                    "art_type":'工作总结',
+                    "art_type":'管理制度',
                     "ispublish":""+page_data.article.ispublish,
                     "description":page_data.article.description
                 });

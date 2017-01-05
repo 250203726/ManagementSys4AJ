@@ -27,9 +27,9 @@
                    { display: '文件名称', name: 'DocName', minWidth: 460, align: 'left', render: g_render4name },
                    { display: '上传用户', name: 'CreateUser', width: 150 },
                    { display: '文件大小', name: 'Filesize', width: 120, render: g_render4filesize },
-                   { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time }
+                   { display: '上传时间', name: 'CreateOn', width: 120, render: g_render4time },
+                   { display: '操作', width: 120, render: g_render4handlebar }
                ],
-               //data:grid_data.data,
                url: "../NB_JsonHttp.aspx?oprtype=getfiles4grid&strkey=" + myEscape('三体系建设'),
                pageSize: 30,
                rownumbers: true,
@@ -122,6 +122,15 @@
                 cls_icon = "ico-file-" + fileExt[0];
             }
             return "<SPAN class='ico-file " + cls_icon + "'></SPAN><a href='../Components/NBersFileServices/DownloadHandler.ashx?fileids=" + rowdata.id + " 'rel='" + rowdata.id + " 'target='_blank'>" + docname + "</a>";
+        }
+
+        function g_render4handlebar(rowdata, index, colvalue) {
+            var ispublish = rowdata.Ispublish;
+            if ("1" == ispublish) {
+                return '<a href="javascript:void(0)" name="handlebar" rel="1" file_type="file" data-id="' + rowdata.id + '" update_to="0"">不在首页显示</a>';
+            } else {
+                return '<a href="javascript:void(0)" name="handlebar" rel="0"  file_type="file" data-id="' + rowdata.id + '" update_to="1"">发布到首页</a>';
+            }
         }
     </script>
 </head>

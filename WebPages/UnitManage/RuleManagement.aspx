@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>制度管理</title>
+    <title>管理制度</title>
      <link href="../assets/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
@@ -31,7 +31,7 @@
                     { display: '操作', width: 120,render:g_render4handlebar }
                ],
                //data:grid_data.data,
-               url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey="+myEscape('制度管理'),
+               url: "../NB_JsonHttp.aspx?oprtype=GETFILESANDARTICLE4GRID&strkey="+myEscape('管理制度'),
                pageSize: 30,
                rownumbers: true,
                toolbar: {
@@ -45,7 +45,7 @@
                     'timestamp': Math.random(),
                     'token': "wonder4",
                     'fkGuid': "123456",
-                    'docType': '制度管理',
+                    'docType': '管理制度',
                 },
                 'swf': '../Components/NBersFileServices/uploadify.swf',
                 'uploader': '../Components/NBersFileServices/FileHandler.ashx',
@@ -62,13 +62,13 @@
                 var author = $(e.target).attr("author");
 
                 if (top_tab.isTabItemExist("RuleManagement")) {
-                    top_tab.setHeader("RuleManagement", author + "-制度管理");
+                    top_tab.setHeader("RuleManagement", author + "-管理制度");
                     top_tab.setTabItemSrc("RuleManagement", url);
                     top_tab.reload("RuleManagement");
                     top_tab.selectTabItem("RuleManagement");
                     return;
                 }
-                window.top.f_addTab("WorkPlan", author + "-制度管理", url);
+                window.top.f_addTab("WorkPlan", author + "-管理制度", url);
 
             });
             $("#pageloading").hide();
@@ -84,21 +84,21 @@
                 myTips("请选择文章类数据编辑！");
                 return;
             }
-            window.top.f_addTab("Save_RuleManagement", btn.text + "-制度管理", "/UnitManage/SavePage/SaveRuleManagement.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
+            window.top.f_addTab("Save_RuleManagement", btn.text + "-管理制度", "/UnitManage/SavePage/SaveRuleManagement.aspx?nodeid=29&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
 
         //点击上传按钮的操作 add wonder4 2016年11月7日22:54:21
         function OnUpfiles() {
             //TODO：清理上传列表
             $.ligerDialog.open({
-                target: $("#mytarget"), width: 500, minHeight: 300, title: "制度管理",
+                target: $("#mytarget"), width: 500, minHeight: 300, title: "管理制度",
                 buttons: [
                     { text: '取消', onclick: function (item, dialog) { g.reload(); dialog.hidden(); } }
                 ]
             });
         }
         function ItemClick(btn) {
-            window.top.f_addTab("Save_RuleManagement", btn.text + "-制度管理", "/UnitManage/SavePage/SaveRuleManagement.aspx?nodeid=29&mode=1&v=" + Math.random());
+            window.top.f_addTab("Save_RuleManagement", btn.text + "-管理制度", "/UnitManage/SavePage/SaveRuleManagement.aspx?nodeid=29&mode=1&v=" + Math.random());
         }
 
         //删除数据 add wonder4 2016年11月7日22:54:21

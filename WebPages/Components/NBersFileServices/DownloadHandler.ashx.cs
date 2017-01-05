@@ -52,7 +52,7 @@ namespace WebPages.Components.NBersFileServices
                 if (!File.Exists(strFilePath))
                 {
                     HttpContext.Current.Response.Status = "404 Not Found";
-                    HttpContext.Current.Response.Write("物理文件不存在");
+                    HttpContext.Current.Response.Write("<script>alert('物理文件不存在，请联系管理员！');window.close();</script>");
                     return;
                 }
                 //取实际文档扩展名
