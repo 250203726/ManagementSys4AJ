@@ -1,12 +1,52 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <title>Sorry，您的体验时间已到，请联系软件提供商！</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../resources/css/main2.css" />
+    <style type="text/css">
+        .mod-notfound {
+            border-right: #e1e1e1 1px solid;
+            border-top: #e1e1e1 1px solid;
+            margin-top: 5%;
+            background: #fff;
+            border-left: #e1e1e1 1px solid;
+            border-bottom: #e1e1e1 1px solid;
+            text-align: center;
+            border-radius: 10px;
+            min-height:500px;
+        }
+
+            .mod-notfound ul {
+                margin: 0;
+                padding: 0;
+                list-style-position: inside;
+                text-align: left;
+                text-indent: 1em;
+            }
+
+            .mod-notfound li {
+                height: 24px;
+                line-height: 24px;
+            }
+
+                .mod-notfound li a {
+                    color: steelblue;
+                }
+    </style>
 </head>
 <body>
-	405错误
+    <div class="mod-page-body">
+        <div class="mod-page-main wordwrap clearfix">
+            <div class="x-page-container">
+                <div class="mod-notfound grid-98">
+                    <img alt="404 NOT FOUND" class="img-notfound" src="../resources/images/notfound.gif" style="width: 520px;height: 320px;" />
+                    <p style="color:#e80;font-size: 24px; line-height: 70px">
+                        -.-&nbsp;抱歉！您的体验时间已到，请联系软件提供商！
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

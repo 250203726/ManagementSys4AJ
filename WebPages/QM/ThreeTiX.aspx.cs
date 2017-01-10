@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebPages.QM
 {
-    public partial class ThreeTiX : System.Web.UI.Page
+    public partial class ThreeTiX : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -52,7 +52,7 @@
             if(state==1)//新增
             {
                 //初始化表格
-                var dataNull={name:' ',status: 1, id: 0};
+                var dataNull={name:' ',status: '1', id: '0'};
                 f.setData(dataNull);
                 var JSONdata = GetDataByAjax('../NB_JsonHttp.aspx', "getAllMenus","role");
                 //菜单树加载

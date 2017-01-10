@@ -15,6 +15,10 @@ namespace WebPages.Home
         public string sysKeyValue = "{}";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!N_Bers.Business.Core.Public.VerifyRights())
+            {
+                Response.Redirect("~/error/405.html");
+            }
             string strQuery = @"
                                             WITH    tb
                       AS ( SELECT   ROW_NUMBER() OVER ( ORDER BY id ) rid ,
@@ -52,18 +56,18 @@ namespace WebPages.Home
             strQuery = strQuery.Replace("1=1", "isnull(ispublish,0)=1");
             List<ArticleModel> all_list = Wonder4.Map.Extensions.DAL.CPQuery.From(strQuery).ToList<ArticleModel>();
             var index_banner = all_list.Where(p => p.art_type.StartsWith("首页新闻")).Take(5);
-            var station_duty = (from item in all_list where item.art_type.EndsWith("安全稽查") select item).Take(6);
+            var security_audit = (from item in all_list where item.art_type.StartsWith("安全稽查") select item).Take(6);
             var unit_notice = all_list.Where(p=>p.art_type.Equals("部门公告") && p.ispublish.Equals(1)).Take(1);
             var safty_meeting = all_list.Where(p=>p.art_type.StartsWith("安全例会")).Take(6);
-            var work_plan = all_list.Where(p => p.art_type.EndsWith("教育培训")).Take(6);
-            var work_summary = all_list.Where(p => p.art_type.EndsWith("三体系建设")).Take(6);
+            var education_training = all_list.Where(p => p.art_type.EndsWith("教育培训")).Take(6);
+            var threeTiXi = all_list.Where(p => p.art_type.EndsWith("三体系建设")).Take(6);
             var myPageData = new
             {
-                station_duty = station_duty,
+                security_audit = security_audit,
                 unit_notice = unit_notice,
                 safty_meeting= safty_meeting,
-                work_plan= work_plan,
-                work_summary= work_summary,
+                education_training = education_training,
+                threeTiXi = threeTiXi,
                 index_banner= index_banner,
             };
 

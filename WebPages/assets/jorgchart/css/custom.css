@@ -18,6 +18,9 @@ body {
     body p {
         font-size: 14px;
     }
+        td div {
+        font-size: 12px !important;
+    }
 
         body p a {
             font-size: 16px;
@@ -116,7 +119,7 @@ table{
 }
 
 .new_line {
-    font-size: 14px !important;
+    font-size: 12px !important;
     margin-top: 10px !important;
     line-height: normal !important;
 }
@@ -150,5 +153,5 @@ div .node_hierarchy_6 {
     padding: 1px  !important;
     border-radius: 1px  !important;
      border: 1px solid white !important;
-     font-size:11px!important;
+     font-size:11.5px!important;
 }

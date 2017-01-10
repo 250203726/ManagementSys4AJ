@@ -133,6 +133,9 @@
        }
 
        function format_date(str_date) {
+           if (!str_date) {
+               return '';
+           }
            var milli = str_date.replace(/\/Date\((-?\d+)\)\//, '$1');
            var s = "01-01";
            var dt = new Date(parseInt(milli));
@@ -145,11 +148,15 @@
        var pageData;
        $(function () {
             pageData=<%=PageData%>;
-           findWeather();
-           initArticleList(pageData.station_duty,"station_duty");
-           initArticleList(pageData.work_summary,"work_summary");
+           try {
+               findWeather();
+           } catch (e) {
+               window.console.log("当前电脑不能访问外网。");
+           }
+           initArticleList(pageData.security_audit,"security_audit");
            initArticleList(pageData.safty_meeting,"safty_meeting");
-           initArticleList(pageData.work_plan,"work_plan");
+           initArticleList(pageData.education_training,"education_training");
+           initArticleList(pageData.threeTiXi,"threeTiXi");
            initNotice();
            setRight();
            renderTpl();
@@ -157,8 +164,17 @@
 
        function initArticleList(data,model_name)
        {
+           var url = '/home/news_view.aspx?oid=';
+           var url2 = '../Components/NBersFileServices/DownloadHandler.ashx?fileids=';
+           var tpl = "<li><a href='@url@id'  target='_blank'>@title</a><span class='myspan'>@time</span></li>";
+           var ul= $("ul."+model_name);
            $.each(data,function(n,value){
-               $("ul."+model_name).append($("<li><a href='/home/news_view.aspx?oid="+value.id+"' target='_blank'>"+value.title+"<span class='myspan'>"+format_date(value.create_date)+"</span></a> </li>"));
+               if (value.remark == "article") {
+                   ul.append(tpl.replace("[@type]", "").replace("@url", url).replace("@id", value.id).replace("@title", value.title).replace("@time", format_date( value.create_date)));
+               } else {
+                   ul.append(tpl.replace("[@type]", "").replace("@url", url2).replace("@id", value.id).replace("@title", value.title).replace("@time", format_date(value.create_date)));
+               }   
+               //$("ul."+model_name).append($("<li><a  href='/home/news_view.aspx?oid="+value.id+"' target='_blank' data_type='"+value.remark+"'>"+value.title+"<span class='myspan'>"+format_date(value.create_date)+"</span></a> </li>"));
            });        
        }
        function initNotice() {
@@ -243,7 +259,7 @@
                     <div class="panel-body">
                         <div>
                             <a href="/UnitManage/NetworkMap_New.aspx" class="thumbnail" target="_blank">
-                                <img data-src="holder.js/100%x250" alt="..." src="../upfiles/201611/img/netmap.jpg">
+                                <img data-src="holder.js/100%x250" alt="..." src="../assets/img/netmap.jpg">
                             </a>
                         </div>
                     </div>
@@ -257,7 +273,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">安 · 全 · 稽 · 查<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqjc" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list station_duty">
+                        <ul class="index_list security_audit">
                         </ul>
                     </div>
                 </div>
@@ -267,7 +283,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">安 · 全 · 例 · 会<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=aqlh" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list work_summary">
+                        <ul class="index_list safty_meeting">
                         </ul>
                     </div>
                 </div>
@@ -280,7 +296,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">教 · 育 · 培 · 训<span class="myspan"><a href="unit_decription.aspx?news_type=safety_manage&child_type=jypx" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list safty_meeting">                         
+                        <ul class="index_list education_training">                         
                         </ul>
                     </div>
                 </div>
@@ -290,7 +306,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">质 · 量 · 管 · 理<span class="myspan"><a href="unit_decription.aspx?news_type=quality_manage&child_type=zlgl" target="_blank">更多>></a></span></div>
                     <div class="panel-body" style="padding-left: 0;">
-                        <ul class="index_list work_plan">                            
+                        <ul class="index_list threeTiXi">                            
                         </ul>
                     </div>
                 </div>

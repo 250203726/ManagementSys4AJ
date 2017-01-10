@@ -10,7 +10,6 @@
     <link href="../assets/lib/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="../assets/lib/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <script src="../assets/js/jquery-1.11.1.min.js"></script>
-    <%--<script src="../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>--%>
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -26,7 +25,6 @@
                 render: t_render,
                 isExpand:5,
                 onContextmenu: function (node, e) {
-                    //console.log(e.target);
                     if (e.target.nodeName.toLocaleUpperCase()!= "SPAN") {
                         myTips("请在节点上点击右键，进行操作！");
                         menu.hide();
@@ -78,8 +76,6 @@
               { text: '新增下一级节点', click: itemclick, icon: 'add' },
               { line: true },
                 { text: '修改', click: itemclick, icon: 'edit' },
-
-                { text: '查看', click: itemclick, icon: "view" },
                 { text: '删除', click: itemclick, icon: "delete" },
                 ]
             });
@@ -128,35 +124,27 @@
             $.ligerDialog.open({
                 target: $("#mytarget"), width: 600, title: btn.text + "节点",
                 buttons: [
-                    { text: '确定', onclick: function (item, dialog) { f_save(); dialog.hidden(); } },
+                    { text: '确定', onclick: function (item, dialog) { f_save(dialog);  } },
                     { text: '取消', onclick: function (item, dialog) { dialog.hidden(); } }
                 ]
             });
         }
         function f_save() {
-            //TODO:必填校验
             var user_post = f.getData();
-            //var newnodedata = selected_node.data;
-            //newnodedata.treedataindex = 0;
-            //newnodedata.auditor = user_post.auditor;
-            //newnodedata.name = user_post.name;
-            //newnodedata.node_guid = user_post.node_guid;
-            //newnodedata.parentguid = user_post.parentguid;
-            //newnodedata.sort_order = user_post.sort_order;
-            //newnodedata.station_name = user_post.station_name;
-            //newnodedata.remark = "";
-
-
+            if (user_post.name == "") {
+                myTips("节点名称不能为空！");
+                return;
+            }
+            if (user_post.auditor == "") {
+                myTips("责任人名称不能为空！");
+                return;
+            }
             var ret = GetDataByAjax("../NB_JsonHttp.aspx", "SaveNode", "", "", JSON.stringify(user_post));
             if (ret.result) {
                 myTips(ret.msg);
-                //if (user_post.node_guid == "00000000-0000-0000-0000-000000000000") {
-                //    t.append(t.getParent(selected_node), user_post);
-                //} else {
-                //    t.update(selected_node, newnodedata);
-                //}
                 t.reload();
             } else { }
+            dialog.hidden();
         }
         function t_render(data, item) {
             var auditor = data.auditor || "";
@@ -177,7 +165,7 @@
          
     </style>
 </head>
-<body style=""overflow-x: hidden; padding: 5px; margin: 0;">
+<body style="overflow-x: hidden; padding: 5px; margin: 0; margin-bottom:35px">
       <div id="toptoolbar"></div> 
        <ul id="tree1" ></ul>
     <div id="mytarget" style="width: 100%; display: none">

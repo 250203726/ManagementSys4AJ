@@ -90,19 +90,19 @@
                                 <tr>
                                     <td class="right">账&nbsp;&nbsp;&nbsp;&nbsp;号：</td>
                                     <td style="text-align: left;">
-                                        <input type="text" name="form-username" id="wscrm_Username" class="login-text" value="admin" />
+                                        <input type="text" name="form-username" id="wscrm_Username" class="login-text" value="" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="right">密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
                                     <td class="left">
-                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="admin" />
+                                        <input type="password" name="form-password" id="wscrm_Password" class="login-text" value="" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="right">验证码：</td>
                                     <td class="left">
-                                        <input type="text" name="authCode" id="authCode" class="login-text" style="width: 90px;" value="312" />
+                                        <input type="text" name="authCode" id="authCode" class="login-text" style="width: 90px;" value="" />
                                         <img alt="" src="Validate.aspx" onclick="showImage(this)" width="100" height="25" style="vertical-align: middle;"/>
                                     </td>
                                 </tr>

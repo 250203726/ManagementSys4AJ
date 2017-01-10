@@ -300,7 +300,7 @@
                 $(this).toggleClass("profileHover");
             });
             $("#userInfo").click(function (e) {
-                f_addTab("grzl", "个人资料", "UserManage/UserInfo.aspx?nodeid=-1");
+                f_addTab("grzl", "个人资料", "UserManage/UserInfo.aspx");
                 e.preventDefault();
             });
             $("#changePwd").click(function (e) {

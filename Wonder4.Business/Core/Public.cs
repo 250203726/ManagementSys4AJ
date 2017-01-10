@@ -177,5 +177,17 @@ namespace N_Bers.Business.Core
 
             return Wonder4.Map.Extensions.JsonExtensions.ToJson(myCol);
         }
+
+
+        public static bool VerifyRights()
+        {
+            DateTime endDateTime = new DateTime(2017, 2, 20);
+
+            if (endDateTime < DateTime.Now)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

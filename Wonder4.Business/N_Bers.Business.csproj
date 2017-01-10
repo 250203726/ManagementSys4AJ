@@ -59,6 +59,7 @@
     <Compile Include="BLL\ValidAccessBLL.cs" />
     <Compile Include="Core\CryptoHelper.cs" />
     <Compile Include="Core\DBHelper.cs" />
+    <Compile Include="Core\MyHttpModule.cs" />
     <Compile Include="Core\Public.cs" />
     <Compile Include="Core\SQLHelper.cs" />
     <Compile Include="Model\AccessModel.cs" />
