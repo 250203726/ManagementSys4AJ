@@ -99,7 +99,7 @@
                     "id":''+page_data.article.id,
                     "art_type":station_name,
                 });
-                page_init.title.attr("readonly","readonly");
+                //page_init.title.attr("readonly","readonly");
                 KE.html(page_data.article.content);
             }
         }

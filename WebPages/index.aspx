@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>后台管理系统</title>
+    <title>安质部-后台管理系统</title>
     <link rel="shoucut icon" href="assets/ico/favicon.ico" type="image/x-icon"/>
     <link href="resources/ligerUI/skins/Gray/css/ligerui-all.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/index.css" rel="stylesheet" type="text/css"/>
@@ -237,9 +237,9 @@
                         <img src="resources/images/sysicon.gif" width="30" height="22" alt="公司Logo" />
                     </span>
                     <span class="h2">管理系统</span>
-                </div>
+                </div>                
             </div>
-            <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown" style="min-width: 120px;">
+            <div class="l-topmenu-welcome fix_profile" data-toggle="dropdown" style="min-width: 120px;">                
                 <label id="wel_label" class="wel_label">
                     欢迎您：
                 	<a>

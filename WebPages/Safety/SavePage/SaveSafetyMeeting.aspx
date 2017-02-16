@@ -33,6 +33,8 @@
                     }
                 });
                 prettyPrint();
+                //保证编辑器渲染完成
+                initPage();
             });
         })
 
@@ -48,12 +50,29 @@
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("新增成功！");
+                    myTips("保存成功！");
                 }
             });
-
+            page_init={
+                id:$("input[name=id]"),
+                title:$("input[name=title]"),
+                art_type: $("select[name=art_type]"),
+                content:KE,
+            };
             window["f"]=$("#art_form").ligerForm();
         });
+        //初始化页面
+        function initPage() {
+            if (typeof(page_data)=="object" && page_data.article) {
+                page_data.article && page_init.title.val(page_data.article.title);
+                f.setData({
+                    "id":''+page_data.article.id,
+                    "art_type":page_data.article.art_type,
+                    "ispublish":""+page_data.article.ispublish
+                });
+                KE.html(page_data.article.content);
+            }
+        }
     </script>
     <style>
         .mytab {
@@ -143,10 +162,10 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+<%--            <tr>
                 <td><label for="description">内容摘要</label></td>
                 <td><textarea name="description" value="" class="myinput"></textarea></td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td><label for="kinde_content">内容描述</label></td>
                 <td>

@@ -90,8 +90,8 @@
             }
             window.top.f_addTab("Save_WorkSummary", btn.text + "-工作总结", "/UnitManage/SavePage/SaveWorkSummary.aspx?nodeid=25&mode=2&oid=" + rows[0].id + "&v=" + Math.random());
         }
-        function ItemClick() {
-    
+        function ItemClick(item) {
+            AddItem(item);
         }
         function OnUpfiles() {
             //TODO：清理上传列表
@@ -115,7 +115,7 @@
             //服务端删除，合并id为ids
             var ids = rows.map(function (data, index) { return data.id }).join(",");
             //服务端删除，合并id为ids
-            if (rows.remark && rows.remark=="file") {//附件
+            if (rows[0].remark && rows[0].remark=="file") {//附件
                 var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
             }else {
                 var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);

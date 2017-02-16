@@ -13,6 +13,7 @@
 
     <script src="../Components/NBersFileServices/jquery.uploadify.js" type="text/javascript"></script>
     <link href="../Components/NBersFileServices/uploadify.css" rel="stylesheet" />
+    <link href="../Components/NBersFileServices/file-icon.css" rel="stylesheet" />
 
     <script src="../assets/lib/ligerUI/js/ligerui.all.js"></script>
     <script src="../assets/js/Util.js" type="text/javascript"></script>

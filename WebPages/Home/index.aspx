@@ -315,8 +315,7 @@
     </div>
     <%--页脚--%>
     <div class="container footer">
-        Copyright©2016 荆力总包版权所有     地址：荆州**　 邮编：123456</br>
-            鄂ICP备05003329号  鄂公网安备 42050202000133号 
+       Copyright©2016 荆力总包安质部版权所有</br>
     </div>
         <script type="text/html" id="tpl-carousel-li">
                         {{each index_banner as value i}}

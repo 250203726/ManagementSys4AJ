@@ -122,7 +122,7 @@
             }
             var ids = rows.map(function (data, index) { return data.id }).join(",");
             //服务端删除，合并id为ids
-            if (rows.remark && rows.remark=="file") {//附件
+            if (rows[0].remark && rows[0].remark=="file") {//附件
                 var returnStr = GetDataByAjax("../Components/NBersFileServices/DeleteFileHandle.ashx?", "", "", "", { fileids: ids });
             }else {
                 var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);

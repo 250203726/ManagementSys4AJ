@@ -70,6 +70,24 @@
             }
             window.top.f_addTab("Eidt_StationDudy", "编辑岗位职责", "../UnitDecription/UnitFigure.aspx?type=station_duty&oid="+rows[0].id);
         }
+         //deleteRow
+        function deleteRow() {
+            var rows = g.getSelectedRows();
+            if (rows.length == 0) {
+                myTips("请选择数据进行删除！");
+                return;
+            }
+            //服务端删除，合并id为ids
+            var ids = rows.map(function (data, index) { return data.id }).join(",");
+
+            var returnStr = GetDataByAjax("../NB_JsonHttp.aspx", "DELETEARTICLES", ids, "", null);
+            if (returnStr.result) {
+                g.deleteSelectedRow();
+                myTips(returnStr.msg);
+            } else {
+                myTips("删除失败，请联系管理员！");
+            }
+        }
          //
         function g_render4title(rowdata, index, colvalue) {
             return '<a name="title" href="javascript:void(0)" rel='+rowdata.id+'>'+colvalue+'</a>';
