@@ -50,7 +50,12 @@
                 post_data.content = KE.html();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("保存成功！");
+                    if (post_data.id=="0") {
+                        myAlerts("新增成功，窗口即将关闭！","", "success");
+                        CloseCurrentTab();
+                    }else {
+                        myTips("保存成功");
+                    }
                 }
             });
 
@@ -73,6 +78,10 @@
                     "ispublish": "" + page_data.article.ispublish
                 });
                 KE.html(page_data.article.content);
+            }
+            //按钮名称 
+            if (page_init && page_init.id && page_init.id.val()=="0") {
+                $("input[name='btn_submit']").val("保存关闭");
             }
         }
     </script>

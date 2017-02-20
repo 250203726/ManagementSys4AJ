@@ -342,3 +342,12 @@ $(document).on("click", "table.l-grid-body-table a[name=handlebar]", function (e
         g.reload();
     }
 });
+
+/*
+关闭当前tab页签
+*/
+function CloseCurrentTab() {
+    if (window.parent.tab) {
+        window.parent.tab.removeSelectedTabItem();
+    }
+}

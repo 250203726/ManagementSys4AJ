@@ -115,6 +115,10 @@
                 f.setEnabled(["parentname"], false);
             } else if (btn.text == "删除") {
                 var guid = selected_node.data.node_guid;
+                if (t.hasChildren(selected_node.data)) {
+                    myTips("不能删除非末级节点！");
+                    return;
+                } 
                 var Rtn = GetDataByAjax('../NB_JsonHttp.aspx', "DeleteMapNode", guid);
                 myTips(Rtn.msg);
                 t.reload();

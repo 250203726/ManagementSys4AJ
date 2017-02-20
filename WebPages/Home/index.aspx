@@ -237,7 +237,7 @@
 
     <div class="container">
         <div class="public_tips">
-            <marquee style="width: 57%; float: left;" scrollamount="5"><font color="red">重要公告：</font>2016-11-20 在**地区举行年度总结大会，请全体员工务必参与，不得缺席...</marquee>
+            <marquee style="width: 57%; float: left;" scrollamount="3"></marquee>
             <div class="tips_weather"></div>
         </div>
         <div class="row">

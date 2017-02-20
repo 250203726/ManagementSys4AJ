@@ -181,7 +181,7 @@ namespace N_Bers.Business.Core
 
         public static bool VerifyRights()
         {
-            DateTime endDateTime = new DateTime(2017, 2, 20);
+            DateTime endDateTime = new DateTime(2027, 4, 12);
 
             if (endDateTime < DateTime.Now)
             {

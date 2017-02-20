@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>保存-工作总结</title>
+    <title>保存-首页滚动图</title>
     <link href="../../Components/NBersEditor/themes/default/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../Components/NBersEditor/plugins/code/prettify.css" />
     <script src="../../../assets/lib/jquery/jquery-1.9.0.min.js" type="text/javascript"></script> 
@@ -56,7 +56,12 @@
                 post_data.description=page_init.url.val();
                 var Rtn = GetDataByAjax("../../../NB_JsonHttp.aspx", "SAVEARTICLE", "", "", JSON.stringify(post_data));
                 if (Rtn.result) {
-                    myTips("保存成功");
+                    if (post_data.id=="0") {
+                        myAlerts("新增成功，窗口即将关闭！","", "success");
+                        CloseCurrentTab();
+                    }else {
+                        myTips("保存成功");
+                    }
                 }
             });
             page_init={
@@ -111,7 +116,11 @@
                     "art_type":'首页新闻',
                     "ispublish":""+page_data.article.ispublish
                 });
-                KE.html(page_data.article.content);
+                KE.html(page_data.article.content);               
+            }
+            //按钮名称 
+            if (page_init && page_init.id && page_init.id.val()=="0") {
+                $("input[name='btn_submit']").val("保存关闭");
             }
         }
     </script>
@@ -187,7 +196,7 @@
                       <tr>
             <td><label for="ispublish">滚动图</label></td>
             <td>
-                 <input type="text" name="url" value=""  class="myinput"/>
+                 <input type="text" name="url" value=""  class="myinput" readonly="readonly"/>
                 <input class="btn" style="vertical-align: bottom;margin-left: 5px;" type="button" name="upfiles" value="上传" />
             </td>
             </tr>

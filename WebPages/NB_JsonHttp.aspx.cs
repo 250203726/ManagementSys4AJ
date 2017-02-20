@@ -421,6 +421,7 @@ namespace WebPages
             {
                 ArticleModel artM_old = (new ArticleBLL()).GetModel(artM.id);
                 artM_old.title = artM.title;
+                artM_old.art_type = artM.art_type;
                 artM_old.content = artM.content;
                 artM_old.ispublish = artM.ispublish;
                 artM_old.description = (string.IsNullOrEmpty(artM.description) ? artM_old.description : artM.description);
